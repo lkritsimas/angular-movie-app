@@ -1,0 +1,11 @@
+<h2>Movies</h2>
+
+<a>New movies</a> | <a>Top movies</a>
+
+<ul class="movies">
+  <li *ngFor="let movie of movies">
+    <a routerLink="/title/{{ movie.id }}">
+      {{ movie.name }}
+    </a>
+  </li>
+</ul>
