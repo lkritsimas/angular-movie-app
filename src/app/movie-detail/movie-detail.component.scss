@@ -1,0 +1,17 @@
+$width: 1160px;
+
+img {
+    display: block;
+    width: $width;
+    margin-bottom: 16px;
+}
+
+.details {
+    width: $width;
+    margin: 0 auto;
+
+    .year {
+        color: #999;
+        font-size: 65%;
+    }
+}

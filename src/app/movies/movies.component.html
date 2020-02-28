@@ -1,6 +1,8 @@
 <h2>Movies</h2>
 
-<a routerLink="/movies/upcoming">Upcoming movies</a> | <a routerLink="/movies/popular">Popular movies</a>
+<p>
+  <a routerLink="/movies/upcoming">Upcoming movies</a> | <a routerLink="/movies/popular">Popular movies</a>
+</p>
 <h3>{{ title }}</h3>
 <ul class="movies" *ngIf="(movies | async)">
   <li *ngFor="let movie of (movies | async).results">

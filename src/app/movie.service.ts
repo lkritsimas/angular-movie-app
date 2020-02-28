@@ -10,6 +10,7 @@ import { API_KEY } from './api';
 })
 export class MovieService {
   private API_URL: string = 'https://api.themoviedb.org/3';
+  private movieDetailsEndpoint: string = '/movie';
   private popularMoviesEndpoint: string = '/movie/popular';
   private upcomingMoviesEndpoint: string = '/movie/upcoming';
   private searchEndpoint: string = '/search/multi';
@@ -21,6 +22,13 @@ export class MovieService {
 
   createUrlString(path: string, params?: string): string {
     return `${this.API_URL}${path}?${params ? params + '&' : ''}api_key=${API_KEY}`;
+  }
+
+  getMovieDetails(id: string): Observable<any> {
+    const searchString = this.createUrlString(`${this.movieDetailsEndpoint}/${id}`);
+    return this.httpClient.get(searchString).pipe(
+      tap(_ => console.log(`fetched movie ${id}`))
+    );
   }
 
   getPopularMovies() {
