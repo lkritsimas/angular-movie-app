@@ -1,9 +1,12 @@
 <h2>Movies</h2>
 
 <a routerLink="/movies/upcoming">Upcoming movies</a> | <a routerLink="/movies/popular">Popular movies</a>
-<ul class="movies">
-  <li *ngFor="let movie of movies.results">
-    <img src="https://image.tmdb.org/t/p/w200/{{ movie.poster_path }}" />
+<h3>{{ title }}</h3>
+<ul class="movies" *ngIf="(movies | async)">
+  <li *ngFor="let movie of (movies | async).results">
+    <a routerLink="/title/{{ movie.id }}">
+      <img src="https://image.tmdb.org/t/p/w200/{{ movie.poster_path }}" />
+    </a>
     <div>
       <a routerLink="/title/{{ movie.id }}">
         {{ movie.title }}

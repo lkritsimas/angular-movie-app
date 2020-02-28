@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Location } from "@angular/common";
 
 import { MovieService } from '../movie.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-movies',
@@ -9,31 +10,39 @@ import { MovieService } from '../movie.service';
   styleUrls: ['./movies.component.scss']
 })
 export class MoviesComponent implements OnInit {
-  movies: any;
+  movies: Observable<any>;
   path: string;
+  title: string = '';
 
   constructor(location: Location, private movieService: MovieService) {
+    this.movies = this.movieService.result;
     this.path = location.path()
   }
   ngOnInit(): void {
     const pathParts = this.path.split("/");
     const currPath = pathParts[pathParts.length - 1];
 
-    if (currPath === 'popular')
+    if (currPath === 'popular') {
       this.getPopularMovies();
-    else if (currPath === 'upcoming' || currPath === '')
+    } else if (currPath === 'upcoming' || currPath === '') {
       this.getUpcomingMovies();
+    }
   }
 
   getUpcomingMovies(): void {
-    this.movieService.getUpcomingMovies().subscribe(movies => {
-      this.movies = movies
-    });
+    this.title = 'Upcoming movies';
+    this.movieService.getUpcomingMovies();
+    // this.movieService.getUpcomingMovies().subscribe(movies => {
+    //   this.title = 'Upcoming movies';
+    //   this.movies = movies;
+    // });
   }
 
   getPopularMovies(): void {
-    this.movieService.getPopularMovies().subscribe(movies => {
-      this.movies = movies
-    });
+    this.title = 'Popular movies';
+    this.movieService.getPopularMovies();
+    // this.movieService.getPopularMovies().subscribe(movies => {
+    //   this.movies = movies;
+    // });
   }
 }
