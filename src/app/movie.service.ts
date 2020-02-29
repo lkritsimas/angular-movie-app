@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, BehaviorSubject, Subject } from 'rxjs';
-import { catchError, map, tap, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-import { API_KEY } from './api';
 import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+import { API_KEY, API_URL } from './api';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovieService {
-  private API_URL: string = 'https://api.themoviedb.org/3';
   private movieDetailsEndpoint: string = '/movie';
   private discoverMoviesEndpoint: string = '/discover/movie';
   private upcomingMoviesEndpoint: string = '/movie/upcoming';
@@ -31,12 +30,12 @@ export class MovieService {
         .join('&');
     }
 
-    return `${this.API_URL}${path}?${queryParamsString ? queryParamsString + '&' : ''}api_key=${API_KEY}`;
+    return `${API_URL}${path}?${queryParamsString ? queryParamsString + '&' : ''}api_key=${API_KEY}`;
   }
 
   getMovieDetails(id: string): Observable<any> {
     const queryString = this.createQueryString(`${this.movieDetailsEndpoint}/${id}`, {
-      'append_to_response': 'release_dates,images,similar'
+      'append_to_response': 'release_dates,images,similar,credits'
     });
     return this.httpClient.get(queryString).pipe(
       tap(_ => console.log(`fetched movie ${id}`))

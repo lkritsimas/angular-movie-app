@@ -3,15 +3,30 @@
 $movie-thumb-width: 205px;
 $movie-small-thumb-width: 162px;
 
+$yellow: hsl(48, 100%, 67%);
+
 // Bulma overrides
 $text: #fff;
 $title-color: $text;
 $subtitle-color: hsl(0, 0%, 71%);
+
+$input-color: hsl(0, 0%, 71%);
+$input-background-color: hsl(0, 0%, 14%);
+$input-border-color: hsl(0, 0%, 29%);
+$input-hover-border-color: hsl(0, 0%, 21%);
 
 $navbar-background-color: hsl(0, 0%, 7%);
 $navbar-item-color: hsl(0, 0%, 93%);
 $navbar-item-hover-background-color: transparent;
 $navbar-item-hover-color: hsl(0, 0%, 71%);
 $navbar-item-active-color: hsl(0, 0%, 100%);
+$navbar-dropdown-border-top: 2px solid hsl(0, 0, 14%);
+$navbar-dropdown-background-color: hsl(0, 0%, 7%);
+$navbar-dropdown-arrow: $yellow;
+$navbar-dropdown-item-hover-color: hsl(0, 0%, 71%);
+$navbar-dropdown-item-hover-background-color: hsl(0, 0%, 7%);
+
+$card-color: hsl(0, 0%, 93%);
+$card-background-color: hsl(0, 0%, 21%);
 
 @import "~node_modules/bulma/bulma.sass";

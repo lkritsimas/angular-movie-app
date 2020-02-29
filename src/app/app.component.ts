@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { TitleService } from './title.service';
@@ -30,7 +29,6 @@ export class AppComponent implements OnInit {
             route = route.firstChild;
           }
 
-          console.log(route.snapshot)
           if (route.snapshot.data['title'])
             return route.snapshot.data['title'];
 

@@ -1,6 +1,6 @@
-<nav class="navbar is-spaced" role="navigation" aria-label="main navigation">
+<nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item" routerLink="/">{{ title }}</a>
+    <a class="navbar-item has-text-warning" routerLink="/">{{ title }}</a>
 
     <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
       data-target="navbarBasicExample">
@@ -12,19 +12,32 @@
 
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item" routerLink="/movies">
-        Movies
-      </a>
+      <a class="navbar-item" routerLink="/">Home</a>
 
-      <a class="navbar-item" routerLink="/actors">
-        Actors
-      </a>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" routerLink="/movies">
+          Movies
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" routerLink="/movies/popular">
+            Popular
+          </a>
+          <a class="navbar-item" routerLink="/movies/top">
+            Top Rated
+          </a>
+          <a class="navbar-item" routerLink="/movies/upcoming">
+            Upcoming
+          </a>
+        </div>
+      </div>
+
+      <a class="navbar-item" routerLink="/actors">Actors</a>
+
+      <app-search class="navbar-item is-expanded"></app-search>
     </div>
 
     <div class="navbar-end">
-      <div class="navbar-item">
-        <app-search></app-search>
-      </div>
+      <a class="navbar-item" routerLink="/mylist">My Lists</a>
     </div>
   </div>
 </nav>

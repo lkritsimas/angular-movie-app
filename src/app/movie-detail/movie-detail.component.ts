@@ -12,6 +12,7 @@ import { TitleService } from '../title.service';
 export class MovieDetailComponent implements OnInit {
   movie: any;
   similarMovies: any;
+  movieCredits: any;
   movieBackdrops: any;
   movieGenres: string[];
   movieRating: string;
@@ -32,8 +33,11 @@ export class MovieDetailComponent implements OnInit {
     this.movieService.getMovieDetails(id).subscribe(movie => {
       if (!movie) return;
 
+      // Set document title
       const releaseDate = new Date(movie.release_date).getFullYear();
       this.titleService.setTitle(`${movie.title} (${releaseDate})`);
+
+      this.movieCredits = movie.credits;
       this.movieGenres = movie.genres.map(genre => genre.name);
       this.similarMovies = movie.similar && movie.similar.results ? movie.similar.results : null;
       this.movieBackdrops = movie.images && movie.images.backdrops ? movie.images.backdrops : null;

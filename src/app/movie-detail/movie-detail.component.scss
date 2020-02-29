@@ -1,5 +1,16 @@
 @import "../../variables";
 
+
+.card {
+   display: flex;
+   flex-direction: column;
+   height: 100%;
+
+   &-content {
+       padding: 0.75rem;
+   }
+}
+
 .backdrop {
     content: '';
     display: block;
@@ -52,10 +63,20 @@
     }
 }
 
+.credits {
+    .cast .card {
+        width: $movie-small-thumb-width;
+    }
+}
+
 .similar {
     margin-left: auto;
 
     img {
         width: $movie-small-thumb-width;
     }
+}
+
+.nopicture img {
+    height: 243px;
 }
