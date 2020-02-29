@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 
 import { MovieService } from '../movie.service';
 import { ActivatedRoute } from '@angular/router';
+import { TitleService } from '../title.service';
 
 @Component({
   selector: 'app-movie-detail',
@@ -16,7 +16,11 @@ export class MovieDetailComponent implements OnInit {
   movieGenres: string[];
   movieRating: string;
 
-  constructor(private route: ActivatedRoute, private movieService: MovieService) {
+  constructor(
+    private route: ActivatedRoute,
+    private movieService: MovieService,
+    private titleService: TitleService
+  ) {
     const id = this.route.snapshot.paramMap.get("id");
 
     this.getMovieDetails(id);
@@ -26,6 +30,10 @@ export class MovieDetailComponent implements OnInit {
 
   getMovieDetails(id: string): void {
     this.movieService.getMovieDetails(id).subscribe(movie => {
+      if (!movie) return;
+
+      const releaseDate = new Date(movie.release_date).getFullYear();
+      this.titleService.setTitle(`${movie.title} (${releaseDate})`);
       this.movieGenres = movie.genres.map(genre => genre.name);
       this.similarMovies = movie.similar && movie.similar.results ? movie.similar.results : null;
       this.movieBackdrops = movie.images && movie.images.backdrops ? movie.images.backdrops : null;

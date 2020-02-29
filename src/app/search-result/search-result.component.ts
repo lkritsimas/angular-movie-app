@@ -12,21 +12,26 @@ import { MovieService } from '../movie.service';
 export class SearchResultComponent implements OnInit {
   movies: Observable<any>;
   searchTerm: string = '';
+  routeTerm: string;
 
-  constructor(private route: ActivatedRoute, private movieService: MovieService) {
-    const term = this.route.snapshot.paramMap.get('term');
-
-    if (term) {
-      this.movieService.search(term);
-      this.searchTerm = term;
-    }
-
-    this.movies = this.movieService.result;
-  }
+  constructor(
+    private route: ActivatedRoute,
+    private movieService: MovieService
+  ) { }
 
   ngOnInit(): void {
+    this.routeTerm = this.route.snapshot.paramMap.get('term');
+
     this.movieService.searchTerm.subscribe({
       next: (term) => this.searchTerm = term
     });
+
+    // Search by route
+    if (this.routeTerm && this.routeTerm !== this.searchTerm) {
+      this.movieService.search(this.routeTerm);
+      this.searchTerm = this.routeTerm;
+    }
+
+    this.movies = this.movieService.result;
   }
 }
