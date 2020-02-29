@@ -1,16 +1,24 @@
 <div *ngIf="movie" class="details">
-    <img src="https://image.tmdb.org/t/p/w342/{{ movie.poster_path }}" />
-    <div class="summary">
-        <h2>{{ movie.title }} <small class="year">({{ movie.release_date | date: 'yyyy' }})</small></h2>
-        <p>{{ movie.runtime }} min </p>
-        {{ movie.overview }}
+    <div class="columns is-narrow">
+        <figure class="column is-narrow">
+            <img src="https://image.tmdb.org/t/p/w342/{{ movie.poster_path }}" class="image container" />
+        </figure>
+        <div class="summary column is-5">
+            <h2 class="title has-text-white">{{ movie.title }} <small
+                    class="subtitle has-text-grey-light">({{ movie.release_date | date: 'yyyy' }})</small>
+            </h2>
+            <p class="has-text-grey-light">{{ movie.runtime }} min </p>
+            <p class="has-text-grey">{{ movie.overview }}</p>
+        </div>
     </div>
 
-    <div *ngIf="similarMovies && similarMovies.results.length" class="similar">
-        <h3>Similar movies</h3>
-        <a *ngFor="let similarMovie of similarMovies.results | slice:0:10" class="movie"
-            routerLink="/title/{{ similarMovie.id }}">
-            <img src="https://image.tmdb.org/t/p/w154/{{ similarMovie.poster_path }}" />
-        </a>
+    <div *ngIf="similarMovies && similarMovies.results.length" class="similar container">
+        <h3 class="title is-4 has-text-grey-lighter">Similar movies</h3>
+        <div class="columns is-multiline is-mobile">
+            <a *ngFor="let similarMovie of similarMovies.results | slice:0:12" class="movie column is-narrow"
+                routerLink="/title/{{ similarMovie.id }}">
+                <img src="https://image.tmdb.org/t/p/w154/{{ similarMovie.poster_path }}" />
+            </a>
+        </div>
     </div>
 </div>
