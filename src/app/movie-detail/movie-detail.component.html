@@ -1,6 +1,8 @@
-<div class="details">
-    <img src="https://image.tmdb.org/t/p/original/{{ movie.backdrop_path }}" />
-    <h2>{{ movie.title }} <small class="year">({{ movie.release_date }})</small></h2>
-    <p>{{ movie.runtime }} min </p>
-    {{ movie.overview }}
+<div *ngIf="movie" class="details">
+    <img src="https://image.tmdb.org/t/p/w200/{{ movie.poster_path }}" />
+    <div class="summary">
+        <h2>{{ movie.title }} <small class="year">({{ movie.release_date }})</small></h2>
+        <p>{{ movie.runtime }} min </p>
+        {{ movie.overview }}
+    </div>
 </div>

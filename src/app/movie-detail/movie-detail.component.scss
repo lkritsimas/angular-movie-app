@@ -1,14 +1,17 @@
 $width: 1160px;
 
-img {
-    display: block;
-    width: $width;
-    margin-bottom: 16px;
-}
-
 .details {
     width: $width;
     margin: 0 auto;
+
+    img {
+        float: left;
+        margin-right: 16px;
+    }
+
+    .summary {
+        display: inline;
+    }
 
     .year {
         color: #999;

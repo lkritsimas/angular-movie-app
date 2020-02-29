@@ -18,6 +18,7 @@ export class MoviesComponent implements OnInit {
     this.movies = this.movieService.result;
     this.path = location.path()
   }
+
   ngOnInit(): void {
     const pathParts = this.path.split("/");
     const currPath = pathParts[pathParts.length - 1];

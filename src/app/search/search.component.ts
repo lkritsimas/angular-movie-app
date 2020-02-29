@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { MovieService } from '../movie.service';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-search',
@@ -8,19 +10,17 @@ import { MovieService } from '../movie.service';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
-  searchTerm: string;
+  searchTerm: string = '';
 
-  constructor(private movieService: MovieService) { }
+  constructor(private movieService: MovieService) {
+    movieService.searchTerm.subscribe({
+      next: (term) => this.searchTerm = term
+    });
+  }
 
   ngOnInit(): void { }
 
   search(): void {
-    // this.movieService.search(this.searchTerm).subscribe(movies => {
-    //   this.movies = movies
-    // });
-    if (this.searchTerm.trim() !== '')
-      this.movieService.search(this.searchTerm);
-    else
-      this.movieService.getUpcomingMovies();
+    this.movieService.search(this.searchTerm);
   }
 }

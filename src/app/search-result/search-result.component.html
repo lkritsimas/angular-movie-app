@@ -1,0 +1,7 @@
+<div *ngIf="searchTerm !== ''; else elseBlock">
+    <h3>Results for: {{ searchTerm }}</h3>
+    <app-movies></app-movies>
+</div>
+<ng-template #elseBlock>
+    Enter a word or phrase to search on in the form at the top of the page.
+</ng-template>

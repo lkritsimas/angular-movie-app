@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, BehaviorSubject } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable, of, BehaviorSubject, Subject } from 'rxjs';
+import { catchError, map, tap, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { API_KEY } from './api';
+import { Movie } from './movie';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +19,9 @@ export class MovieService {
 
   private resultSource = new BehaviorSubject<object>({});
   public result = this.resultSource.asObservable();
+  public searchTerm = new BehaviorSubject<string>('');
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private router: Router, private httpClient: HttpClient) { }
 
   createUrlString(path: string, params?: string): string {
     return `${this.API_URL}${path}?${params ? params + '&' : ''}api_key=${API_KEY}`;
@@ -53,11 +56,16 @@ export class MovieService {
   }
 
   search(term: string = '') {
-    if (!term.trim()) return of({});
+    // Update search term
+    this.searchTerm.next(term)
+
+    if (!term) return this.router.navigate(['search']);
 
     const searchString = this.createUrlString(this.searchEndpoint, `query=${term}`);
-    this.httpClient.get(searchString).subscribe(response =>
-      this.resultSource.next(response)
-    );
+    this.httpClient.get(searchString).subscribe({
+      next: (response) => this.resultSource.next(response)
+    });
+
+    this.router.navigate(['search', term]);
   }
 }
