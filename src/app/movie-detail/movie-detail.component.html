@@ -1,8 +1,16 @@
 <div *ngIf="movie" class="details">
-    <img src="https://image.tmdb.org/t/p/w200/{{ movie.poster_path }}" />
+    <img src="https://image.tmdb.org/t/p/w342/{{ movie.poster_path }}" />
     <div class="summary">
-        <h2>{{ movie.title }} <small class="year">({{ movie.release_date }})</small></h2>
+        <h2>{{ movie.title }} <small class="year">({{ movie.release_date | date: 'yyyy' }})</small></h2>
         <p>{{ movie.runtime }} min </p>
         {{ movie.overview }}
+    </div>
+
+    <div *ngIf="similarMovies && similarMovies.results.length" class="similar">
+        <h3>Similar movies</h3>
+        <a *ngFor="let similarMovie of similarMovies.results | slice:0:10" class="movie"
+            routerLink="/title/{{ similarMovie.id }}">
+            <img src="https://image.tmdb.org/t/p/w154/{{ similarMovie.poster_path }}" />
+        </a>
     </div>
 </div>

@@ -4,7 +4,6 @@ import { catchError, map, tap, debounceTime, distinctUntilChanged, switchMap } f
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { API_KEY } from './api';
-import { Movie } from './movie';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -31,6 +30,14 @@ export class MovieService {
     const searchString = this.createUrlString(`${this.movieDetailsEndpoint}/${id}`);
     return this.httpClient.get(searchString).pipe(
       tap(_ => console.log(`fetched movie ${id}`))
+    );
+  }
+
+
+  getSimilarMovies(id: string): Observable<any> {
+    const searchString = this.createUrlString(`/movie/${id}/similar`);
+    return this.httpClient.get(searchString).pipe(
+      tap(_ => console.log(`fetched movies ${id}`))
     );
   }
 

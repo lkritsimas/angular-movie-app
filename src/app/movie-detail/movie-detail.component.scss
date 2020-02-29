@@ -1,8 +1,9 @@
-$width: 1160px;
+$width: 100%;
 
 .details {
     width: $width;
     margin: 0 auto;
+    padding: 0 60px;
 
     img {
         float: left;
@@ -10,7 +11,15 @@ $width: 1160px;
     }
 
     .summary {
-        display: inline;
+        display: block;
+    }
+
+    .similar {
+        clear: both;
+
+        .movie img {
+            margin: 8px;
+        }
     }
 
     .year {
