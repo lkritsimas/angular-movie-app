@@ -1,9 +1,13 @@
-<div *ngIf="searchTerm !== ''; else elseBlock">
-    <h3>Results for: {{ searchTerm }}</h3>
+<div *ngIf="searchTerm !== ''; else elseBlock" class="search">
+    <div class="container is-fluid">
+        <h3 class="search-header column subtitle is-6">Results for: <b>{{ searchTerm }}</b></h3>
+    </div>
     <app-movies></app-movies>
 </div>
 <ng-template #elseBlock>
-    <div class="column">
-        Enter a word or phrase to search on in the form at the top of the page.
+    <div class="container is-fluid">
+        <div class="search-header column subtitle is-6">
+            Enter a word or phrase to search on in the form at the top of the page.
+        </div>
     </div>
 </ng-template>
