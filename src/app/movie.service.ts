@@ -13,6 +13,7 @@ export class MovieService {
   private movieDetailsEndpoint: string = '/movie';
   private discoverMoviesEndpoint: string = '/discover/movie';
   private upcomingMoviesEndpoint: string = '/movie/upcoming';
+  private topRatedMoviesEndpoint: string = '/movie/top_rated';
   private searchEndpoint: string = '/search/movie';
 
   private resultSource = new BehaviorSubject<object>({});
@@ -47,6 +48,13 @@ export class MovieService {
     return this.httpClient.get(queryString).subscribe(response => {
       return this.resultSource.next(response)
     });
+  }
+
+  getTopRatedMovies() {
+    const queryString = this.createQueryString(this.topRatedMoviesEndpoint);
+    return this.httpClient.get(queryString).subscribe(response =>
+      this.resultSource.next(response)
+    );
   }
 
   getUpcomingMovies() {

@@ -23,10 +23,15 @@ export class MoviesComponent implements OnInit {
     const pathParts = this.path.split("/");
     const currPath = pathParts[pathParts.length - 1];
 
-    if (currPath === 'popular') {
-      this.getPopularMovies();
-    } else if (currPath === 'upcoming' || currPath === '') {
-      this.getUpcomingMovies();
+    switch (currPath) {
+      case 'popular':
+        return this.getPopularMovies();
+      case 'top':
+        return this.getTopRatedMovies();
+      case 'upcoming':
+        return this.getUpcomingMovies();
+      default:
+        break;
     }
   }
 
@@ -40,5 +45,10 @@ export class MoviesComponent implements OnInit {
     this.movieService.discoverMovies({
       'sort_by': 'popularity.desc'
     });
+  }
+
+  getTopRatedMovies(): void {
+    this.title = 'Top rated movies';
+    this.movieService.getTopRatedMovies();
   }
 }
