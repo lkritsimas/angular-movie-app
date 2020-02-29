@@ -12,12 +12,14 @@ import { ActivatedRoute } from '@angular/router';
 export class MovieDetailComponent implements OnInit {
   movie: any;
   similarMovies: any;
+  movieBackdrops: any;
 
   constructor(private route: ActivatedRoute, private movieService: MovieService) {
     const id = this.route.snapshot.paramMap.get("id");
 
     this.getMovieDetails(id);
     this.getSimilarMovies(id);
+    this.getMovieImages(id);
   }
 
   ngOnInit(): void { }
@@ -35,4 +37,10 @@ export class MovieDetailComponent implements OnInit {
     });
   }
 
+  getMovieImages(id: string): void {
+    this.movieService.getMovieImages(id).subscribe(movieImages => {
+      console.log(movieImages)
+      this.movieBackdrops = movieImages.backdrops;
+    });
+  }
 }

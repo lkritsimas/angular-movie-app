@@ -1,60 +1,78 @@
-.vignette {
-    background: #111;
-    z-index: 2;
-    width: 10%;
-    position: absolute;
-    top: 0;
-    bottom: 0;
+@import "../../variables";
 
-    &::before {
+.backdrop {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    opacity: 0.15;
+
+    &::after {
         content: '';
         position: absolute;
         z-index: 10;
-        background-image: linear-gradient(to right, #111, transparent);
-        top: 0;
+        background-image: linear-gradient(to top, $black-bis, transparent);
         bottom: 0;
-        left: 100%;
-        width: 275px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 114px
+    }    
+}
+
+.details {
+    .summary {
+        z-index: 1;
+    }
+
+    .subtext {
+        margin-bottom: 0.25em;
+        
+        .separator {
+            color: $grey-dark;
+            margin-left: 0.25em;
+            margin-right: 0.5em;
+        }
+    }
+
+    .image {
+        box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.5), 
+                    0 0px 0 1px rgba(10, 10, 10, 0.75);        
     }
 }
 
-.backdrop {
-    height: 509px;
-    // max-width: none;
-    width: 100%;
+// .vignette {
+//     background: #111;
+//     z-index: 2;
+//     width: 10%;
+//     position: absolute;
+//     top: 0;
+//     bottom: 0;
+
+//     &::before {
+//         content: '';
+//         position: absolute;
+//         z-index: 10;
+//         background-image: linear-gradient(to right, #111, transparent);
+//         top: 0;
+//         bottom: 0;
+//         left: 100%;
+//         width: 275px;
+//     }
+// }
+
+// .backdrop {
+//     height: 100%;
+//     width: 100%;
     
-    right: 0;
-    top: 0;
-    bottom: 0;
-    position: absolute;
-}
-
-// $width: 100%;
-
-// .details {
-//     width: $width;
-//     margin: 0 auto;
-//     padding: 0 60px;
-
-//     img {
-//         float: left;
-//         margin-right: 16px;
-//     }
-
-//     .summary {
-//         display: block;
-//     }
-
-//     .similar {
-//         clear: both;
-
-//         .movie img {
-//             margin: 8px;
-//         }
-//     }
-
-//     .year {
-//         color: #999;
-//         font-size: 65%;
-//     }
+//     right: 0;
+//     top: 0;
+//     bottom: 0;
+//     position: absolute;
 // }

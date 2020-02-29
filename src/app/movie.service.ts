@@ -33,6 +33,12 @@ export class MovieService {
     );
   }
 
+  getMovieImages(id: string): Observable<any> {
+    const searchString = this.createUrlString(`/movie/${id}/images`, 'include_image_language=null');
+    return this.httpClient.get(searchString).pipe(
+      tap(_ => console.log(`fetched images for movie ${id}`))
+    );
+  }
 
   getSimilarMovies(id: string): Observable<any> {
     const searchString = this.createUrlString(`/movie/${id}/similar`);

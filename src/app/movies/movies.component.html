@@ -1,4 +1,4 @@
-<ul class="movies columns is-multiline" *ngIf="(movies | async)">
+<ul class="section container is-fluid movies columns is-multiline" *ngIf="(movies | async)">
   <ng-container *ngFor="let movie of (movies | async).results">
     <li *ngIf="movie.poster_path" class="movie column is-full-mobile is-narrow-desktop">
       <a routerLink="/title/{{ movie.id }}">
