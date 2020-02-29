@@ -1,20 +1,5 @@
-$width: 100%;
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    color: white;
-}
-
-html, 
+html,
 body {
-    font-family: Arial;
-    width: $width;
-    margin: 0 auto;
     background-color: #111;
-}
-
-h1, h2, h3, h4, h5, h6, p {
-    margin-bottom: 16px;
+    height: 100%
 }

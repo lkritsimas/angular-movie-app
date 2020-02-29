@@ -10,6 +10,10 @@
             <p class="has-text-grey-light">{{ movie.runtime }} min </p>
             <p class="has-text-grey">{{ movie.overview }}</p>
         </div>
+        <div class="column is-relative is-paddingless is-hidden-touch" *ngIf="movie.backdrop_path">
+            <div class="vignette"></div>
+            <img src="https://image.tmdb.org/t/p/w1280/{{ movie.backdrop_path }}" class="image backdrop" />
+        </div>
     </div>
 
     <div *ngIf="similarMovies && similarMovies.results.length" class="similar container">
