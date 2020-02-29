@@ -1,10 +1,13 @@
-<nav>
-  <h1><a routerLink="/">{{ title }}</a></h1>
-  <ul>
-    <li><a routerLink="/movies">Movies</a></li>
-    <li><a routerLink="/actors">Actors</a></li>
-  </ul>
-  <app-search></app-search>
-</nav>
+<div class="container is-fluid">
+  <nav>
+    <h1><a routerLink="/">{{ title }}</a></h1>
+    <ul>
+      <li><a routerLink="/movies">Movies</a></li>
+      <li><a routerLink="/actors">Actors</a></li>
+    </ul>
+    <app-search></app-search>
+  </nav>
 
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
+
+</div>

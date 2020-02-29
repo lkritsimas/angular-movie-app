@@ -1,12 +1,12 @@
-<ul class="movies" *ngIf="(movies | async)">
-  <li *ngFor="let movie of (movies | async).results">
+<ul class="movies columns is-multiline" *ngIf="(movies | async)">
+  <li *ngFor="let movie of (movies | async).results" class="movie column is-full-mobile is-narrow-desktop">
     <a routerLink="/title/{{ movie.id }}">
-      <img src="https://image.tmdb.org/t/p/w200/{{ movie.poster_path }}" />
+      <img src="https://image.tmdb.org/t/p/w200/{{ movie.poster_path }}" class="image" />
     </a>
-    <div>
+    <!-- <div>
       <a routerLink="/title/{{ movie.id }}">
         {{ movie.title }}
       </a>
-    </div>
+    </div> -->
   </li>
 </ul>
