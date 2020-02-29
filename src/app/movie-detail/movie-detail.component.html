@@ -16,12 +16,18 @@
                 {{ movie.original_title }} <span class="is-italic">(original title)</span>
             </div>
             <div class="subtext is-size-7-mobile has-text-grey-light">
+                <ng-container *ngIf="movieRating">
+                    <span class="rating">{{ movieRating }}</span>
+                    <span class="separator">|</span>
+                </ng-container>
                 <span class="runtime">{{ movie.runtime }} min</span>
                 <span class="separator">|</span>
-                <span class="release-date">{{ movie.release_date | date: 'dd MMMM yyyy' }}</span>
-                <span class="separator">|</span>
-                <ng-container *ngFor="let genre of genres; let isLast=last">
-                    <span>{{ genre }}</span>{{ isLast ? '' : ', ' }}
+                <span class="release-date">{{ movie.release_date | date: 'd MMMM yyyy' }}</span>
+                <ng-container *ngIf="movieGenres">
+                    <span class="separator">|</span>
+                    <ng-container *ngFor="let genre of movieGenres; let isLast=last">
+                        <span>{{ genre }}</span>{{ isLast ? '' : ', ' }}
+                    </ng-container>
                 </ng-container>
             </div>
             <p class="overview is-size-6 has-text-grey">{{ movie.overview }}</p>

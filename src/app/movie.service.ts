@@ -36,7 +36,7 @@ export class MovieService {
 
   getMovieDetails(id: string): Observable<any> {
     const queryString = this.createQueryString(`${this.movieDetailsEndpoint}/${id}`, {
-      'append_to_response': 'releases,images,similar'
+      'append_to_response': 'release_dates,images,similar'
     });
     return this.httpClient.get(queryString).pipe(
       tap(_ => console.log(`fetched movie ${id}`))
