@@ -29,10 +29,10 @@
     </div>
 </div>
 
-<div *ngIf="similarMovies && similarMovies.results.length" class="similar container is-fluid section">
+<div *ngIf="similarMovies && similarMovies.length" class="similar container is-fluid section">
     <h3 class="title is-4 has-text-grey-lighter">Similar movies</h3>
     <div class="columns is-multiline is-mobile">
-        <ng-container *ngFor="let similarMovie of similarMovies.results">
+        <ng-container *ngFor="let similarMovie of similarMovies">
             <a *ngIf="similarMovie.poster_path" class="movie column is-narrow"
                 routerLink="/title/{{ similarMovie.id }}">
                 <img src="https://image.tmdb.org/t/p/w154/{{ similarMovie.poster_path }}" />

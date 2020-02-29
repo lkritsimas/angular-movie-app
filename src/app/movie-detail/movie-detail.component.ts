@@ -19,8 +19,6 @@ export class MovieDetailComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get("id");
 
     this.getMovieDetails(id);
-    this.getSimilarMovies(id);
-    this.getMovieImages(id);
   }
 
   ngOnInit(): void { }
@@ -28,20 +26,9 @@ export class MovieDetailComponent implements OnInit {
   getMovieDetails(id: string): void {
     this.movieService.getMovieDetails(id).subscribe(movie => {
       this.genres = movie.genres.map(genre => genre.name);
+      this.similarMovies = movie.similar && movie.similar.results ? movie.similar.results : null;
+      this.movieBackdrops = movie.images && movie.images.backdrops ? movie.images.backdrops : null;
       this.movie = movie;
-    });
-  }
-
-  getSimilarMovies(id: string): void {
-    this.movieService.getSimilarMovies(id).subscribe(similarMovies => {
-      this.similarMovies = similarMovies;
-    });
-  }
-
-  getMovieImages(id: string): void {
-    this.movieService.getMovieImages(id).subscribe(movieImages => {
-      console.log(movieImages)
-      this.movieBackdrops = movieImages.backdrops;
     });
   }
 }

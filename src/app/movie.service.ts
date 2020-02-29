@@ -12,9 +12,9 @@ import { Router } from '@angular/router';
 export class MovieService {
   private API_URL: string = 'https://api.themoviedb.org/3';
   private movieDetailsEndpoint: string = '/movie';
-  private popularMoviesEndpoint: string = '/movie/popular';
+  private discoverMoviesEndpoint: string = '/discover/movie';
   private upcomingMoviesEndpoint: string = '/movie/upcoming';
-  private searchEndpoint: string = '/search/multi';
+  private searchEndpoint: string = '/search/movie';
 
   private resultSource = new BehaviorSubject<object>({});
   public result = this.resultSource.asObservable();
@@ -22,50 +22,39 @@ export class MovieService {
 
   constructor(private router: Router, private httpClient: HttpClient) { }
 
-  createUrlString(path: string, params?: string): string {
-    return `${this.API_URL}${path}?${params ? params + '&' : ''}api_key=${API_KEY}`;
+  createQueryString(path: string, params?: any): string {
+    let queryParamsString: string;
+    if (params) {
+      // Build query string
+      queryParamsString = Object.keys(params)
+        .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+        .join('&');
+    }
+
+    return `${this.API_URL}${path}?${queryParamsString ? queryParamsString + '&' : ''}api_key=${API_KEY}`;
   }
 
   getMovieDetails(id: string): Observable<any> {
-    const searchString = this.createUrlString(`${this.movieDetailsEndpoint}/${id}`);
-    return this.httpClient.get(searchString).pipe(
+    const queryString = this.createQueryString(`${this.movieDetailsEndpoint}/${id}`, {
+      'append_to_response': 'releases,images,similar'
+    });
+    return this.httpClient.get(queryString).pipe(
       tap(_ => console.log(`fetched movie ${id}`))
     );
   }
 
-  getMovieImages(id: string): Observable<any> {
-    const searchString = this.createUrlString(`/movie/${id}/images`, 'include_image_language=null');
-    return this.httpClient.get(searchString).pipe(
-      tap(_ => console.log(`fetched images for movie ${id}`))
-    );
+  discoverMovies(params?: any) {
+    const queryString = this.createQueryString(this.discoverMoviesEndpoint, params);
+    return this.httpClient.get(queryString).subscribe(response => {
+      return this.resultSource.next(response)
+    });
   }
 
-  getSimilarMovies(id: string): Observable<any> {
-    const searchString = this.createUrlString(`/movie/${id}/similar`);
-    return this.httpClient.get(searchString).pipe(
-      tap(_ => console.log(`fetched movies ${id}`))
-    );
-  }
-
-  getPopularMovies() {
-    const searchString = this.createUrlString(this.popularMoviesEndpoint);
-    return this.httpClient.get(searchString).subscribe(response =>
-      this.resultSource.next(response)
-    );
-    // return this.httpClient.get(this.createUrlString(this.popularMoviesEndpoint)).pipe(
-    //   tap(_ => console.log('fetched movies'))
-    // );
-  }
-
-  // getUpcomingMovies(): Observable<any> {
   getUpcomingMovies() {
-    const searchString = this.createUrlString(this.upcomingMoviesEndpoint);
-    return this.httpClient.get(searchString).subscribe(response =>
+    const queryString = this.createQueryString(this.upcomingMoviesEndpoint);
+    return this.httpClient.get(queryString).subscribe(response =>
       this.resultSource.next(response)
     );
-    // return this.httpClient.get(this.createUrlString(this.upcomingMoviesEndpoint)).pipe(
-    //   tap(_ => console.log('fetched movies'))
-    // );
   }
 
   search(term: string = '') {
@@ -74,8 +63,10 @@ export class MovieService {
 
     if (!term) return this.router.navigate(['search']);
 
-    const searchString = this.createUrlString(this.searchEndpoint, `query=${term}`);
-    this.httpClient.get(searchString).subscribe({
+    const queryString = this.createQueryString(this.searchEndpoint, {
+      'query': term
+    });
+    this.httpClient.get(queryString).subscribe({
       next: (response) => this.resultSource.next(response)
     });
 

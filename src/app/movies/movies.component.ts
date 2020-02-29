@@ -33,17 +33,12 @@ export class MoviesComponent implements OnInit {
   getUpcomingMovies(): void {
     this.title = 'Upcoming movies';
     this.movieService.getUpcomingMovies();
-    // this.movieService.getUpcomingMovies().subscribe(movies => {
-    //   this.title = 'Upcoming movies';
-    //   this.movies = movies;
-    // });
   }
 
   getPopularMovies(): void {
     this.title = 'Popular movies';
-    this.movieService.getPopularMovies();
-    // this.movieService.getPopularMovies().subscribe(movies => {
-    //   this.movies = movies;
-    // });
+    this.movieService.discoverMovies({
+      'sort_by': 'popularity.desc'
+    });
   }
 }
