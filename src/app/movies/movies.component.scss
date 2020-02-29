@@ -1,0 +1,10 @@
+@import "../../variables";
+
+.movies {
+    margin-left: 0;
+    margin-right: 0;
+
+    img {
+        width: $movie-thumb-width;
+    }
+}

@@ -1,6 +1,6 @@
-<ul class="section container is-fluid movies columns is-multiline" *ngIf="(movies | async)">
+<ul class="movies section container is-fluid movies columns is-multiline is-mobile" *ngIf="(movies | async)">
   <ng-container *ngFor="let movie of (movies | async).results">
-    <li *ngIf="movie.poster_path" class="movie column is-full-mobile is-narrow-desktop">
+    <li *ngIf="movie.poster_path" class="movie column is-narrow">
       <a routerLink="/title/{{ movie.id }}">
         <img src="https://image.tmdb.org/t/p/w200/{{ movie.poster_path }}" class="image" />
       </a>
