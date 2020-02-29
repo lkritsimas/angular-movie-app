@@ -13,6 +13,7 @@ export class MovieDetailComponent implements OnInit {
   movie: any;
   similarMovies: any;
   movieBackdrops: any;
+  genres: string[];
 
   constructor(private route: ActivatedRoute, private movieService: MovieService) {
     const id = this.route.snapshot.paramMap.get("id");
@@ -26,7 +27,7 @@ export class MovieDetailComponent implements OnInit {
 
   getMovieDetails(id: string): void {
     this.movieService.getMovieDetails(id).subscribe(movie => {
-      console.log(movie)
+      this.genres = movie.genres.map(genre => genre.name);
       this.movie = movie;
     });
   }

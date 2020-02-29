@@ -12,6 +12,7 @@
     background-repeat: no-repeat;
     background-position: 50% 50%;
     opacity: 0.15;
+    filter: blur(2px);
 
     &::after {
         content: '';
@@ -27,17 +28,21 @@
 }
 
 .details {
+    .title {
+        margin-bottom: 0.25rem;
+    }
+
     .summary {
         z-index: 1;
     }
 
     .subtext {
-        margin-bottom: 0.25em;
+        margin-bottom: 1.5rem;
         
         .separator {
             color: $grey-dark;
-            margin-left: 0.25em;
-            margin-right: 0.5em;
+            margin-left: 0.6em;
+            margin-right: 0.6em;
         }
     }
 

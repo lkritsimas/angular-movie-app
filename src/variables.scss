@@ -3,6 +3,11 @@
 $movie-thumb-width: 205px;
 $movie-small-thumb-width: 162px;
 
+// Bulma overrides
+$text: #fff;
+$title-color: $text;
+$subtitle-color: hsl(0, 0%, 71%);
+
 $navbar-background-color: hsl(0, 0%, 7%);
 $navbar-item-color: hsl(0, 0%, 93%);
 $navbar-item-hover-background-color: transparent;

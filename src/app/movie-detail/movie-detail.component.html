@@ -8,16 +8,23 @@
             <img src="https://image.tmdb.org/t/p/w342/{{ movie.poster_path }}" class="image container" />
         </figure>
         <div class="summary section is-medium column is-5">
-            <h2 class="title is-2 has-text-white">
+            <h2 class="title is-2">
                 {{ movie.title }}
-                <small class="subtitle is-4 has-text-grey-light">({{ movie.release_date | date: 'yyyy' }})</small>
+                <small class="subtitle is-4">({{ movie.release_date | date: 'yyyy' }})</small>
             </h2>
-            <div class="subtext">
-                <span class="runtime has-text-grey-light">{{ movie.runtime }} min </span>
-                <span class="separator">|</span>
-                <span class="release-date has-text-grey-light">{{ movie.release_date | date: 'dd MMMM yyyy' }}</span>
+            <div *ngIf="movie.title !== movie.original_title">
+                {{ movie.original_title }} <span class="is-italic">(original title)</span>
             </div>
-            <p class="overview has-text-grey">{{ movie.overview }}</p>
+            <div class="subtext is-size-7-mobile has-text-grey-light">
+                <span class="runtime">{{ movie.runtime }} min</span>
+                <span class="separator">|</span>
+                <span class="release-date">{{ movie.release_date | date: 'dd MMMM yyyy' }}</span>
+                <span class="separator">|</span>
+                <ng-container *ngFor="let genre of genres; let isLast=last">
+                    <span>{{ genre }}</span>{{ isLast ? '' : ', ' }}
+                </ng-container>
+            </div>
+            <p class="overview is-size-6 has-text-grey">{{ movie.overview }}</p>
         </div>
     </div>
 </div>
