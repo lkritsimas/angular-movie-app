@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { MovieService } from '../movie.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { TitleService } from '../title.service';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-movie-detail',
@@ -18,16 +19,34 @@ export class MovieDetailComponent implements OnInit {
   movieRating: string;
 
   constructor(
-    private route: ActivatedRoute,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
     private movieService: MovieService,
     private titleService: TitleService
   ) {
-    const id = this.route.snapshot.paramMap.get("id");
+    this.router.events
+      .pipe(
+        filter(event => event instanceof NavigationEnd),
+        map(() => this.activatedRoute),
+        map((route) => {
+          while (route.firstChild) {
+            route = route.firstChild;
+          }
 
-    this.getMovieDetails(id);
+          return route.snapshot.paramMap.get('id');
+        })
+      )
+      .subscribe((id: string) => {
+        this.getMovieDetails(id);
+        window.scroll(0, 0);
+      });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+
+    // const id = this.activatedRoute.snapshot.paramMap.get('id');
+    // this.getMovieDetails(id);
+  }
 
   getMovieDetails(id: string): void {
     this.movieService.getMovieDetails(id).subscribe(movie => {
