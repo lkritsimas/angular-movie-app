@@ -2,42 +2,45 @@
   <div class="navbar-brand">
     <a class="navbar-item has-text-warning" routerLink="/">{{ title }}</a>
 
-    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
-      data-target="navbarBasicExample">
+    <a (click)="toggleNavbar()" #navBurger role="button" class="navbar-burger burger" aria-label="menu"
+      aria-expanded="false" data-target="navbar">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
     </a>
   </div>
 
-  <div id="navbarBasicExample" class="navbar-menu">
+  <div id="navbar" class="navbar-menu" #navMenu>
     <div class="navbar-start">
-      <a class="navbar-item" routerLink="/">Home</a>
+      <a class="navbar-item" routerLink="/" routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{exact: true}">Home</a>
 
       <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link" routerLink="/movies">
-          Movies
-        </a>
+        <div class="navbar-link">
+          <a class="navbar-item is-paddingless" routerLink="/movies" routerLinkActive="is-active">
+            Movies
+          </a>
+        </div>
         <div class="navbar-dropdown">
-          <a class="navbar-item" routerLink="/movies/popular">
+          <a class="navbar-item" routerLink="/movies/popular" routerLinkActive="is-active">
             Popular
           </a>
-          <a class="navbar-item" routerLink="/movies/top">
+          <a class="navbar-item" routerLink="/movies/top" routerLinkActive="is-active">
             Top Rated
           </a>
-          <a class="navbar-item" routerLink="/movies/upcoming">
+          <a class="navbar-item" routerLink="/movies/upcoming" routerLinkActive="is-active">
             Upcoming
           </a>
         </div>
       </div>
 
-      <a class="navbar-item" routerLink="/people">People</a>
+      <a class="navbar-item" routerLink="/people" routerLinkActive="is-active">People</a>
 
-      <app-search class="navbar-item is-expanded"></app-search>
+      <app-search class="navbar-item navbar-search is-expanded"></app-search>
     </div>
 
     <div class="navbar-end">
-      <a class="navbar-item" routerLink="/mylist">My Lists</a>
+      <a class="navbar-item" routerLink="/mylist" routerLinkActive="is-active">My Lists</a>
     </div>
   </div>
 </nav>

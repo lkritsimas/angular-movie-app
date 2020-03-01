@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { TitleService } from './title.service';
@@ -8,6 +8,8 @@ import { TitleService } from './title.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  @ViewChild('navBurger') navBurger: ElementRef;
+  @ViewChild('navMenu') navMenu: ElementRef;
   title: string = 'MyMovieList';
 
   public constructor(
@@ -37,5 +39,10 @@ export class AppComponent implements OnInit {
       ).subscribe((title: string) => {
         this.titleService.setTitle(title);
       });
+  }
+
+  public toggleNavbar() {
+    this.navBurger.nativeElement.classList.toggle('is-active');
+    this.navMenu.nativeElement.classList.toggle('is-active');
   }
 }

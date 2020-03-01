@@ -17,15 +17,16 @@ $input-border-color: hsl(0, 0%, 29%);
 $input-hover-border-color: hsl(0, 0%, 21%);
 
 $navbar-background-color: hsl(0, 0%, 7%);
-$navbar-item-color: hsl(0, 0%, 93%);
-$navbar-item-hover-background-color: transparent;
+$navbar-item-color: hsl(0, 0%, 90%);
 $navbar-item-hover-color: hsl(0, 0%, 71%);
+$navbar-item-hover-background-color: transparent;
 $navbar-item-active-color: hsl(0, 0%, 100%);
 $navbar-dropdown-border-top: 2px solid hsl(0, 0, 14%);
 $navbar-dropdown-background-color: hsl(0, 0%, 7%);
 $navbar-dropdown-arrow: $yellow;
-$navbar-dropdown-item-hover-color: hsl(0, 0%, 71%);
+$navbar-dropdown-item-hover-color: $navbar-item-hover-color;
 $navbar-dropdown-item-hover-background-color: hsl(0, 0%, 7%);
+$navbar-dropdown-item-active-background-color: transparent;
 
 $card-color: hsl(0, 0%, 93%);
 $card-background-color: hsl(0, 0%, 21%);

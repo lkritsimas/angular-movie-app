@@ -20,9 +20,12 @@
                     <span class="rating">{{ movieRating }}</span>
                     <span class="separator">|</span>
                 </ng-container>
-                <span class="runtime">{{ movie.runtime }} min</span>
-                <span class="separator">|</span>
-                <span class="release-date">{{ movie.release_date | date: 'd MMMM yyyy' }}</span>
+                <ng-container *ngIf="movie.runtime">
+                    <span class="runtime">{{ movie.runtime }} min</span>
+                    <span class="separator">|</span>
+                </ng-container>
+                <span *ngIf="movie.release_date"
+                    class="release-date">{{ movie.release_date | date: 'd MMMM yyyy' }}</span>
                 <ng-container *ngIf="movieGenres">
                     <span class="separator">|</span>
                     <ng-container *ngFor="let genre of movieGenres; let isLast=last">

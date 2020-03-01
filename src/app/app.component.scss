@@ -2,16 +2,66 @@
 @import "../variables";
 
 .navbar {
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 10%, rgba(0, 0, 0, 0));
-    padding-left: 2rem;
-    padding-right: 2rem;
-
     &-start {
         flex-grow: 1;
     }
 
     &-item {
-        font-weight: 500;
-        transition: color 400ms;
+        transition: color 300ms;
+        
+        .is-active {
+            font-weight: bold;
+            color: $white;
+        }
+
+        .navbar-dropdown .is-active {
+            color: $yellow;
+        }
+    }
+
+    &-dropdown {
+        min-width: 188px;
+    }
+
+    &-brand {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    &-burger {
+        // Left-aligned burger
+        order: -1;
+        margin-left: 0;
+        user-select: none;
+
+        &:hover {
+            color: inherit;
+            background-color: $grey-darker;
+        }
+
+        span {
+            height: 2px;
+        }
+    }
+
+    @include touch {
+        &-brand {
+            background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 10%, rgba(0, 0, 0, 0));
+        }
+
+        &-start {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &-search {
+            order: -1;
+        }
+    }
+
+    @include desktop {
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 10%, rgba(0, 0, 0, 0));
+        padding-left: 2rem;
+        padding-right: 2rem;
     }
 }

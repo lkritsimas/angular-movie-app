@@ -24,6 +24,7 @@ export class MovieDetailComponent implements OnInit {
     private movieService: MovieService,
     private titleService: TitleService
   ) {
+    // Listen for route changes
     this.router.events
       .pipe(
         filter(event => event instanceof NavigationEnd),
@@ -42,11 +43,7 @@ export class MovieDetailComponent implements OnInit {
       });
   }
 
-  ngOnInit(): void {
-
-    // const id = this.activatedRoute.snapshot.paramMap.get('id');
-    // this.getMovieDetails(id);
-  }
+  ngOnInit(): void { }
 
   getMovieDetails(id: string): void {
     this.movieService.getMovieDetails(id).subscribe(movie => {
