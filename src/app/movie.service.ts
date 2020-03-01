@@ -87,15 +87,16 @@ export class MovieService {
 
   search(term: string = '') {
     // Update search term
-    const parsed = this.parseSearchTerm(term);
     this.searchTerm.next(term);
 
     if (!term) return this.router.navigate(['search']);
 
-    let endPoint = this.searchMovieEndpoint;
-    if (parsed.type === 'person') endPoint = this.searchPersonEndpoint;
+    const parsed = this.parseSearchTerm(term);
+    let apiEndPoint = this.searchMovieEndpoint;
+    if (parsed.type === 'person')
+      apiEndPoint = this.searchPersonEndpoint;
 
-    const queryString = this.createQueryString(endPoint, {
+    const queryString = this.createQueryString(apiEndPoint, {
       'query': parsed.term
     });
 
