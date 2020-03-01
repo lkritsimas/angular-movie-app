@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { MovieService } from '../movie.service';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-search',
@@ -11,6 +10,7 @@ import { Subject } from 'rxjs';
 })
 export class SearchComponent implements OnInit {
   searchTerm: string = '';
+  rating: string = '';
 
   constructor(private movieService: MovieService) {
     movieService.searchTerm.subscribe({

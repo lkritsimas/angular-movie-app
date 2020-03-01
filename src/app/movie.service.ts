@@ -14,7 +14,8 @@ export class MovieService {
   private discoverMoviesEndpoint: string = '/discover/movie';
   private upcomingMoviesEndpoint: string = '/movie/upcoming';
   private topRatedMoviesEndpoint: string = '/movie/top_rated';
-  private searchEndpoint: string = '/search/movie';
+  private searchMovieEndpoint: string = '/search/movie';
+  private searchPersonEndpoint: string = '/search/person';
 
   public fetchType: string = '';
   public prevFetchType: string = '';
@@ -74,15 +75,30 @@ export class MovieService {
     );
   }
 
+  parseSearchTerm(term: string) {
+    term = term.trim();
+    const found = term.match(/^(?:(person|movie):)?\s*(.+?)$/);
+
+    return {
+      type: found[1] || null,
+      term: found[2] || null
+    };
+  }
+
   search(term: string = '') {
     // Update search term
-    this.searchTerm.next(term)
+    const parsed = this.parseSearchTerm(term);
+    this.searchTerm.next(term);
 
     if (!term) return this.router.navigate(['search']);
 
-    const queryString = this.createQueryString(this.searchEndpoint, {
-      'query': term
+    let endPoint = this.searchMovieEndpoint;
+    if (parsed.type === 'person') endPoint = this.searchPersonEndpoint;
+
+    const queryString = this.createQueryString(endPoint, {
+      'query': parsed.term
     });
+
     this.httpClient.get(queryString).subscribe({
       next: (response) => this.resultSource.next(response['results'])
     });

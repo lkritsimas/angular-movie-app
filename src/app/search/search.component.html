@@ -1,4 +1,6 @@
-<form (ngSubmit)="search()" #searchForm="ngForm">
-    <input type="text" [(ngModel)]="searchTerm" name="search" class="input is-rounded is-fullwidth"
-        placeholder="Search...">
+<form (ngSubmit)="search()" #searchForm="ngForm" class="field">
+    <div class="control is-expanded">
+        <input type="text" [(ngModel)]="searchTerm" name="search" class="input is-fullwidth"
+            placeholder='e.g. "Inglourious Basterds", "movie: Inglourious Basterds" or "person: Charlie Day"...'>
+    </div>
 </form>
