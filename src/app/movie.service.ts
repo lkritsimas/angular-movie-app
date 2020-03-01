@@ -16,18 +16,28 @@ export class MovieService {
   private topRatedMoviesEndpoint: string = '/movie/top_rated';
   private searchEndpoint: string = '/search/movie';
 
-  private resultSource = new BehaviorSubject<object>({});
+  public fetchType: string = '';
+  public prevFetchType: string = '';
+  private resultSource = new BehaviorSubject<any[]>([]);
   public result = this.resultSource.asObservable();
   public searchTerm = new BehaviorSubject<string>('');
 
+  private currentPage: number = 0;
+
   constructor(private router: Router, private httpClient: HttpClient) { }
 
-  createQueryString(path: string, params?: any): string {
+  createQueryString(path: string, params?: any, page?: number): string {
     let queryParamsString: string;
-    if (params) {
+
+    if (params || page) {
+      const mergedObj = {
+        ...{ 'page': page || 1 },
+        ...params
+      };
+
       // Build query string
-      queryParamsString = Object.keys(params)
-        .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+      queryParamsString = Object.keys(mergedObj)
+        .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(mergedObj[k]))
         .join('&');
     }
 
@@ -43,24 +53,24 @@ export class MovieService {
     );
   }
 
-  discoverMovies(params?: any) {
-    const queryString = this.createQueryString(this.discoverMoviesEndpoint, params);
+  discoverMovies(params?: any, page?: number) {
+    const queryString = this.createQueryString(this.discoverMoviesEndpoint, params, page);
     return this.httpClient.get(queryString).subscribe(response => {
-      return this.resultSource.next(response)
+      return this.resultSource.next([...this.resultSource.getValue(), ...response['results']])
     });
   }
 
-  getTopRatedMovies() {
-    const queryString = this.createQueryString(this.topRatedMoviesEndpoint);
+  getTopRatedMovies(page?: number) {
+    const queryString = this.createQueryString(this.topRatedMoviesEndpoint, null, page);
     return this.httpClient.get(queryString).subscribe(response =>
-      this.resultSource.next(response)
+      this.resultSource.next([...this.resultSource.getValue(), ...response['results']])
     );
   }
 
-  getUpcomingMovies() {
-    const queryString = this.createQueryString(this.upcomingMoviesEndpoint);
+  getUpcomingMovies(page?: number) {
+    const queryString = this.createQueryString(this.upcomingMoviesEndpoint, null, page);
     return this.httpClient.get(queryString).subscribe(response =>
-      this.resultSource.next(response)
+      this.resultSource.next([...this.resultSource.getValue(), ...response['results']])
     );
   }
 
@@ -74,9 +84,26 @@ export class MovieService {
       'query': term
     });
     this.httpClient.get(queryString).subscribe({
-      next: (response) => this.resultSource.next(response)
+      next: (response) => this.resultSource.next(response['results'])
     });
 
     this.router.navigate(['search', term]);
+  }
+
+  clear() {
+    this.resultSource.next([]);
+    this.currentPage = 0;
+  }
+
+  getPage(): number {
+    this.setPage();
+    return this.currentPage;
+  }
+
+  setPage(page?: number) {
+    if (!page)
+      this.currentPage += 1;
+    else
+      this.currentPage = page;
   }
 }

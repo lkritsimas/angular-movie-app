@@ -9,6 +9,7 @@ import { SearchComponent } from './search/search.component';
 import { FormsModule } from '@angular/forms';
 import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 import { SearchResultComponent } from './search-result/search-result.component';
+import { InfiniteScrollComponent } from './infinite-scroll/infinite-scroll.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { SearchResultComponent } from './search-result/search-result.component';
     MoviesComponent,
     SearchComponent,
     MovieDetailComponent,
-    SearchResultComponent
+    SearchResultComponent,
+    InfiniteScrollComponent
   ],
   imports: [
     BrowserModule,
