@@ -25,16 +25,16 @@
     <ul *ngIf="(movies | async)" class="columns is-multiline is-mobile">
       <ng-container *ngFor="let movie of (movies | async)">
         <!-- Render movie -->
-        <li *ngIf="movie.poster_path; else elseBlock" class="movie column is-narrow">
+        <li *ngIf="movie.poster_path; else elseBlock" class="movie column">
           <a routerLink="/title/{{ movie.id }}">
-            <img src="https://image.tmdb.org/t/p/w200/{{ movie.poster_path }}" class="image" alt="{{ movie.title }}" />
+            <img src="https://image.tmdb.org/t/p/w300/{{ movie.poster_path }}" class="image" alt="{{ movie.title }}" />
           </a>
         </li>
         <!-- Render person -->
         <ng-template #elseBlock>
-          <li *ngIf="movie.profile_path" class="movie column is-narrow">
+          <li *ngIf="movie.profile_path" class="movie column">
             <a routerLink="/person/{{ movie.id }}">
-              <img src="https://image.tmdb.org/t/p/w200/{{ movie.profile_path }}" class="image"
+              <img src="https://image.tmdb.org/t/p/w300/{{ movie.profile_path }}" class="image"
                 alt="{{ movie.name }}" />
             </a>
           </li>
