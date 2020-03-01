@@ -1,5 +1,26 @@
 <div class="movies section container is-fluid">
-  <p *ngIf="title" class="title is-4 is-paddingless">{{ title }}</p>
+
+  <div class="filter">
+    <div class="columns is-mobile">
+      <div class="column">
+        <p *ngIf="title" class="title is-4 is-paddingless">{{ title }}</p>
+      </div>
+      <div class="column is-narrow">
+        <div class="select is-rounded is-grey">
+          <select [(ngModel)]="filter" (ngModelChange)="onFilterChange($event)">
+            <option value="" selected disabled hidden>Filter by Rating</option>
+            <option class="G">G</option>
+            <option class="PG">PG</option>
+            <option class="PG-13">PG-13</option>
+            <option class="R">R</option>
+            <option class="NC-17">NC-17</option>
+            <option class="NR">NR - Unrated</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <app-infinite-scroll (scrolled)="onScroll()">
     <ul *ngIf="(movies | async)" class="columns is-multiline is-mobile">
       <ng-container *ngFor="let movie of (movies | async)">

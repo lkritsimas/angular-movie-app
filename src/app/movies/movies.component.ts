@@ -12,11 +12,13 @@ import { MovieService } from '../movie.service';
 export class MoviesComponent implements OnInit {
   movies: Observable<any>;
   path: string;
-  prevPath: string;
   title: string = '';
   currPath: string;
+
   fetchType: string = '';
   prevFetchType: string = '';
+
+  filter: string = '';
 
   constructor(location: Location, private movieService: MovieService) {
     this.movies = this.movieService.result;
@@ -51,7 +53,6 @@ export class MoviesComponent implements OnInit {
       default:
         break;
     }
-
   }
 
   onScroll(): void {
@@ -67,7 +68,9 @@ export class MoviesComponent implements OnInit {
     this.title = 'Popular movies';
     this.movieService.discoverMovies(
       {
-        'sort_by': 'popularity.desc'
+        'sort_by': 'popularity.desc',
+        'certification_country': 'US',
+        'certification': this.filter
       },
       this.movieService.getPage()
     );
@@ -76,5 +79,11 @@ export class MoviesComponent implements OnInit {
   getTopRatedMovies(): void {
     this.title = 'Top rated movies';
     this.movieService.getTopRatedMovies(this.movieService.getPage());
+  }
+
+  onFilterChange(newValue) {
+    this.filter = newValue;
+    this.movieService.clear();
+    this.fetchMovies();
   }
 }
