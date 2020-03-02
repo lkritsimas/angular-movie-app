@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { filter, map } from 'rxjs/operators';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 import { MovieService } from '../movie.service';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { TitleService } from '../title.service';
-import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-movie-detail',

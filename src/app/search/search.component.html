@@ -1,6 +1,13 @@
-<form (ngSubmit)="search()" #searchForm="ngForm" class="field">
+<form (ngSubmit)="search()" #searchForm="ngForm" class="field has-addons">
     <div class="control is-expanded">
-        <input type="text" [(ngModel)]="searchTerm" name="search" class="input is-fullwidth"
+        <input type="text" [(ngModel)]="searchTerm" name="search" autocomplete="off" class="input is-fullwidth"
             placeholder='e.g. "Inglourious Basterds", "movie: Inglourious Basterds" or "person: Charlie Day"...'>
+    </div>
+    <div class="control">
+        <button type="submit" class="button">
+            <span class="icon">
+                <fa-icon [icon]="faSearch"></fa-icon>
+            </span>
+        </button>
     </div>
 </form>

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { MovieService } from '../movie.service';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-search',
@@ -9,6 +10,7 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
+  faSearch = faSearch;
   searchTerm: string = '';
   rating: string = '';
 

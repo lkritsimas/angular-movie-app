@@ -11,10 +11,12 @@ $title-color: $text;
 $subtitle-color: hsl(0, 0%, 71%);
 $link: $yellow;
 
-$input-color: hsl(0, 0%, 71%);
+$input-color: hsl(0, 0%, 86%);
 $input-background-color: hsl(0, 0%, 14%);
+// $input-focus-color: $input-background-color;
 $input-border-color: hsl(0, 0%, 29%);
 $input-hover-border-color: hsl(0, 0%, 21%);
+$input-placeholder-color: hsl(0, 0%, 48%);
 
 $navbar-background-color: hsl(0, 0%, 7%);
 $navbar-item-color: hsl(0, 0%, 90%);
@@ -29,6 +31,8 @@ $navbar-dropdown-item-hover-background-color: hsl(0, 0%, 7%);
 $navbar-dropdown-item-active-background-color: transparent;
 
 $card-color: hsl(0, 0%, 93%);
-$card-background-color: hsl(0, 0%, 21%);
+$card-background-color: transparent;
+$card-content-padding: 0.75rem 0;
 
 @import "~node_modules/bulma/bulma.sass";
+@import "./helpers";

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { TitleService } from './title.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

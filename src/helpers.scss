@@ -1,0 +1,12 @@
+%movie {
+    min-width: 150px; 
+    max-width: 232px;
+
+    @include desktop {
+        min-width: 193px;
+    }
+
+    @include fullhd {
+        min-width: 208px;
+    }
+}

@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { InfiniteScrollComponent } from './infinite-scroll/infinite-scroll.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { InfiniteScrollComponent } from './infinite-scroll/infinite-scroll.compo
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

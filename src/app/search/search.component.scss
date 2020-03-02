@@ -1,3 +1,47 @@
+@import "../../variables";
+
 form {
     flex-grow: 1;
+    transition: border 200ms ease 0s, box-shadow 200ms ease 0s;
+
+    button {
+        color: $grey-light;
+        background-color: $input-background-color;
+        border-color: $input-border-color;
+        border-left: none;
+
+        &:hover {
+            color: inherit;
+        }
+    }
+
+    input {
+        border-right: none;
+    }
+
+    &:hover > .control > button,
+    &:hover > .control > input {
+        background-color: $input-background-color;
+        border-color: $input-hover-border-color;
+    }
+
+    .control,
+    button,
+    input {
+        outline: none;
+        border: none;
+        box-shadow: none;
+
+        &:active,
+        &:focus {
+            outline: none;
+            border: none;
+            box-shadow: none;
+        }
+    }
+
+    &:focus-within {
+        box-shadow: 0 0 0 2px $yellow;
+        border-radius: 4px;
+    }
 }
