@@ -57,6 +57,16 @@
         box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.5), 
                     0 0px 0 1px rgba(10, 10, 10, 0.75);        
     }
+
+    .user-ratings {
+        position: absolute;
+        left: 0;
+        right: 0;
+
+        small {
+            font-size: 0.8em;
+        }
+    }
 }
 
 .credits {

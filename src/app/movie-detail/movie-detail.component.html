@@ -4,15 +4,24 @@
         class="backdrop is-hidden-touch">
     </div>
     <div class="section columns">
-        <figure class="section column is-narrow is-offset-1">
-            <img src="https://image.tmdb.org/t/p/w342{{ movie.poster_path }}" class="image container" />
-        </figure>
+        <div class="section column is-narrow is-offset-1 is-relative">
+            <figure>
+                <img src="https://image.tmdb.org/t/p/w342{{ movie.poster_path }}" class="image container" />
+            </figure>
+            <div class="user-ratings column has-text-centered">
+                <span class="title is-3">{{ movie.vote_average }}</span>
+                <span class="has-text-grey">/10</span>
+                <div>
+                    <small class="has-text-grey">{{ movie.vote_count | number }} ratings</small>
+                </div>
+            </div>
+        </div>
         <div class="summary section is-medium column is-5">
             <h2 class="title is-2">
                 {{ movie.title }}
                 <small class="subtitle is-4">({{ movie.release_date | date: 'yyyy' }})</small>
             </h2>
-            <div *ngIf="movie.title !== movie.original_title">
+            <div *ngIf="movie.title !== movie.original_title" class="has-text-grey-light">
                 {{ movie.original_title }} <span class="is-italic">(original title)</span>
             </div>
             <div class="subtext is-size-7-mobile has-text-grey-light">
