@@ -1,0 +1,15 @@
+@import '../../variables';
+
+.filter {
+    select {
+        border: none;
+        
+        &:invalid {
+            color: $grey;
+        }
+
+        option {
+            color: $grey-lighter;
+        }
+    }
+}

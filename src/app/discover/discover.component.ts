@@ -8,23 +8,34 @@ import { Observable } from 'rxjs';
   styleUrls: ['./discover.component.scss']
 })
 export class DiscoverComponent implements OnInit {
-  filter: string = '';
+  genres: any;
+  genresFilter: string = '';
+  ratingFilter: string = '';
+  sortByFilter: string = 'popularity.desc';
 
   constructor(private movieService: MovieService) { }
 
   ngOnInit(): void {
+    this.getMovieGenres();
     this.discoverMovies();
   }
 
   discoverMovies(): void {
     this.movieService.discoverMovies(
       {
-        'sort_by': 'popularity.desc',
+        'sort_by': this.sortByFilter,
         'certification_country': 'US',
-        'certification': this.filter
+        'certification': this.ratingFilter,
+        'with_genres': this.genresFilter
       },
       this.movieService.getPage()
     );
+  }
+
+  getMovieGenres(): void {
+    this.movieService.getMovieGenres().subscribe(data => {
+      this.genres = data.genres
+    });
   }
 
   onScroll(): void {
@@ -32,9 +43,20 @@ export class DiscoverComponent implements OnInit {
   }
 
   onFilterChange(newValue): void {
-    this.filter = newValue;
+    this.ratingFilter = newValue;
     this.movieService.clear();
     this.discoverMovies();
   }
 
+  onGenreFilterChange(newValue): void {
+    this.genresFilter = newValue;
+    this.movieService.clear();
+    this.discoverMovies();
+  }
+
+  onSortByFilterChange(newValue): void {
+    this.sortByFilter = newValue;
+    this.movieService.clear();
+    this.discoverMovies();
+  }
 }

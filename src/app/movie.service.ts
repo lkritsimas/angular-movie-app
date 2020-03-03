@@ -17,6 +17,7 @@ export class MovieService {
   private topRatedMoviesEndpoint: string = '/movie/top_rated';
   private searchMovieEndpoint: string = '/search/movie';
   private searchPersonEndpoint: string = '/search/person';
+  private movieGenresEndpoint: string = '/genre/movie/list';
 
   public fetchType: string = '';
   public prevFetchType: string = '';
@@ -44,6 +45,13 @@ export class MovieService {
     }
 
     return `${API_URL}${path}?${queryParamsString ? queryParamsString + '&' : ''}api_key=${API_KEY}`;
+  }
+
+  getMovieGenres(): Observable<any> {
+    const queryString = this.createQueryString(this.movieGenresEndpoint);
+    return this.httpClient.get(queryString).pipe(
+      tap(_ => console.log(`fetched movie genres`))
+    );
   }
 
   getMovieDetails(id: string): Observable<any> {

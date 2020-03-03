@@ -8,7 +8,7 @@
             <figure>
                 <img src="https://image.tmdb.org/t/p/w342{{ movie.poster_path }}" class="image container" />
             </figure>
-            <div class="user-ratings column has-text-centered">
+            <div *ngIf="movie.vote_count !== 0" class="user-ratings column has-text-centered">
                 <span class="title is-3">{{ movie.vote_average }}</span>
                 <span class="has-text-grey">/10</span>
                 <div>
@@ -35,7 +35,7 @@
                 </ng-container>
                 <span *ngIf="movie.release_date"
                     class="release-date">{{ movie.release_date | date: 'd MMMM yyyy' }}</span>
-                <ng-container *ngIf="movieGenres">
+                <ng-container *ngIf="movieGenres.length">
                     <span class="separator">|</span>
                     <ng-container *ngFor="let genre of movieGenres; let isLast=last">
                         <span>{{ genre }}</span>{{ isLast ? '' : ', ' }}
