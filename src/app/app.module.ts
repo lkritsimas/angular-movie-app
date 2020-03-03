@@ -11,6 +11,7 @@ import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { InfiniteScrollComponent } from './infinite-scroll/infinite-scroll.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { DiscoverComponent } from './discover/discover.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     SearchComponent,
     MovieDetailComponent,
     SearchResultComponent,
-    InfiniteScrollComponent
+    InfiniteScrollComponent,
+    DiscoverComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,22 @@
+<app-movies (onScroll)="onScroll()">
+    <div class="filter">
+        <div class="columns">
+            <div class="column">
+                <p class="title is-4 is-paddingless">Discover new movies</p>
+            </div>
+            <div class="column is-narrow">
+                <div class="select is-rounded is-fullwidth is-grey">
+                    <select [(ngModel)]="filter" (ngModelChange)="onFilterChange($event)">
+                        <option value="" selected disabled hidden>Filter by Rating</option>
+                        <option value="G">G</option>
+                        <option value="PG">PG</option>
+                        <option value="PG-13">PG-13</option>
+                        <option value="R">R</option>
+                        <option value="NC-17">NC-17 (NSFW)</option>
+                        <option value="NR">NR - Not Rated (NSFW-ish)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</app-movies>

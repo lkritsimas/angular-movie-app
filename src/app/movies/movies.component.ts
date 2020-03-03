@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Location } from "@angular/common";
 import { Observable } from 'rxjs';
 
@@ -10,6 +10,8 @@ import { MovieService } from '../movie.service';
   styleUrls: ['./movies.component.scss']
 })
 export class MoviesComponent implements OnInit {
+  @Output() public onScroll: EventEmitter<any> = new EventEmitter();
+
   movies: Observable<any>;
   path: string;
   title: string = '';
@@ -55,8 +57,12 @@ export class MoviesComponent implements OnInit {
     }
   }
 
-  onScroll(): void {
-    this.fetchMovies();
+  runOnScroll(): void {
+    // this.fetchMovies();
+    this.onScroll.emit(this.fetchMovies());
+
+    console.log('movies: scroll')
+
   }
 
   getUpcomingMovies(): void {

@@ -9,7 +9,7 @@
     &-item {
         transition: color 300ms;
         
-        .is-active {
+        &.is-active {
             font-weight: bold;
             color: $white;
         }
