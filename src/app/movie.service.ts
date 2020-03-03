@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { API_KEY, API_URL } from './api';
+import { API_KEY, API_URL } from './api.config';
 
 @Injectable({
   providedIn: 'root'

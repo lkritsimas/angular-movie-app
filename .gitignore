@@ -46,4 +46,4 @@ testem.log
 Thumbs.db
 
 # API stuff
-src/app/api.ts
+src/app/api.config.ts
