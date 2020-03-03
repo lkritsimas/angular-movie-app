@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angu
 import { Location } from "@angular/common";
 import { Observable } from 'rxjs';
 
-import { MovieService } from '../movie.service';
+import { MovieService } from '../../movie.service';
 
 @Component({
   selector: 'app-movies',

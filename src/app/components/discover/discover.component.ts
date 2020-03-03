@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MovieService } from '../movie.service';
 import { Observable } from 'rxjs';
+
+import { MovieService } from '../../movie.service';
 
 @Component({
   selector: 'app-discover',

@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { MoviesComponent } from './movies/movies.component';
-import { MovieDetailComponent } from './movie-detail/movie-detail.component';
-import { SearchResultComponent } from './search-result/search-result.component';
-import { DiscoverComponent } from './discover/discover.component';
+import { MoviesComponent } from './components/movies/movies.component';
+import { MovieDetailComponent } from './components/movie-detail/movie-detail.component';
+import { SearchResultComponent } from './components/search-result/search-result.component';
+import { DiscoverComponent } from './components/discover/discover.component';
 
 const routes: Routes = [
   { path: 'movies/popular', component: MoviesComponent, data: { title: 'Popular movies' } },

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { MovieService } from '../movie.service';
+import { MovieService } from '../../movie.service';
 
 @Component({
   selector: 'app-search-result',
