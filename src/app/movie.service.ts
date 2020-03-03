@@ -12,6 +12,7 @@ import { API_KEY, API_URL } from './api';
 export class MovieService {
   private movieDetailsEndpoint: string = '/movie';
   private discoverMoviesEndpoint: string = '/discover/movie';
+  private popularMoviesEndpoint: string = '/movie/popular';
   private upcomingMoviesEndpoint: string = '/movie/upcoming';
   private topRatedMoviesEndpoint: string = '/movie/top_rated';
   private searchMovieEndpoint: string = '/search/movie';
@@ -59,6 +60,13 @@ export class MovieService {
     return this.httpClient.get(queryString).subscribe(response => {
       return this.resultSource.next([...this.resultSource.getValue(), ...response['results']])
     });
+  }
+
+  getPopularMovies(page?: number) {
+    const queryString = this.createQueryString(this.popularMoviesEndpoint, null, page);
+    return this.httpClient.get(queryString).subscribe(response =>
+      this.resultSource.next([...this.resultSource.getValue(), ...response['results']])
+    );
   }
 
   getTopRatedMovies(page?: number) {

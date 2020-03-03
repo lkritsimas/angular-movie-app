@@ -72,14 +72,7 @@ export class MoviesComponent implements OnInit {
 
   getPopularMovies(): void {
     this.title = 'Popular movies';
-    this.movieService.discoverMovies(
-      {
-        'sort_by': 'popularity.desc',
-        'certification_country': 'US',
-        'certification': this.filter
-      },
-      this.movieService.getPage()
-    );
+    this.movieService.getPopularMovies(this.movieService.getPage());
   }
 
   getTopRatedMovies(): void {
