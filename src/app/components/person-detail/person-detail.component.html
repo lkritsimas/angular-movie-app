@@ -1,0 +1,34 @@
+<div *ngIf="person" class="details is-relative">
+    <!--
+    <div *ngIf="movie.backdrop_path"
+        [style.backgroundImage]="'url(https://image.tmdb.org/t/p/w1280' + movie.backdrop_path + ')'"
+        class="backdrop is-hidden-touch">
+    </div> -->
+    <div class="section columns">
+        <div class="section column is-narrow is-offset-1 is-relative">
+            <figure>
+                <img src="https://image.tmdb.org/t/p/w342{{ person.profile_path }}" class="image container" />
+            </figure>
+        </div>
+        <div class="summary section is-medium column is-5">
+            <h2 class="title is-2">
+                {{ person.name }}
+            </h2>
+            <h3 class="title is-4">Biography</h3>
+            <p class="biography is-size-6 has-text-grey">
+                {{ person.biography }}
+            </p>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="moviesAsCast" class="known-for container is-fluid section">
+    <h3 class="title is-4 has-text-grey-lighter">Known for</h3>
+    <div class="columns is-multiline is-mobile">
+        <ng-container *ngFor="let movie of moviesAsCast | slice:0:10">
+            <a *ngIf="movie.poster_path" class="movie column" routerLink="/title/{{ movie.id }}">
+                <img src="https://image.tmdb.org/t/p/w154{{ movie.poster_path }}" class="image" />
+            </a>
+        </ng-container>
+    </div>
+</div>

@@ -1,5 +1,5 @@
 # MyMovieList
-IMDb-ish clone in Angular 9 using TMDb API
+IMDb-ish clone made with Angular 9 and Bulma using TMDb API
 
 ## Install
     git clone

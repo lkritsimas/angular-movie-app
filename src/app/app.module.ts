@@ -12,6 +12,7 @@ import { MovieDetailComponent } from './components/movie-detail/movie-detail.com
 import { SearchResultComponent } from './components/search-result/search-result.component';
 import { InfiniteScrollComponent } from './components/infinite-scroll/infinite-scroll.component';
 import { DiscoverComponent } from './components/discover/discover.component';
+import { PersonDetailComponent } from './components/person-detail/person-detail.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { DiscoverComponent } from './components/discover/discover.component';
     MovieDetailComponent,
     SearchResultComponent,
     InfiniteScrollComponent,
-    DiscoverComponent
+    DiscoverComponent,
+    PersonDetailComponent
   ],
   imports: [
     BrowserModule,

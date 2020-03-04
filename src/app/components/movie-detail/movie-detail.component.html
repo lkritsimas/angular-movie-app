@@ -53,13 +53,15 @@
         <div *ngFor="let cast of movieCredits.cast | slice:0:10" class="cast column is-narrow">
             <div class="card">
                 <div class="card-image">
-                    <figure class="image{{ !cast.profile_path ? ' nopicture' : '' }} ">
-                        <img *ngIf="cast.profile_path; else nopictureBlock"
-                            src="https://image.tmdb.org/t/p/w154{{ cast.profile_path }}" alt="{{ cast.name }}" />
-                        <ng-template #nopictureBlock>
-                            <img src="../assets/nopicture_person.png" alt="{{ cast.name }}" />
-                        </ng-template>
-                    </figure>
+                    <a routerLink="/person/{{ cast.id }}">
+                        <figure class="image{{ !cast.profile_path ? ' nopicture' : '' }}" [routerLink]="">
+                            <img *ngIf="cast.profile_path; else nopictureBlock"
+                                src="https://image.tmdb.org/t/p/w154{{ cast.profile_path }}" alt="{{ cast.name }}" />
+                            <ng-template #nopictureBlock>
+                                <img src="../assets/nopicture_person.png" alt="" />
+                            </ng-template>
+                        </figure>
+                    </a>
                 </div>
                 <div class="card-content">
                     <p class="title is-6">{{ cast.name }}</p>
@@ -75,8 +77,12 @@
     <h3 class="title is-4 has-text-grey-lighter">Similar movies</h3>
     <div class="columns is-multiline is-mobile">
         <ng-container *ngFor="let similarMovie of similarMovies">
-            <a *ngIf="similarMovie.poster_path" class="movie column" routerLink="/title/{{ similarMovie.id }}">
-                <img src="https://image.tmdb.org/t/p/w154{{ similarMovie.poster_path }}" class="image" />
+            <a class="movie column" routerLink="/title/{{ similarMovie.id }}">
+                <img *ngIf="similarMovie.poster_path; else nopictureBlock"
+                    src="https://image.tmdb.org/t/p/w154{{ similarMovie.poster_path }}" class="image" />
+                <ng-template #nopictureBlock>
+                    <img src="../assets/nopicture_movie.png" alt="{{ similarMovie.name }}" />
+                </ng-template>
             </a>
         </ng-container>
     </div>
