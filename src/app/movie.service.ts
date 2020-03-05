@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, BehaviorSubject, Subscription } from 'rxjs';
+import { tap, share, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
 import { API_KEY, API_URL } from './api.config';
+import { Movie, Genre } from './movie';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class MovieService {
 
   public fetchType: string = '';
   public prevFetchType: string = '';
-  private resultSource = new BehaviorSubject<any[]>([]);
+  private resultSource = new BehaviorSubject<Movie[]>([]);
   public result = this.resultSource.asObservable();
   public searchTerm = new BehaviorSubject<string>('');
 
@@ -47,48 +48,53 @@ export class MovieService {
     return `${API_URL}${path}?${queryParamsString ? queryParamsString + '&' : ''}api_key=${API_KEY}`;
   }
 
-  getMovieGenres(): Observable<any> {
+  getMovieGenres(): Observable<Genre[]> {
     const queryString = this.createQueryString(this.movieGenresEndpoint);
-    return this.httpClient.get(queryString).pipe(
-      tap(_ => console.log(`fetched movie genres`))
-    );
+    return this.httpClient.get<Genre[]>(queryString)
+      .pipe(
+        tap(_ => console.log('fetched movie genres')),
+        map(response => response['genres']),
+        share(),
+      );
   }
 
-  getMovieDetails(id: string): Observable<any> {
+  getMovieDetails(id: string): Observable<Movie> {
     const queryString = this.createQueryString(`${this.movieDetailsEndpoint}/${id}`, {
-      'append_to_response': 'release_dates,images,similar,credits'
+      'append_to_response': 'release_dates,similar,credits'
     });
-    return this.httpClient.get(queryString).pipe(
-      tap(_ => console.log(`fetched movie ${id}`))
-    );
+    return this.httpClient.get<Movie>(queryString)
+      .pipe(
+        tap(_ => console.log(`fetched movie ${id}`)),
+        share()
+      );
   }
 
   discoverMovies(params?: any, page?: number) {
     const queryString = this.createQueryString(this.discoverMoviesEndpoint, params, page);
-    return this.httpClient.get(queryString).subscribe(response => {
+    return this.httpClient.get<Movie[]>(queryString).subscribe(response => {
       return this.resultSource.next([...this.resultSource.getValue(), ...response['results']])
     });
   }
 
   getPopularMovies(page?: number) {
     const queryString = this.createQueryString(this.popularMoviesEndpoint, null, page);
-    return this.httpClient.get(queryString).subscribe(response =>
+    return this.httpClient.get<Movie[]>(queryString).subscribe(response =>
       this.resultSource.next([...this.resultSource.getValue(), ...response['results']])
     );
   }
 
   getTopRatedMovies(page?: number) {
     const queryString = this.createQueryString(this.topRatedMoviesEndpoint, null, page);
-    return this.httpClient.get(queryString).subscribe(response =>
+    return this.httpClient.get<Movie[]>(queryString).subscribe(response =>
       this.resultSource.next([...this.resultSource.getValue(), ...response['results']])
     );
   }
 
   getUpcomingMovies(page?: number) {
     const queryString = this.createQueryString(this.upcomingMoviesEndpoint, null, page);
-    return this.httpClient.get(queryString).subscribe(response =>
-      this.resultSource.next([...this.resultSource.getValue(), ...response['results']])
-    );
+    return this.httpClient.get<Movie[]>(queryString).subscribe(response => {
+      return this.resultSource.next([...this.resultSource.getValue(), ...response['results']])
+    });
   }
 
   parseSearchTerm(term: string) {
@@ -116,11 +122,12 @@ export class MovieService {
       'query': parsed.term
     });
 
-    this.httpClient.get(queryString).subscribe({
-      next: (response) => this.resultSource.next(response['results'])
-    });
+    this.httpClient.get<Movie[]>(queryString)
+      .subscribe({
+        next: (response) => this.resultSource.next(response['results'])
+      });
 
-    this.router.navigate(['search', term]);
+    // this.router.navigate(['search', term]);
   }
 
   clear() {

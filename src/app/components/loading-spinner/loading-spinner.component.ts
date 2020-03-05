@@ -6,13 +6,18 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./loading-spinner.component.scss']
 })
 export class LoadingSpinnerComponent implements OnInit {
-  @Input() show: boolean;
+  private _show: boolean;
   @Input() overlay: boolean;
+  @Input()
+  set show(show: boolean) {
+    this._show = show;
+  }
+  get show() { return this._show; }
 
   constructor() { }
 
   ngOnInit(): void {
-    this.show = this.show !== undefined;
+    this._show = this._show !== undefined;
     this.overlay = this.overlay !== undefined;
   }
 

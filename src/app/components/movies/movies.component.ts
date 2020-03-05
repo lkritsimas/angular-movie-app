@@ -3,6 +3,7 @@ import { Location } from "@angular/common";
 import { Observable } from 'rxjs';
 
 import { MovieService } from '../../movie.service';
+import { Movie } from '../../movie';
 
 @Component({
   selector: 'app-movies',
@@ -12,7 +13,7 @@ import { MovieService } from '../../movie.service';
 export class MoviesComponent implements OnInit {
   @Output() public onScroll: EventEmitter<any> = new EventEmitter();
 
-  movies: Observable<any>;
+  movies: Observable<Movie[]>;
   path: string;
   title: string = '';
   currPath: string;

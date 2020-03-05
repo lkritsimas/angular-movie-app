@@ -25,10 +25,15 @@
 <div *ngIf="moviesAsCast" class="known-for container is-fluid section">
     <h3 class="title is-4 has-text-grey-lighter">Known for</h3>
     <div class="columns is-multiline is-mobile">
-        <ng-container *ngFor="let movie of moviesAsCast | slice:0:10">
-            <a *ngIf="movie.poster_path" class="movie column" routerLink="/title/{{ movie.id }}">
-                <img src="https://image.tmdb.org/t/p/w154{{ movie.poster_path }}" class="image" />
+        <ng-container *ngFor="let movie of moviesAsCast | slice:0:castLimit">
+            <a class="movie column" routerLink="/title/{{ movie.id }}">
+                <img *ngIf="movie.poster_path; else nopictureBlock"
+                    src="https://image.tmdb.org/t/p/w154{{ movie.poster_path }}" class="image" />
+                <ng-template #nopictureBlock>
+                    <img src="../assets/nopicture_movie.png" alt="" />
+                </ng-template>
             </a>
         </ng-container>
     </div>
+    <a (click)="toggleCastLimit()" class="title is-5 has-text-warning">Show all</a>
 </div>

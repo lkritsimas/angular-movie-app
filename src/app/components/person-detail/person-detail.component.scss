@@ -1,0 +1,13 @@
+@import '../../../variables';
+
+.known-for {
+    margin-left: auto;
+
+    .movie {
+        @extend %movie;
+
+        @include fullhd {
+            min-width: 170px;
+        }        
+    }
+}

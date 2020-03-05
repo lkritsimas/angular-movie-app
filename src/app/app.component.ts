@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { filter, map } from 'rxjs/operators';
+import { Router, ActivatedRoute, NavigationEnd, Event, NavigationStart, NavigationCancel, NavigationError, RouterEvent } from '@angular/router';
+import { filter, map, debounceTime } from 'rxjs/operators';
+import { forkJoin, Subject } from 'rxjs';
 import { TitleService } from './title.service';
 
 @Component({
@@ -12,20 +13,38 @@ export class AppComponent implements OnInit {
   @ViewChild('navBurger') navBurger: ElementRef;
   @ViewChild('navMenu') navMenu: ElementRef;
   title: string = 'MyMovieList';
+  isLoading: boolean = false;
 
   public constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private titleService: TitleService,
+    private titleService: TitleService
   ) { }
 
   ngOnInit() {
     const appTitle = this.titleService.getTitle();
 
+    // this.router.events
+    //   // .pipe(
+    //   //   debounceTime(150)
+    //   // )
+    //   .subscribe((event: RouterEvent) => {
+    //     if (event instanceof NavigationStart) {
+    //       this.isLoading = true;
+    //     }
+    //     if (
+    //       event instanceof NavigationEnd ||
+    //       event instanceof NavigationCancel ||
+    //       event instanceof NavigationError
+    //     ) {
+    //       this.isLoading = false;
+    //     }
+    //   });
+
     // Set title based on route
     this.router.events
       .pipe(
-        filter(event => event instanceof NavigationEnd),
+        filter((event: RouterEvent) => event instanceof NavigationEnd),
         map(() => this.activatedRoute),
         map((route) => {
           while (route.firstChild) {

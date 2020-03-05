@@ -13,6 +13,7 @@ import { SearchResultComponent } from './components/search-result/search-result.
 import { InfiniteScrollComponent } from './components/infinite-scroll/infinite-scroll.component';
 import { DiscoverComponent } from './components/discover/discover.component';
 import { PersonDetailComponent } from './components/person-detail/person-detail.component';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { PersonDetailComponent } from './components/person-detail/person-detail.
     SearchResultComponent,
     InfiniteScrollComponent,
     DiscoverComponent,
-    PersonDetailComponent
+    PersonDetailComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { MovieService } from '../../movie.service';
+import { Movie } from '../../movie';
 
 @Component({
   selector: 'app-search-result',
@@ -10,7 +11,7 @@ import { MovieService } from '../../movie.service';
   styleUrls: ['./search-result.component.scss']
 })
 export class SearchResultComponent implements OnInit {
-  movies: Observable<any>;
+  movies: Observable<Movie[]>;
   searchTerm: string = '';
   routeTerm: string;
 

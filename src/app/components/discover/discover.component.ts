@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 import { MovieService } from '../../movie.service';
+import { Genre } from '../../movie';
 
 @Component({
   selector: 'app-discover',
@@ -9,10 +10,11 @@ import { MovieService } from '../../movie.service';
   styleUrls: ['./discover.component.scss']
 })
 export class DiscoverComponent implements OnInit {
-  genres: any;
+  genres: Genre[];
   genresFilter: string = '';
   ratingFilter: string = '';
   sortByFilter: string = 'popularity.desc';
+  // sortByFilterX = new BehaviorSubject<string>('');
 
   constructor(private movieService: MovieService) { }
 
@@ -34,9 +36,10 @@ export class DiscoverComponent implements OnInit {
   }
 
   getMovieGenres(): void {
-    this.movieService.getMovieGenres().subscribe(data => {
-      this.genres = data.genres
-    });
+    this.movieService.getMovieGenres()
+      .subscribe((genres: Genre[]) =>
+        this.genres = genres
+      );
   }
 
   onScroll(): void {
@@ -56,6 +59,13 @@ export class DiscoverComponent implements OnInit {
   }
 
   onSortByFilterChange(newValue): void {
+    // this.sortByFilterX
+    //   .pipe(switchMap(rating => this.movieService.discoverMovies(rating)))
+    //   .subscribe(data => {
+    //     // this.movies$ = data.results
+    //   });
+
+
     this.sortByFilter = newValue;
     this.movieService.clear();
     this.discoverMovies();
