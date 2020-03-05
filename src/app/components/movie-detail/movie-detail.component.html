@@ -7,7 +7,7 @@
         </div>
         <div class="section columns">
             <div class="section column is-narrow is-offset-1 is-relative">
-                <figure class="image container">
+                <figure class="image cover container">
                     <img *ngIf="movie.poster_path; else nopictureBlock"
                         [src]="imageService.url(movie.poster_path, 'movie', 'medium')" />
                     <ng-template #nopictureBlock>
