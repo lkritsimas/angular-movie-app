@@ -1,0 +1,28 @@
+@import '../../../variables';
+
+.no-picture {
+    color: $white;
+    @extend %details-image;
+    max-width: 100%;
+
+    &.small {
+        max-width: 100%;
+        height: 100%;
+        border-radius: 0;    
+    }
+
+    &-holder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: inherit;
+        font-size: 150px;
+        background: $grey;
+        border-radius: inherit;
+
+        &.small {
+            font-size: 75px;
+        }
+    }
+}

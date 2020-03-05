@@ -12,8 +12,34 @@
 }
 
 %details-image {
+    z-index: 1;
     width: 342px;
-    height: 513px;
+    height: auto;
+    max-width: 342px;
+    max-height: 513px;
+    border-radius: 6px;
     box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.5), 
                 0 0px 0 1px rgba(10, 10, 10, 0.75);
+
+    &:before {
+        content: '';
+        z-index: -1;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: -2px;
+        border-radius: inherit;
+        background: linear-gradient(hsla(0, 0%, 0%, 0.2), hsla(0, 0%, 100%, 0.07));
+    }
+
+    img {
+        border-radius: inherit;
+    }    
+}
+
+@keyframes maxHeight {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
 }

@@ -14,6 +14,7 @@ import { InfiniteScrollComponent } from './components/infinite-scroll/infinite-s
 import { DiscoverComponent } from './components/discover/discover.component';
 import { PersonDetailComponent } from './components/person-detail/person-detail.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { NoPictureComponent } from './components/no-picture/no-picture.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
     InfiniteScrollComponent,
     DiscoverComponent,
     PersonDetailComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    NoPictureComponent
   ],
   imports: [
     BrowserModule,

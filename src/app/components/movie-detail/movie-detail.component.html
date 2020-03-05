@@ -2,13 +2,17 @@
 <div *ngIf="movie">
     <div class="details is-relative">
         <div *ngIf="movie.backdrop_path"
-            [style.backgroundImage]="'url(https://image.tmdb.org/t/p/w1280' + movie.backdrop_path + ')'"
+            [style.backgroundImage]="'url(' + imageService.url(movie.backdrop_path, 'backdrop') + ')'"
             class="backdrop is-hidden-touch">
         </div>
         <div class="section columns">
             <div class="section column is-narrow is-offset-1 is-relative">
                 <figure class="image container">
-                    <img src="https://image.tmdb.org/t/p/w342{{ movie.poster_path }}" class="" />
+                    <img *ngIf="movie.poster_path; else nopictureBlock"
+                        [src]="imageService.url(movie.poster_path, 'movie', 'medium')" />
+                    <ng-template #nopictureBlock>
+                        <app-no-picture movie></app-no-picture>
+                    </ng-template>
                 </figure>
                 <div *ngIf="movie.vote_count !== 0" class="user-ratings column has-text-centered">
                     <span class="title is-3">{{ movie.vote_average }}</span>
@@ -56,11 +60,11 @@
                 <div class="card">
                     <div class="card-image">
                         <a routerLink="/person/{{ cast.id }}">
-                            <figure class="image" [ngClass]="{ nopicture: !cast.profile_path }" [routerLink]="">
+                            <figure class="image" [routerLink]="">
                                 <img *ngIf="cast.profile_path; else nopictureBlock"
-                                    src="https://image.tmdb.org/t/p/w154{{ cast.profile_path }}" [alt]="cast.name" />
+                                    [src]="imageService.url(cast.profile_path, 'person', 'small')" [alt]="cast.name" />
                                 <ng-template #nopictureBlock>
-                                    <img src="../assets/nopicture_person.png" alt="" />
+                                    <app-no-picture person small></app-no-picture>
                                 </ng-template>
                             </figure>
                         </a>
@@ -81,9 +85,9 @@
             <ng-container *ngFor="let similarMovie of similarMovies">
                 <a class="movie column" routerLink="/title/{{ similarMovie.id }}">
                     <img *ngIf="similarMovie.poster_path; else nopictureBlock"
-                        src="https://image.tmdb.org/t/p/w154{{ similarMovie.poster_path }}" class="image" />
+                        [src]="imageService.url(similarMovie.poster_path, 'movie', 'small')" class="image" />
                     <ng-template #nopictureBlock>
-                        <img src="../assets/nopicture_movie.png" [alt]="similarMovie.name" />
+                        <app-no-picture movie small></app-no-picture>
                     </ng-template>
                 </a>
             </ng-container>

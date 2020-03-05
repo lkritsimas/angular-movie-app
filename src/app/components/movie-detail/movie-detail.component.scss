@@ -71,6 +71,10 @@
 .credits {
     .cast .card {
         width: $movie-small-thumb-width;
+
+        img {
+            height: 243px;
+        }
     }
 }
 
@@ -89,8 +93,4 @@
     // img {
     //     width: $movie-small-thumb-width;
     // }
-}
-
-.nopicture img {
-    height: 243px;
 }

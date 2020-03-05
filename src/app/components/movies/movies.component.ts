@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angu
 import { Location } from "@angular/common";
 import { Observable } from 'rxjs';
 
+import { ImageService } from '../../services/image.service';
 import { MovieService } from '../../movie.service';
 import { Movie } from '../../movie';
 
@@ -23,7 +24,11 @@ export class MoviesComponent implements OnInit {
 
   filter: string = '';
 
-  constructor(location: Location, private movieService: MovieService) {
+  constructor(
+    protected location: Location,
+    private movieService: MovieService,
+    public imageService: ImageService
+  ) {
     this.movies = this.movieService.result;
     this.path = location.path();
   }

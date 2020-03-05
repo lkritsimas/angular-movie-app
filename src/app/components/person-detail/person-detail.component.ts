@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { tap } from 'rxjs/operators';
 
 import { PersonService } from '../../person.service';
+import { ImageService } from '../../services/image.service';
 
 @Component({
   selector: 'app-person-detail',
@@ -13,9 +14,13 @@ export class PersonDetailComponent implements OnInit {
   person: any;
   moviesAsCast: any;
   moviesAsCrew: any;
-  private _toggleCastLimit: boolean = false;
+  _toggleCastLimit: boolean = false;
 
-  constructor(private personService: PersonService, private activatedRoute: ActivatedRoute) { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private personService: PersonService,
+    public imageService: ImageService
+  ) { }
 
   ngOnInit(): void {
     const id = this.activatedRoute.snapshot.paramMap.get('id');

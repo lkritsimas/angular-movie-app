@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { MovieService } from '../../movie.service';
 import { TitleService } from '../../title.service';
+import { ImageService } from '../../services/image.service';
 import { Movie, Credits, Genre, ReleaseDates } from '../../movie';
 
 @Component({
@@ -22,7 +23,8 @@ export class MovieDetailComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private movieService: MovieService,
-    private titleService: TitleService
+    private titleService: TitleService,
+    public imageService: ImageService
   ) { }
 
   ngOnInit(): void {

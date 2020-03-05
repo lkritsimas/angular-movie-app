@@ -1,13 +1,12 @@
 <div *ngIf="person" class="details is-relative">
-    <!--
-    <div *ngIf="movie.backdrop_path"
-        [style.backgroundImage]="'url(https://image.tmdb.org/t/p/w1280' + movie.backdrop_path + ')'"
-        class="backdrop is-hidden-touch">
-    </div> -->
     <div class="section columns">
         <div class="section column is-narrow is-offset-1 is-relative">
-            <figure>
-                <img src="https://image.tmdb.org/t/p/w342{{ person.profile_path }}" class="image container" />
+            <figure class="image container">
+                <img *ngIf="person.profile_path; else nopictureBlock"
+                    [src]="imageService.url(person.profile_path, 'person', 'medium')" />
+                <ng-template #nopictureBlock>
+                    <app-no-picture person></app-no-picture>
+                </ng-template>
             </figure>
         </div>
         <div class="summary section is-medium column is-5">
@@ -28,12 +27,12 @@
         <ng-container *ngFor="let movie of moviesAsCast | slice:0:castLimit">
             <a class="movie column" routerLink="/title/{{ movie.id }}">
                 <img *ngIf="movie.poster_path; else nopictureBlock"
-                    src="https://image.tmdb.org/t/p/w154{{ movie.poster_path }}" class="image" />
+                    [src]="imageService.url(movie.poster_path, 'movie', 'small')" class="image" />
                 <ng-template #nopictureBlock>
-                    <img src="../assets/nopicture_movie.png" alt="" />
+                    <app-no-picture movie small></app-no-picture>
                 </ng-template>
             </a>
         </ng-container>
     </div>
-    <a (click)="toggleCastLimit()" class="title is-5 has-text-warning">Show all</a>
+    <a (click)="toggleCastLimit()" class="title is-5 has-text-warning">Show {{ _toggleCastLimit ? 'less' : 'more' }}</a>
 </div>
