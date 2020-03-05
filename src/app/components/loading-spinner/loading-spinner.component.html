@@ -1,0 +1,4 @@
+<div class="wrapper" [ngClass]="{ show: show, overlay: overlay }">
+    <div class="loader is-loading" [ngClass]="{ contained: !overlay }"></div>
+    <ng-content></ng-content>
+</div>
