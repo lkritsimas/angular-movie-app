@@ -11,11 +11,16 @@
                     {{ person.name }}
                 </h2>
                 <h3 class="title is-4">Biography</h3>
-                <div [innerHTML]="person.biography | truncateText:biographyLimit | paragraph"
-                    class="biography content is-size-6 has-text-grey"></div>
-                <button (click)="toggleBiographyLimit()" class="button is-text is-small">
-                    Show more
-                </button>
+                <div class="biography">
+                    <div [innerHTML]="person.biography | paragraph" [appAnimateGrow]="_toggleBiography"
+                        class="content is-size-6 has-text-grey"></div>
+                    <div class="read-more">
+                        <a (click)="toggleBiography()" class="is-block has-text-centered">
+                            <fa-icon [icon]="showBiography ? faChevronCircleUp : faChevronCircleDown" size="2x">
+                            </fa-icon>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

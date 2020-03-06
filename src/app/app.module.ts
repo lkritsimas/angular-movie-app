@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -17,6 +18,7 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
 import { ImageComponent } from './components/image/image.component';
 import { TruncateTextPipe } from './pipes/truncate-text.pipe';
 import { ParagraphPipe } from './pipes/paragraph.pipe';
+import { GrowDirective } from './directives/grow.directive';
 
 @NgModule({
   declarations: [
@@ -31,10 +33,12 @@ import { ParagraphPipe } from './pipes/paragraph.pipe';
     LoadingSpinnerComponent,
     ImageComponent,
     TruncateTextPipe,
-    ParagraphPipe
+    ParagraphPipe,
+    GrowDirective
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
