@@ -15,6 +15,8 @@ import { DiscoverComponent } from './components/discover/discover.component';
 import { PersonDetailComponent } from './components/person-detail/person-detail.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { ImageComponent } from './components/image/image.component';
+import { TruncateTextPipe } from './pipes/truncate-text.pipe';
+import { ParagraphPipe } from './pipes/paragraph.pipe';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { ImageComponent } from './components/image/image.component';
     DiscoverComponent,
     PersonDetailComponent,
     LoadingSpinnerComponent,
-    ImageComponent
+    ImageComponent,
+    TruncateTextPipe,
+    ParagraphPipe
   ],
   imports: [
     BrowserModule,

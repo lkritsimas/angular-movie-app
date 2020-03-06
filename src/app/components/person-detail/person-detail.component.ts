@@ -17,6 +17,7 @@ export class PersonDetailComponent implements OnInit {
   moviesAsCast: Cast[];
   moviesAsCrew: Crew[];
   _toggleCastLimit: boolean = false;
+  _toggleBiographyLimit: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -54,4 +55,10 @@ export class PersonDetailComponent implements OnInit {
   // Limit amount of visible movies
   get castLimit() { return this._toggleCastLimit ? -1 : 9; }
   toggleCastLimit() { this._toggleCastLimit = !this._toggleCastLimit; }
+
+  // Limit amount of visible text in biography
+  get biographyLimit() { return this._toggleBiographyLimit ? -1 : 1000; }
+  toggleBiographyLimit() {
+    this._toggleBiographyLimit = !this._toggleBiographyLimit;
+  }
 }
