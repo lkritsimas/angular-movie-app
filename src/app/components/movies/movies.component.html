@@ -3,20 +3,25 @@
   <ng-content select=".filter"></ng-content>
 
   <app-infinite-scroll (scrolled)="runOnScroll()">
-    <ul *ngIf="(movies | async)" class="columns is-multiline is-mobile">
-      <ng-container *ngFor="let movie of (movies | async)">
+    <ul *ngIf="(movies | async)" class="grid-columns grid-large section columns is-centered">
+      <ng-container *ngFor="let movie of (movies | async); let first = first;">
         <!-- Render movie -->
         <li *ngIf="movie.poster_path; else elseBlock" class="movie column">
           <a routerLink="/title/{{ movie.id }}">
-            <img [src]="imageService.url(movie.poster_path, 'movie', 'small')" class="image" alt="{{ movie.title }}" />
+            <app-image *ngIf="first; else notFirst" [url]="movie.poster_path" type="block" alt="movie.title">
+            </app-image>
+            <ng-template #notFirst>
+              <app-image [url]="movie.poster_path" type="movie" size="medium" small alt="movie.title"></app-image>
+            </ng-template>
+            <div class="movie-title-background"></div>
+            <div class="movie-title">{{ movie.title }}</div>
           </a>
         </li>
         <!-- Render person -->
         <ng-template #elseBlock>
-          <li *ngIf="movie.profile_path" class="movie column">
+          <li *ngIf="movie.profile_path" class="person column">
             <a routerLink="/person/{{ movie.id }}">
-              <img [src]="imageService.url(movie.profile_path, 'person', 'small')" class="image"
-                alt="{{ movie.name }}" />
+              <app-image [url]="movie.profile_path" type="person" size="small" small alt="movie.name"></app-image>
             </a>
           </li>
         </ng-template>

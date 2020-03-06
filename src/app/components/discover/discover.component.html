@@ -6,7 +6,7 @@
             </div>
             <div class="column is-narrow">
                 <div class="select is-rounded is-fullwidth is-grey" required>
-                    <select [(ngModel)]="sortByFilter" (ngModelChange)="onSortByFilterChange($event)" required>
+                    <select [ngModel]="sortByFilter" (ngModelChange)="onSortByFilterChange($event)" required>
                         <option value="popularity.desc" selected>Popularity Descending</option>
                         <option value="popularity.asc">Popularity Ascending</option>
                         <option value="vote_average.desc">Rating Descending</option>
@@ -29,7 +29,7 @@
             </div>
             <div class="column is-narrow">
                 <div class="select is-rounded is-fullwidth is-grey">
-                    <select [(ngModel)]="ratingFilter" (ngModelChange)="onFilterChange($event)" required>
+                    <select [ngModel]="ratingFilter" (ngModelChange)="onFilterChange($event)" required>
                         <option value="" selected disabled hidden>Filter by Rating</option>
                         <option value="">All ratings</option>
                         <option value="G">G</option>

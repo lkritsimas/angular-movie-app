@@ -1,22 +1,19 @@
 @import '../../../variables';
 .details {
+    background-color: $black-bis;
+
+    .summary {
+        .title.is-2 {
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, .75);
+        }
+    }
+
     .image {
         @extend %details-image;
     }
 }
 .known-for {
-    margin-left: auto;
-
     .movie {
-        .image {
-            animation-duration: 400ms;
-            animation-name: maxHeight;
-        }
-
-        @extend %movie;
-
-        @include fullhd {
-            min-width: 170px;
-        }
+        overflow: hidden;
     }
 }

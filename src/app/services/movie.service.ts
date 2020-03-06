@@ -4,8 +4,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, Subscription } from 'rxjs';
 import { tap, share, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
-import { API_KEY, API_URL } from './api.config';
-import { Movie, Genre } from './movie';
+import { API_KEY, API_URL } from '../api.config';
+import { Movie, Genre } from '../movie';
 
 @Injectable({
   providedIn: 'root'
@@ -71,9 +71,9 @@ export class MovieService {
 
   discoverMovies(params?: any, page?: number) {
     const queryString = this.createQueryString(this.discoverMoviesEndpoint, params, page);
-    return this.httpClient.get<Movie[]>(queryString).subscribe(response => {
-      return this.resultSource.next([...this.resultSource.getValue(), ...response['results']])
-    });
+    return this.httpClient.get<Movie[]>(queryString).subscribe(response =>
+      this.resultSource.next([...this.resultSource.getValue(), ...response['results']])
+    );
   }
 
   getPopularMovies(page?: number) {
@@ -127,7 +127,7 @@ export class MovieService {
         next: (response) => this.resultSource.next(response['results'])
       });
 
-    // this.router.navigate(['search', term]);
+    this.router.navigate(['search', term]);
   }
 
   clear() {

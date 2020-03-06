@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd, Event, NavigationStart, NavigationCancel, NavigationError, RouterEvent } from '@angular/router';
 import { filter, map, debounceTime } from 'rxjs/operators';
 import { forkJoin, Subject } from 'rxjs';
-import { TitleService } from './title.service';
+
+import { TitleService } from './services/title.service';
 
 @Component({
   selector: 'app-root',

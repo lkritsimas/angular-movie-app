@@ -1,38 +1,32 @@
-<div *ngIf="person" class="details is-relative">
-    <div class="section columns">
-        <div class="section column is-narrow is-offset-1 is-relative">
-            <figure class="image container">
-                <img *ngIf="person.profile_path; else nopictureBlock"
-                    [src]="imageService.url(person.profile_path, 'person', 'medium')" />
-                <ng-template #nopictureBlock>
-                    <app-no-picture person></app-no-picture>
-                </ng-template>
-            </figure>
-        </div>
-        <div class="summary section is-medium column is-5">
-            <h2 class="title is-2">
-                {{ person.name }}
-            </h2>
-            <h3 class="title is-4">Biography</h3>
-            <p class="biography is-size-6 has-text-grey">
-                {{ person.biography }}
-            </p>
+<app-loading-spinner [show]="loading" overlay></app-loading-spinner>
+<div *ngIf="person">
+    <div class="details is-relative">
+        <div class="section columns">
+            <div class="section column is-narrow is-offset-1 is-relative">
+                <app-image [url]="person.profile_path" classList="cover container" type="person" size="medium">
+                </app-image>
+            </div>
+            <div class="summary section is-medium column is-5">
+                <h2 class="title is-2">
+                    {{ person.name }}
+                </h2>
+                <h3 class="title is-4">Biography</h3>
+                <p class="biography is-size-6 has-text-grey">
+                    {{ person.biography }}
+                </p>
+            </div>
         </div>
     </div>
-</div>
 
-<div *ngIf="moviesAsCast" class="known-for container is-fluid section">
-    <h3 class="title is-4 has-text-grey-lighter">Known for</h3>
-    <div class="columns is-multiline is-mobile">
-        <ng-container *ngFor="let movie of moviesAsCast | slice:0:castLimit">
-            <a class="movie column" routerLink="/title/{{ movie.id }}">
-                <img *ngIf="movie.poster_path; else nopictureBlock"
-                    [src]="imageService.url(movie.poster_path, 'movie', 'small')" class="image" />
-                <ng-template #nopictureBlock>
-                    <app-no-picture movie small></app-no-picture>
-                </ng-template>
+    <div *ngIf="moviesAsCast" class="known-for container section">
+        <h3 class="title is-4 has-text-grey-lighter">Known for</h3>
+        <div class="grid-columns columns">
+            <a *ngFor="let movie of moviesAsCast | slice:0:castLimit" class="movie column"
+                routerLink="/title/{{ movie.id }}">
+                <app-image [url]="movie.poster_path" type="movie" size="small" small></app-image>
             </a>
-        </ng-container>
+        </div>
+        <a *ngIf="moviesAsCast.length > castLimit" (click)="toggleCastLimit()" class="title is-5 has-text-warning">Show
+            {{ _toggleCastLimit ? 'less' : 'more' }}</a>
     </div>
-    <a (click)="toggleCastLimit()" class="title is-5 has-text-warning">Show {{ _toggleCastLimit ? 'less' : 'more' }}</a>
 </div>

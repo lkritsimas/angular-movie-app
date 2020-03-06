@@ -1,0 +1,12 @@
+<figure class="app-image image" [ngClass]="classList">
+    <img *ngIf="url; else nopictureBlock" [src]="imageService.url(url, type, size)" [alt]="alt" />
+
+    <ng-template #nopictureBlock>
+        <div *ngIf="type !== 'backdrop'" class="no-image" [ngClass]="{ small: small }">
+            <div class="no-image-holder" [ngClass]="{ small: small }">
+                <fa-icon *ngIf="type === 'movie'" [icon]="faFilm"></fa-icon>
+                <fa-icon *ngIf="type === 'person'" [icon]="faUser"></fa-icon>
+            </div>
+        </div>
+    </ng-template>
+</figure>

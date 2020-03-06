@@ -3,7 +3,7 @@ import { Location } from "@angular/common";
 import { Observable } from 'rxjs';
 
 import { ImageService } from '../../services/image.service';
-import { MovieService } from '../../movie.service';
+import { MovieService } from '../../services/movie.service';
 import { Movie } from '../../movie';
 
 @Component({

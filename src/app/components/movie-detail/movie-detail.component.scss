@@ -53,10 +53,6 @@
         }
     }
 
-    .image {
-        @extend %details-image;
-    }
-
     .user-ratings {
         position: absolute;
         left: 0;
@@ -70,27 +66,16 @@
 
 .credits {
     .cast .card {
-        width: $movie-small-thumb-width;
+        // width: $movie-small-thumb-width;
 
-        img {
-            height: 243px;
-        }
+        // &-image {
+        //     height: 243px;
+        // }
     }
 }
 
 .similar {
-    margin-left: auto;
-
-
     .movie {
-        @extend %movie;
-
-        @include fullhd {
-            min-width: 170px;
-        }        
+        overflow: hidden;     
     }
-
-    // img {
-    //     width: $movie-small-thumb-width;
-    // }
 }

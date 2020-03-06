@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-
-import { API_KEY, API_URL } from './api.config';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
+
+import { API_KEY, API_URL } from '../api.config';
 
 @Injectable({
   providedIn: 'root'

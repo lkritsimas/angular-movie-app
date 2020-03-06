@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 
-import { MovieService } from '../../movie.service';
+import { MovieService } from '../../services/movie.service';
 import { Genre } from '../../movie';
 
 @Component({

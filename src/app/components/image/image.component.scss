@@ -1,0 +1,82 @@
+@import '../../../variables';
+:host-context(:not(.card) + a:hover) .app-image {
+    transform: scale(1.15);
+}
+
+.image {
+    z-index: 1;
+    box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.5), 
+                0 0px 0 1px rgba(10, 10, 10, 0.75);
+    // width: 100%;
+    // height: auto;
+    // max-width: 342px;
+    // max-height: 513px;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    transition: 350ms ease;
+
+    img {
+        height: 100%;
+        object-fit: cover;
+        border-radius: inherit;      
+    }
+
+    &.small {
+        // max-width: 243px;
+        // min-width: 150px; 
+        // max-width: 232px;
+        // height: 278px;
+
+        // @include desktop {
+        //     min-width: 193px;
+        // }
+
+        // @include fullhd {
+        //     min-width: 208px;
+        // }
+        height: 100%;
+    }
+
+    &.cover {
+        width: 342px;
+        height: 513px;        
+        border-radius: 6px;
+
+        &:before {
+            content: '';
+            z-index: -1;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            margin: -2px;
+            border-radius: inherit;
+            background: linear-gradient(hsla(0, 0%, 0%, 0.2), hsla(0, 0%, 100%, 0.07));
+        }
+    }
+
+    &-none {
+        z-index: 1;
+        color: $white;
+        border-radius: inherit;
+        height: 100%;
+        max-width: 100%;
+
+        &-holder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: inherit;
+            font-size: 150px;
+            background: $grey;
+            border-radius: inherit;
+
+            &.small {
+                font-size: 75px;
+            }
+        }
+    }
+}

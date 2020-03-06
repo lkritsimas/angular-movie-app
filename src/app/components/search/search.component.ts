@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-import { MovieService } from '../../movie.service';
+import { MovieService } from '../../services/movie.service';
 
 @Component({
   selector: 'app-search',

@@ -12,6 +12,7 @@ export interface ImageSize {
     large: string
   };
   backdrop: string;
+  block: string;
 }
 
 @Injectable({
@@ -30,7 +31,8 @@ export class ImageService {
       medium: 'w370_and_h556_bestv2',
       large: 'w600_and_h900_bestv2',
     },
-    backdrop: 'w1400_and_h450_face'
+    backdrop: 'w1400_and_h450_face',
+    block: 'w1000_and_h563_face'
   };
 
   constructor() { }

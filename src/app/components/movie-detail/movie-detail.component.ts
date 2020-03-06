@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { map, switchMap, tap, distinctUntilChanged } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 
-import { MovieService } from '../../movie.service';
-import { TitleService } from '../../title.service';
+import { MovieService } from '../../services/movie.service';
+import { TitleService } from '../../services/title.service';
 import { ImageService } from '../../services/image.service';
-import { Movie, Credits, Genre, ReleaseDates } from '../../movie';
+import { Movie, Credits, Genre } from '../../movie';
 
 @Component({
   selector: 'app-movie-detail',

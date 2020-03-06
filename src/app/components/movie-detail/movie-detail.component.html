@@ -7,13 +7,8 @@
         </div>
         <div class="section columns">
             <div class="section column is-narrow is-offset-1 is-relative">
-                <figure class="image cover container">
-                    <img *ngIf="movie.poster_path; else nopictureBlock"
-                        [src]="imageService.url(movie.poster_path, 'movie', 'medium')" />
-                    <ng-template #nopictureBlock>
-                        <app-no-picture movie></app-no-picture>
-                    </ng-template>
-                </figure>
+                <app-image [url]="movie.poster_path" classList="cover container" type="movie" size="medium"></app-image>
+
                 <div *ngIf="movie.vote_count !== 0" class="user-ratings column has-text-centered">
                     <span class="title is-3">{{ movie.vote_average }}</span>
                     <span class="has-text-grey">/10</span>
@@ -53,20 +48,14 @@
         </div>
     </div>
 
-    <div *ngIf="movie.credits" class="credits container is-fluid section">
+    <div *ngIf="movie.credits" class="credits container section">
         <h3 class="title is-4 has-text-grey-lighter">Cast</h3>
-        <div class="columns is-multiline is-mobile">
-            <div *ngFor="let cast of movie.credits.cast | slice:0:10" class="cast column is-narrow">
+        <div class="grid-columns columns">
+            <div *ngFor="let cast of movie.credits.cast | slice:0:10" class="cast column">
                 <div class="card">
                     <div class="card-image">
                         <a routerLink="/person/{{ cast.id }}">
-                            <figure class="image" [routerLink]="">
-                                <img *ngIf="cast.profile_path; else nopictureBlock"
-                                    [src]="imageService.url(cast.profile_path, 'person', 'small')" [alt]="cast.name" />
-                                <ng-template #nopictureBlock>
-                                    <app-no-picture person small></app-no-picture>
-                                </ng-template>
-                            </figure>
+                            <app-image [url]="cast.profile_path" type="person" size="small" small></app-image>
                         </a>
                     </div>
                     <div class="card-content">
@@ -79,16 +68,12 @@
         <a class="title is-5 has-text-link">All cast & crew</a>
     </div>
 
-    <div *ngIf="similarMovies.length" class="similar container is-fluid section">
+    <div *ngIf="similarMovies.length" class="similar container section">
         <h3 class="title is-4 has-text-grey-lighter">Similar movies</h3>
-        <div class="columns is-multiline is-mobile">
+        <div class="grid-columns columns">
             <ng-container *ngFor="let similarMovie of similarMovies">
                 <a class="movie column" routerLink="/title/{{ similarMovie.id }}">
-                    <img *ngIf="similarMovie.poster_path; else nopictureBlock"
-                        [src]="imageService.url(similarMovie.poster_path, 'movie', 'small')" class="image" />
-                    <ng-template #nopictureBlock>
-                        <app-no-picture movie small></app-no-picture>
-                    </ng-template>
+                    <app-image [url]="similarMovie.poster_path" type="movie" size="small" small></app-image>
                 </a>
             </ng-container>
         </div>
