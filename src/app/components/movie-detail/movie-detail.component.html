@@ -3,7 +3,7 @@
     <div class="details is-relative" [ngClass]="{ 'no-backdrop': !movie.backdrop_path }">
         <div *ngIf="movie.backdrop_path"
             [style.backgroundImage]="'url(' + imageService.url(movie.backdrop_path, 'backdrop') + ')'"
-            class="backdrop is-hidden-touch">
+            class="backdrop is-hidden-touch" appParallax>
         </div>
         <div class="section columns">
             <div class="section column is-narrow is-offset-1 is-relative">

@@ -19,6 +19,7 @@ import { ImageComponent } from './components/image/image.component';
 import { RevealContentComponent } from './components/reveal-content/reveal-content.component';
 import { TruncateTextPipe } from './pipes/truncate-text.pipe';
 import { ParagraphPipe } from './pipes/paragraph.pipe';
+import { ParallaxDirective } from './directives/parallax.directive';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ParagraphPipe } from './pipes/paragraph.pipe';
     ImageComponent,
     RevealContentComponent,
     TruncateTextPipe,
-    ParagraphPipe
+    ParagraphPipe,
+    ParallaxDirective
   ],
   imports: [
     BrowserModule,
