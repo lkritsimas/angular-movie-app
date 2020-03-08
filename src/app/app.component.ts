@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd, Event, NavigationStart, NavigationCancel, NavigationError, RouterEvent } from '@angular/router';
-import { filter, map, debounceTime } from 'rxjs/operators';
+import { filter, map, debounceTime, tap } from 'rxjs/operators';
 import { forkJoin, Subject } from 'rxjs';
+import { NgScrollbar } from 'ngx-scrollbar';
 
 import { TitleService } from './services/title.service';
 
@@ -13,6 +14,7 @@ import { TitleService } from './services/title.service';
 export class AppComponent implements OnInit {
   @ViewChild('navBurger') navBurger: ElementRef;
   @ViewChild('navMenu') navMenu: ElementRef;
+  @ViewChild(NgScrollbar, { static: true }) scrollbarRef: NgScrollbar;
   title: string = 'MyMovieList';
   isLoading: boolean = false;
 
@@ -46,6 +48,10 @@ export class AppComponent implements OnInit {
     this.router.events
       .pipe(
         filter((event: RouterEvent) => event instanceof NavigationEnd),
+        filter(() => !!this.scrollbarRef),
+        tap((event: NavigationEnd) =>
+          this.scrollbarRef.scrollTo({ top: 0, duration: 0 })
+        ),
         map(() => this.activatedRoute),
         map((route) => {
           while (route.firstChild) {

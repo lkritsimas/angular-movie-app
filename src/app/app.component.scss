@@ -1,6 +1,20 @@
 
 @import "../variables";
 
+.scrollbar {
+    --scrollbar-border-radius: 8px;
+    --scrollbar-padding: 0px;
+    --scrollbar-viewport-margin: 0;
+    --scrollbar-track-color: transparent;
+    --scrollbar-wrapper-color: transparent;
+    --scrollbar-thumb-color: rgba(255, 255, 255, 0.2);
+    --scrollbar-thumb-hover-color: rgba(255, 255, 255, 0.3);
+    --scrollbar-size: 8px;
+    --scrollbar-hover-size: 10px;
+    --scrollbar-thumb-transition: height ease-out 150ms, width ease-out 150ms;
+    --scrollbar-track-transition: height ease-out 150ms, width ease-out 150ms;
+}
+
 .navbar {
     &-start {
         flex-grow: 1;

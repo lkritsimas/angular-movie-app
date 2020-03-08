@@ -45,9 +45,6 @@ export class PersonDetailComponent implements OnInit {
 
         // Hide loading spinner
         this.loading = false;
-
-        // Scroll back to top
-        window.scroll(0, 0);
       });
   }
 
