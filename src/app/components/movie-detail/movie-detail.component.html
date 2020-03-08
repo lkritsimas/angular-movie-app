@@ -43,7 +43,9 @@
                         </ng-container>
                     </ng-container>
                 </div>
-                <p class="overview is-size-6 has-text-grey">{{ movie.overview }}</p>
+                <app-reveal-content [maxHeight]="222">
+                    <div [innerHTML]="movie.overview | paragraph" class="is-size-6 has-text-grey"></div>
+                </app-reveal-content>
             </div>
         </div>
     </div>

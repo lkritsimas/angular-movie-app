@@ -8,7 +8,7 @@
         <!-- Render movie -->
         <li *ngIf="movie.poster_path; else elseBlock" class="movie column">
           <a routerLink="/title/{{ movie.id }}">
-            <app-image *ngIf="first; else notFirst" [url]="movie.poster_path" type="block" alt="movie.title">
+            <app-image *ngIf="first; else notFirst" [url]="movie.backdrop_path" type="block" alt="movie.title">
             </app-image>
             <ng-template #notFirst>
               <app-image [url]="movie.poster_path" type="movie" size="medium" small alt="movie.title"></app-image>
