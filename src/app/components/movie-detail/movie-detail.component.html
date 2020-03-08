@@ -1,6 +1,6 @@
 <app-loading-spinner [show]="loading" overlay></app-loading-spinner>
 <div *ngIf="movie">
-    <div class="details is-relative">
+    <div class="details is-relative" [ngClass]="{ 'no-backdrop': !movie.backdrop_path }">
         <div *ngIf="movie.backdrop_path"
             [style.backgroundImage]="'url(' + imageService.url(movie.backdrop_path, 'backdrop') + ')'"
             class="backdrop is-hidden-touch">
@@ -20,7 +20,7 @@
             <div class="summary section is-medium column is-5">
                 <h2 class="title is-2">
                     {{ movie.title }}
-                    <small class="subtitle is-4">({{ movie.release_date | date: 'yyyy' }})</small>
+                    <small class="subtitle is-4">{{ movie.release_date | date: 'yyyy' }}</small>
                 </h2>
                 <div *ngIf="movie.title !== movie.original_title" class="has-text-grey-light">
                     {{ movie.original_title }} <span class="is-italic">(original title)</span>
@@ -28,7 +28,6 @@
                 <div class="subtext is-size-7-mobile has-text-grey-light">
                     <ng-container *ngIf="movieRating">
                         <span class="rating">{{ movieRating }}</span>
-                        <span class="separator">|</span>
                     </ng-container>
                     <ng-container *ngIf="movie.runtime">
                         <span class="runtime">{{ movie.runtime }} min</span>

@@ -14,7 +14,10 @@
               <app-image [url]="movie.poster_path" type="movie" size="medium" small alt="movie.title"></app-image>
             </ng-template>
             <div class="movie-title-background"></div>
-            <div class="movie-title">{{ movie.title }}</div>
+            <div class="movie-title">
+              {{ movie.title }}
+              <span class="movie-year has-text-grey">{{ movie.release_date | date: 'yyyy' }}</span>
+            </div>
           </a>
         </li>
         <!-- Render person -->

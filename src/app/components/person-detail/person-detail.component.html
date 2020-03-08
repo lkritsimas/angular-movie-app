@@ -10,12 +10,14 @@
                 <h2 class="title is-2">
                     {{ person.name }}
                 </h2>
-                <h3 class="title is-4">Biography</h3>
-                <div class="biography">
-                    <app-reveal-content [maxHeight]="222">
-                        <div [innerHTML]="person.biography | paragraph" class="is-size-6 has-text-grey"></div>
-                    </app-reveal-content>
-                </div>
+                <ng-container *ngIf="person.biography">
+                    <h3 class="title is-4">Biography</h3>
+                    <div class="biography">
+                        <app-reveal-content [maxHeight]="222">
+                            <div [innerHTML]="person.biography | paragraph" class="is-size-6 has-text-grey"></div>
+                        </app-reveal-content>
+                    </div>
+                </ng-container>
             </div>
         </div>
     </div>

@@ -24,7 +24,7 @@
         content: '';
         position: absolute;
         z-index: 10;
-        background-image: linear-gradient(to top, $black-bis, transparent);
+        background-image: linear-gradient(to top, $black, transparent);
         bottom: 0;
         left: 0;
         right: 0;
@@ -34,6 +34,10 @@
 }
 
 .details {
+    &.no-backdrop {
+        background: $black-bis;
+    }
+
     .title {
         text-shadow: 1px 1px 4px rgba(0, 0, 0, .75);
         margin-bottom: 0.25rem;
@@ -45,6 +49,18 @@
 
     .subtext {
         margin-bottom: 1.5rem;
+        
+        .rating {
+            display: inline-flex;
+            white-space: nowrap;
+            align-items: center;
+            align-content: center;
+            padding: 0.06em 4px 0.15em 4px;
+            border: 1px solid $grey-light;
+            line-height: 1;
+            border-radius: 2px;
+            margin-right: 0.7em;
+        }
         
         .separator {
             color: $grey-dark;

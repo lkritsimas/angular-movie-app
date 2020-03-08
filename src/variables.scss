@@ -34,5 +34,5 @@ $card-color: hsl(0, 0%, 93%);
 $card-background-color: transparent;
 $card-content-padding: 0.75rem 0;
 
-@import "~node_modules/bulma/bulma.sass";
+@import "~node_modules/bulma/bulma";
 @import "./helpers";
