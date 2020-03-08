@@ -1,0 +1,18 @@
+<!-- If content height does not exceed max allowed height -->
+<ng-container *ngIf="hidden">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</ng-container>
+<!-- Else -->
+<ng-container *ngIf="!hidden">
+    <div class="read-more" [ngClass]="{ 'hide': state }">
+        <a (click)="toggleState()" class="is-block has-text-centered">
+            <fa-icon [icon]="state ? faChevronCircleUp : faChevronCircleDown" size="2x"></fa-icon>
+        </a>
+    </div>
+    <div class="content" [ngClass]="{ 'show': state }">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+    </div>
+</ng-container>
+<ng-template #content>
+    <ng-content></ng-content>
+</ng-template>

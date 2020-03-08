@@ -1,0 +1,45 @@
+@import '../../../variables';
+$transition: 400ms ease-in-out;
+
+:host {
+    display: inherit;
+    overflow: hidden;
+    
+    & > .content {
+        &.show:after {
+            opacity: 0;
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            pointer-events: none;
+            opacity: 1;
+            bottom: 0;
+            width: 100%;
+            height: 42px;
+            background-image: linear-gradient(to bottom right, transparent 0%, $black-bis 50%);
+            transition: opacity $transition;
+        }
+    }
+}
+
+.read-more {
+    z-index: 2;
+    position: absolute;
+    bottom: 0;
+    right: 32px;
+    width: 32px;
+    height: 32px;
+    transition: bottom $transition;
+
+    a {
+        z-index: inherit;
+        height: inherit;
+        transition: color 200ms ease;
+    }
+
+    &.hide {
+        bottom: -32px;
+    }
+}

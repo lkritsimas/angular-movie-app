@@ -1,9 +1,9 @@
-import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule, Title } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -16,9 +16,9 @@ import { DiscoverComponent } from './components/discover/discover.component';
 import { PersonDetailComponent } from './components/person-detail/person-detail.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { ImageComponent } from './components/image/image.component';
+import { RevealContentComponent } from './components/reveal-content/reveal-content.component';
 import { TruncateTextPipe } from './pipes/truncate-text.pipe';
 import { ParagraphPipe } from './pipes/paragraph.pipe';
-import { GrowDirective } from './directives/grow.directive';
 
 @NgModule({
   declarations: [
@@ -32,9 +32,9 @@ import { GrowDirective } from './directives/grow.directive';
     PersonDetailComponent,
     LoadingSpinnerComponent,
     ImageComponent,
+    RevealContentComponent,
     TruncateTextPipe,
-    ParagraphPipe,
-    GrowDirective
+    ParagraphPipe
   ],
   imports: [
     BrowserModule,

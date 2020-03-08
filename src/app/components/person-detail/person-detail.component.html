@@ -12,14 +12,9 @@
                 </h2>
                 <h3 class="title is-4">Biography</h3>
                 <div class="biography">
-                    <div [innerHTML]="person.biography | paragraph" [appAnimateGrow]="_toggleBiography"
-                        class="content is-size-6 has-text-grey"></div>
-                    <div class="read-more">
-                        <a (click)="toggleBiography()" class="is-block has-text-centered">
-                            <fa-icon [icon]="showBiography ? faChevronCircleUp : faChevronCircleDown" size="2x">
-                            </fa-icon>
-                        </a>
-                    </div>
+                    <app-reveal-content [maxHeight]="222">
+                        <div [innerHTML]="person.biography | paragraph" class="is-size-6 has-text-grey"></div>
+                    </app-reveal-content>
                 </div>
             </div>
         </div>
@@ -33,7 +28,8 @@
                 <app-image [url]="movie.poster_path" type="movie" size="small" small></app-image>
             </a>
         </div>
-        <a *ngIf="moviesAsCast.length > castLimit" (click)="toggleCastLimit()" class="title is-5 has-text-warning">Show
-            {{ _toggleCastLimit ? 'less' : 'more' }}</a>
+        <a (click)="toggleCastLimit()" class="title is-5 has-text-warning">
+            Show {{ fullCast ? 'less' : 'more' }}
+        </a>
     </div>
 </div>

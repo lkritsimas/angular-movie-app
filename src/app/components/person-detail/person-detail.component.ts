@@ -1,28 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { tap, map, switchMap } from 'rxjs/operators';
-import { faChevronCircleDown, faChevronCircleUp } from '@fortawesome/free-solid-svg-icons';
 
 import { PersonService } from '../../services/person.service';
 import { ImageService } from '../../services/image.service';
 import { Person, Cast, Crew } from '../../person';
-import { animateGrow } from '../../animations';
 
 @Component({
   selector: 'app-person-detail',
   templateUrl: './person-detail.component.html',
-  styleUrls: ['./person-detail.component.scss'],
-  animations: [animateGrow]
+  styleUrls: ['./person-detail.component.scss']
 })
 export class PersonDetailComponent implements OnInit {
   loading: boolean = false;
   person: Person;
   moviesAsCast: Cast[];
   moviesAsCrew: Crew[];
-  _toggleCastLimit: boolean = false;
-  _toggleBiography: boolean = false;
-  faChevronCircleDown = faChevronCircleDown;
-  faChevronCircleUp = faChevronCircleUp;
+  private _toggleCast: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -58,12 +52,7 @@ export class PersonDetailComponent implements OnInit {
   }
 
   // Limit amount of visible movies
-  get castLimit() { return this._toggleCastLimit ? -1 : 9; }
-  toggleCastLimit() { this._toggleCastLimit = !this._toggleCastLimit; }
-
-  // Limit amount of visible text in biography
-  get showBiography() { return this._toggleBiography }
-  toggleBiography() {
-    this._toggleBiography = !this._toggleBiography;
-  }
+  get fullCast() { return this._toggleCast; }
+  get castLimit() { return this._toggleCast ? -1 : 9; }
+  toggleCastLimit() { this._toggleCast = !this._toggleCast; }
 }

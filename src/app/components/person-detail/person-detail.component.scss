@@ -14,42 +14,6 @@
 
     .biography {
         position: relative;
-
-        .content {
-            // overflow: hidden;
-            // height: calc(222px - 1em);
-            // transition: height 200ms;
-        }
-
-        .read-more {
-            z-index: 2;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 32px;
-
-            a {
-                z-index: inherit;
-                height: inherit;
-                transition: color 200ms;             
-            }
-        }
-
-        & > .content:after {
-            content: '';
-            position: absolute;
-            pointer-events: none;
-            opacity: 1;
-            bottom: 0;
-            right: 0;
-            width: 100%;
-            height: 32px;
-            background-image: linear-gradient(to right, transparent 0%, $black-bis 50%);
-        }
-
-        &.open:after {
-            opacity: 0;
-        }
     }
 }
 .known-for {

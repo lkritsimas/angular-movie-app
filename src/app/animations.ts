@@ -1,10 +1,12 @@
-import { trigger, style, transition, animate } from '@angular/animations';
+import { trigger, style, transition, animate, state } from '@angular/animations';
 
 export const animateGrow = trigger('grow', [
-    transition('void <=> *', []),
-    transition('* <=> *',
-        [style({ height: '{{ startHeight }}px', opacity: 0 }),
-        animate('.5s ease')], {
-        params: { startHeight: 0 }
-    })
+    state('true', style({
+        height: '*'
+    })),
+    state('false', style({
+        height: `{{maxHeight}}px`
+    }), { params: { maxHeight: 0 } }),
+    transition('true => false', animate('400ms ease-in-out')),
+    transition('false => true', animate('400ms ease-in-out'))
 ]);
