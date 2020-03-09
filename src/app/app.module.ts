@@ -22,6 +22,7 @@ import { TruncateTextPipe } from './pipes/truncate-text.pipe';
 import { ParagraphPipe } from './pipes/paragraph.pipe';
 import { ParallaxDirective } from './directives/parallax.directive';
 import { MyListsComponent } from './components/my-lists/my-lists.component';
+import { AddToListComponent } from './components/add-to-list/add-to-list.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { MyListsComponent } from './components/my-lists/my-lists.component';
     TruncateTextPipe,
     ParagraphPipe,
     ParallaxDirective,
-    MyListsComponent
+    MyListsComponent,
+    AddToListComponent
   ],
   imports: [
     BrowserModule,

@@ -3,14 +3,7 @@ import { LOCAL_STORAGE, StorageService, StorageTranscoders } from 'ngx-webstorag
 import { inject } from '@angular/core/testing';
 import { Observable, of } from 'rxjs';
 
-export interface ListItem {
-  id: number;
-  type: string;
-}
-
-export interface ListItems {
-  [key: string]: ListItem[];
-}
+import { ListItem, ListItems } from '../list';
 
 @Injectable({
   providedIn: 'root'
@@ -18,36 +11,33 @@ export interface ListItems {
 export class LocalStorageService {
   private watchListKey: string = 'watchList';
   private myListsKey: string = 'myLists';
-  private watchList: ListItem[];
-  private myLists: ListItems[];
+  private _watchList: ListItem[];
+  private _myLists: ListItems[];
 
   constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
     this.initLists();
   }
 
   private initLists(): void {
-    this.myLists = this.storage.get(this.myListsKey) || {};
-    this.watchList = this.storage.get(this.watchListKey) || [];
-    console.log(this.myLists)
-    console.log(this.watchList)
+    this._myLists = this.storage.get(this.myListsKey) || {};
+    this._watchList = this.storage.get(this.watchListKey) || [];
   }
 
-  getWatchList(): ListItem[] {
-    return this.watchList;
+  get watchList(): ListItem[] {
+    return this._watchList;
   }
 
-  getMyLists(): ListItems[] {
-    return this.myLists;
+  get myLists(): ListItems[] {
+    return this._myLists;
   }
 
   //  Create a new list
   newList(title: string): boolean {
-    if (!title && title in this.myLists)
+    if (title in this._myLists)
       return false;
 
-    let currList = this.myLists;
+    let currList = this._myLists;
     currList[title] = [];
-    console.log(currList)
 
     this.storage.set(this.myListsKey, currList);
 
@@ -56,12 +46,12 @@ export class LocalStorageService {
 
   // Add new item to a list
   addToList(list: string, id: number, type: string): void {
-    if (!(list in this.myLists))
+    if (!(list in this._myLists))
       return;
 
-    const currList = this.myLists[list];
+    const currList = this._myLists;
 
-    currList.push({
+    currList[list].push({
       id: id,
       type: type
     });
@@ -71,19 +61,19 @@ export class LocalStorageService {
 
   // Remove a specific entry from a list
   removeFromList(list: string, id: number): boolean {
-    if (!(list in this.myLists))
+    if (!(list in this._myLists))
       return false;
 
-    this.myLists = this.myLists[list].filter((list) => list.id != id);
+    this._myLists = this._myLists[list].filter((list) => list.id != id);
   }
 
   // Remove a specific list from array
   removeList(list: string): boolean {
-    if (!(list in this.myLists))
+    if (!(list in this._myLists))
       return false;
 
-    delete this.myLists[list];
-    this.storage.set(this.myListsKey, this.myLists);
+    delete this._myLists[list];
+    this.storage.set(this.myListsKey, this._myLists);
 
     return true;
   }

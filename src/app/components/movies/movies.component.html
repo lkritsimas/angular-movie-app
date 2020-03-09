@@ -8,10 +8,10 @@
         <!-- Render movie -->
         <li *ngIf="movie.poster_path; else elseBlock" class="movie column">
           <a routerLink="/title/{{ movie.id }}">
-            <app-image *ngIf="first; else notFirst" [url]="movie.backdrop_path" type="block" alt="movie.title">
+            <app-image *ngIf="first; else notFirst" [url]="movie.backdrop_path" type="block" [alt]="movie.title">
             </app-image>
             <ng-template #notFirst>
-              <app-image [url]="movie.poster_path" type="movie" size="medium" small alt="movie.title"></app-image>
+              <app-image [url]="movie.poster_path" type="movie" size="medium" small [alt]="movie.title"></app-image>
             </ng-template>
             <div class="movie-title-background"></div>
             <div class="movie-title">
@@ -24,7 +24,7 @@
         <ng-template #elseBlock>
           <li *ngIf="movie.profile_path" class="person column">
             <a routerLink="/person/{{ movie.id }}">
-              <app-image [url]="movie.profile_path" type="person" size="small" small alt="movie.name"></app-image>
+              <app-image [url]="movie.profile_path" type="person" size="small" small [alt]="movie.name"></app-image>
             </a>
           </li>
         </ng-template>

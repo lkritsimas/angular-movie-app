@@ -29,12 +29,35 @@
         </form>
     </div>
 
-    <div class="section">
+    <div *ngIf="myLists" class="section">
         <div class="title">My lists</div>
-        <div *ngFor="let list of myLists | keyvalue">
-            <div>{{ list.key }}</div>
-            <div *ngFor="let item of list.value">{{ item.id }}</div>
+
+        <div class="grid-columns">
+            <div class="card" *ngFor="let list of myLists">
+                <div class="card-content">
+                    <a routerLink="/list/{{ list.title | lowercase }}">
+                        <span class="my-list-title">{{ list.title }}</span>
+                    </a>
+                    <a (click)="removeList(list.title)" class="has-text-danger is-pulled-right">
+                        <span class="icon">
+                            <fa-icon [icon]="faTrash"></fa-icon>
+                        </span>
+                    </a>
+                </div>
+                <div class="card-image">
+                    <a routerLink="/list/{{ list.title | lowercase }}">
+                        <div class="columns is-multiline is-mobile is-marginless">
+                            <ng-container *ngFor="let movie of list.movies | slice:0:4">
+                                <app-image class="column is-half" [url]="movie.poster_path" type="movie" size="small"
+                                    small [alt]="movie.title">
+                                </app-image>
+                            </ng-container>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
+
     </div>
 
 </div>

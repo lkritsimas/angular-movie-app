@@ -1,3 +1,24 @@
+@import '../../../variables';
+
 .slide-in-out {
     transform-origin: left;
+}
+
+.thumbnail figure {
+    max-width: 25%;
+    height: auto;
+}
+
+.grid-columns {
+    grid-gap: 5rem;
+}
+
+.my-list-title {
+    padding: 0.75rem;
+}
+
+.card {
+    &-image {
+    background-color: $black-bis;
+    }
 }
