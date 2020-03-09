@@ -25,6 +25,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
     "bulma": "^0.8.0",
     "ngx-scrollbar": "^7.2.0",
+    "ngx-webstorage-service": "^4.1.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

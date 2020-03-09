@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 
@@ -21,6 +21,7 @@ import { RevealContentComponent } from './components/reveal-content/reveal-conte
 import { TruncateTextPipe } from './pipes/truncate-text.pipe';
 import { ParagraphPipe } from './pipes/paragraph.pipe';
 import { ParallaxDirective } from './directives/parallax.directive';
+import { MyListsComponent } from './components/my-lists/my-lists.component';
 
 @NgModule({
   declarations: [
@@ -37,12 +38,14 @@ import { ParallaxDirective } from './directives/parallax.directive';
     RevealContentComponent,
     TruncateTextPipe,
     ParagraphPipe,
-    ParallaxDirective
+    ParallaxDirective,
+    MyListsComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
     FontAwesomeModule,

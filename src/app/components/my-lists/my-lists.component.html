@@ -1,0 +1,40 @@
+<div class="container">
+
+    <div class="section">
+        <form #newListForm="ngForm" (ngSubmit)="onSubmitNewListForm(newListForm)" novalidate>
+            <div class="field is-horizontal">
+                <div class="field-label">
+                    <button type="button" (click)="toggleNewListForm()" class="button is-link">
+                        <span class="icon">
+                            <fa-icon [icon]="faPlus"></fa-icon>
+                        </span>
+                        <span>New list</span>
+                    </button>
+                </div>
+                <div class="field-body">
+                    <div *ngIf="!newListFormVisible" [@slideInOut] class="field is-expanded has-addons slide-in-out">
+                        <div class="control is-expanded">
+                            <input type="text" class="input"
+                                [ngClass]="{ 'is-danger': newListForm.invalid && (newListForm.dirty || newListForm.touched) }"
+                                placeholder="List title" name="title" ngModel required>
+                        </div>
+                        <div class="control">
+                            <button type="submit" class="button is-link">
+                                <span>Create</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="section">
+        <div class="title">My lists</div>
+        <div *ngFor="let list of myLists | keyvalue">
+            <div>{{ list.key }}</div>
+            <div *ngFor="let item of list.value">{{ item.id }}</div>
+        </div>
+    </div>
+
+</div>

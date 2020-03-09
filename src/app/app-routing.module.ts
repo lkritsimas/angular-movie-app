@@ -6,8 +6,10 @@ import { MovieDetailComponent } from './components/movie-detail/movie-detail.com
 import { SearchResultComponent } from './components/search-result/search-result.component';
 import { DiscoverComponent } from './components/discover/discover.component';
 import { PersonDetailComponent } from './components/person-detail/person-detail.component';
+import { MyListsComponent } from './components/my-lists/my-lists.component';
 
 const routes: Routes = [
+  { path: 'lists', component: MyListsComponent, data: { title: 'My lists' } },
   { path: 'movies/popular', component: MoviesComponent, data: { title: 'Popular movies' } },
   { path: 'movies/top', component: MoviesComponent, data: { title: 'Top rated movies' } },
   { path: 'movies/upcoming', component: MoviesComponent, data: { title: 'Upcoming movies' } },
