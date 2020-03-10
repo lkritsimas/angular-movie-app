@@ -38,6 +38,7 @@ export class LocalStorageService {
     let currList = this._myLists;
     currList.push({
       title: title,
+      order: this._myLists.length + 1,
       movies: []
     });
 
@@ -97,7 +98,7 @@ export class LocalStorageService {
 
   // Check if movie exists in list
   isInList(list: string, id: number) {
-    const currList = this._myLists.find(currList => currList.title === list)
+    const currList = this._myLists.find(currList => currList.title === list);
 
     return currList.movies.some(movie => movie.id === id);
   }
@@ -105,11 +106,14 @@ export class LocalStorageService {
   // Sort a list
   private sort(value) {
     value.sort((a, b) => {
-      if (a.movies.length < b.movies.length) return 1;
-      if (a.movies.length > b.movies.length) return -1;
+      // if (a.movies.length < b.movies.length) return 1;
+      // if (a.movies.length > b.movies.length) return -1;
 
-      if (a.title < b.title) return -1;
-      if (b.title > a.title) return 1;
+      if (a.order < b.order) return -1;
+      if (b.order > a.order) return 1;
+
+      // if (a.title < b.title) return -1;
+      // if (b.title > a.title) return 1;
 
       return 0;
     });

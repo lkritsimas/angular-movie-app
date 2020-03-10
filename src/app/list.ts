@@ -5,6 +5,7 @@ export interface ListItem {
 
 export interface ListItems {
     title: string,
+    order?: number;
     movies: ListItem[]
 }
 

@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, NavigationEnd, Event, NavigationStart, Navigati
 import { filter, map, debounceTime, tap } from 'rxjs/operators';
 import { forkJoin, Subject } from 'rxjs';
 import { NgScrollbar } from 'ngx-scrollbar';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
 import { TitleService } from './services/title.service';
 
@@ -12,6 +13,7 @@ import { TitleService } from './services/title.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  faHeart = faHeart;
   @ViewChild('navBurger') navBurger: ElementRef;
   @ViewChild('navMenu') navMenu: ElementRef;
   @ViewChild(NgScrollbar, { static: true }) scrollbarRef: NgScrollbar;

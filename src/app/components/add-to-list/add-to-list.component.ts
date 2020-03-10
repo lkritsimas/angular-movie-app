@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTimes, faHeart } from '@fortawesome/free-solid-svg-icons';
 
 import { LocalStorageService } from '../../services/local-storage.service';
 import { ListItems } from '../../list';
@@ -12,6 +12,7 @@ import { ListItems } from '../../list';
 export class AddToListComponent implements OnInit {
   faPlus = faPlus;
   faTimes = faTimes;
+  faHeart = faHeart;
   myLists: ListItems[];
   selectedList: string = '';
   @Input() id: number;
@@ -35,7 +36,10 @@ export class AddToListComponent implements OnInit {
     this.localStorageService.addToList(this.selectedList, this.id, this.image);
   }
 
-  isInList(): boolean {
-    return this.localStorageService.isInList(this.selectedList, this.id);
+  isInList(list?: string, id?: number): boolean {
+    id = id || this.id;
+    list = list || this.selectedList;
+
+    return this.localStorageService.isInList(list, id);
   }
 }

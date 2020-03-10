@@ -4,15 +4,15 @@
             <select [(ngModel)]="selectedList">
                 <option value="" selected hidden disabled>Add to list</option>
                 <option *ngFor="let list of myLists" [value]="list.title">
-                    {{ list.title }} ({{ list.movies.length }})
+                    {{ list.title }} {{ isInList(list.title, id) ? ' (in list)' : '' }}
                 </option>
             </select>
         </div>
     </div>
     <div *ngIf="selectedList" class="control">
-        <button *ngIf="!isInList(); else elseBlock" (click)="addToList()" class="button is-primary">
+        <button *ngIf="!isInList(); else elseBlock" (click)="addToList()" class="button is-danger">
             <span class="icon">
-                <fa-icon [icon]="faPlus"></fa-icon>
+                <fa-icon [icon]="faHeart"></fa-icon>
             </span>
             <span>Add</span>
         </button>

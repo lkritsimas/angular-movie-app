@@ -42,7 +42,12 @@
     </div>
 
     <div class="navbar-end">
-      <a class="navbar-item" routerLink="/lists" routerLinkActive="is-active">My Lists</a>
+      <a class="navbar-item" routerLink="/lists" routerLinkActive="is-active">
+        <span class="icon has-text-danger">
+          <fa-icon [icon]="faHeart"></fa-icon>
+        </span>
+        <span>My Lists</span>
+      </a>
     </div>
   </div>
 </nav>

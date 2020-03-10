@@ -23,6 +23,11 @@
     &-item {
         transition: color 300ms;
         
+        .icon {
+            margin-left: -.25em;
+            margin-right: .25em;
+        }
+
         &.is-active {
             font-weight: bold;
             color: $white;
