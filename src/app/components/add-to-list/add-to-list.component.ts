@@ -32,11 +32,10 @@ export class AddToListComponent implements OnInit {
   }
 
   addToList(): void {
-    console.log(this.selectedList);
     this.localStorageService.addToList(this.selectedList, this.id, this.image);
   }
 
   isInList(): boolean {
-    return this.localStorageService.isInMyList(this.selectedList, this.id);
+    return this.localStorageService.isInList(this.selectedList, this.id);
   }
 }

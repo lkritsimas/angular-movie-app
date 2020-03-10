@@ -7,7 +7,7 @@ import { ListItem, ListItems } from '../list';
 @Injectable({
   providedIn: 'root'
 })
-export class LocalStorageService implements OnInit {
+export class LocalStorageService {
   private myListsKey: string = 'myLists';
   private _myLists: ListItems[];
 
@@ -18,25 +18,28 @@ export class LocalStorageService implements OnInit {
     this.initLists();
   }
 
-  ngOnInit() { }
-
   private initLists(): void {
     this._myLists = this.storage.retrieve(this.myListsKey) || [];
+    this.sort(this._myLists);
     this.listSource.next(this._myLists);
 
     this.storage.observe(this.myListsKey).subscribe((lists: ListItems[]) => {
+      this.sort(lists);
       this._myLists = lists || [];
-      this.listSource.next(lists || []);
+      this.listSource.next(this._myLists);
     });
   }
 
   //  Create a new list
   newList(title: string): boolean {
-    if (title in this._myLists)
+    if (this._myLists.some(list => list.title === title))
       return false;
 
     let currList = this._myLists;
-    currList[title] = [];
+    currList.push({
+      title: title,
+      movies: []
+    });
 
     this.storage.store(this.myListsKey, currList);
 
@@ -45,26 +48,34 @@ export class LocalStorageService implements OnInit {
 
   // Add new item to a list
   addToList(list: string, id: number, image: string): void {
-    if (!(list in this._myLists) || this.isInMyList(list, id))
+    if (this.isInList(list, id))
       return;
+
 
     const currList = this._myLists;
 
-    currList[list].push({
-      id: id,
-      image: image
-    });
+    currList
+      .find(currList => currList.title === list)
+      .movies
+      .push({
+        id: id,
+        image: image
+      });
 
     this.storage.store(this.myListsKey, currList);
   }
 
   // Remove a specific entry from a list
   removeFromList(list: string, id: number): boolean {
-    if (!(list in this._myLists))
+    if (!this.isInList(list, id))
       return false;
 
+    // Probably a bad way of doing this, but hey, it works!
     const currList = this._myLists;
-    currList[list] = currList[list].filter(item => item.id !== id);
+    const listIndex = currList.findIndex(currList => currList.title === list);
+    const movieIndex = currList[listIndex].movies.findIndex(item => item.id !== id);
+    currList[listIndex].movies.splice(movieIndex, 1);
+
     this.storage.store(this.myListsKey, currList);
 
     return true;
@@ -72,20 +83,35 @@ export class LocalStorageService implements OnInit {
 
   // Remove a specific list from array
   removeList(list: string): boolean {
-    if (!(list in this._myLists))
+    const index = this._myLists.findIndex(currList => currList.title === list);
+    if (index === -1)
       return false;
 
-    delete this._myLists[list];
-    this.storage.store(this.myListsKey, this._myLists);
+    const currList = this._myLists;
+    currList.splice(index, 1);
+
+    this.storage.store(this.myListsKey, currList);
 
     return true;
   }
 
-  // Check if 
-  isInMyList(list: string, id: number) {
-    if (!id || !(list in this._myLists))
-      return false;
+  // Check if movie exists in list
+  isInList(list: string, id: number) {
+    const currList = this._myLists.find(currList => currList.title === list)
 
-    return this._myLists[list].find(item => item.id === id);
+    return currList.movies.some(movie => movie.id === id);
+  }
+
+  // Sort a list
+  private sort(value) {
+    value.sort((a, b) => {
+      if (a.movies.length < b.movies.length) return 1;
+      if (a.movies.length > b.movies.length) return -1;
+
+      if (a.title < b.title) return -1;
+      if (b.title > a.title) return 1;
+
+      return 0;
+    });
   }
 }

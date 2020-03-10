@@ -18,8 +18,8 @@ import { ListItems } from '../../list';
 export class MyListsComponent implements OnInit {
   faPlus = faPlus;
   faTimes = faTimes;
+  newListFormError: string = '';
   newListFormVisible: boolean = false;
-  private _myLists: ListItems[];
   myLists: any[] = [];
   movies: Movie[] = [];
   people: Person[] = [];
@@ -45,9 +45,16 @@ export class MyListsComponent implements OnInit {
   }
 
   onSubmitNewListForm(newListForm: NgForm): void {
-    if (!newListForm.valid) return;
+    if (newListForm.invalid) return;
 
-    this.localStorageService.newList(newListForm.value.title);
+    const title = newListForm.value.title;
+    const created = this.localStorageService.newList(title);
+    if (!created) {
+      this.newListFormError = `You already have a list titled "${title}"`;
+      newListForm.form.controls['title'].setErrors({ 'invalid': true });
+      return;
+    }
+    this.newListFormError = '';
 
     newListForm.resetForm();
     this.toggleNewListForm();

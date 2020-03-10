@@ -3,14 +3,19 @@
     <div class="my-list-new">
         <form #newListForm="ngForm" (ngSubmit)="onSubmitNewListForm(newListForm)" novalidate>
             <div class="field">
-                <label class="label">New list</label>
+                <label class="label is-small has-text-grey-lighter">
+                    <span class="icon">
+                        <fa-icon [icon]="faPlus"></fa-icon>
+                    </span>
+                    New list
+                </label>
                 <div class="control">
 
                     <div class="field has-addons slide-in-out">
                         <div class="control">
                             <input type="text" class="input is-small"
                                 [ngClass]="{ 'is-danger': newListForm.invalid && (newListForm.dirty || newListForm.touched) }"
-                                placeholder="List title" name="title" autocomplete="off" maxlength="20" ngModel
+                                placeholder="My awesome list" name="title" autocomplete="off" maxlength="20" ngModel
                                 required>
                         </div>
                         <div class="control">
@@ -20,6 +25,9 @@
                         </div>
                     </div>
                 </div>
+                <p *ngIf="newListFormError" class="help is-danger">
+                    <span class="has-text-weight-bold">Error:</span> {{ newListFormError }}
+                </p>
             </div>
 
         </form>
@@ -29,23 +37,23 @@
         <div class="title">My lists</div>
 
         <div class="grid-columns">
-            <div class="card" *ngFor="let list of myLists | keyvalue">
+            <div class="card" *ngFor="let list of myLists">
                 <div class="card-content">
-                    <a routerLink="/list/{{ list.key | lowercase }}">
+                    <a routerLink="/list/{{ list.title | lowercase }}">
                         <span class="my-list-title">
-                            ({{ list.value.length }}) {{ list.key }}
+                            ({{ list.movies.length }}) {{ list.title }}
                         </span>
                     </a>
-                    <a (click)="removeList(list.key)" class="my-list-remove has-text-danger">
+                    <a (click)="removeList(list.title)" class="my-list-remove has-text-danger">
                         <span class="icon">
                             <fa-icon [icon]="faTimes"></fa-icon>
                         </span>
                     </a>
                 </div>
                 <div class="card-image">
-                    <a routerLink="/list/{{ list.key | lowercase }}">
+                    <a routerLink="/list/{{ list.title | lowercase }}">
                         <div class="columns is-multiline is-mobile is-marginless">
-                            <ng-container *ngFor="let movie of list.value | slice:0:4">
+                            <ng-container *ngFor="let movie of list.movies | slice:0:4">
                                 <app-image class="column is-half" [url]="movie.image" type="movie" size="small" small>
                                 </app-image>
                             </ng-container>

@@ -3,8 +3,8 @@
         <div class="select">
             <select [(ngModel)]="selectedList">
                 <option value="" selected hidden disabled>Add to list</option>
-                <option *ngFor="let list of myLists | keyvalue" [value]="list.key">
-                    {{ list.key }}
+                <option *ngFor="let list of myLists" [value]="list.title">
+                    {{ list.title }} ({{ list.movies.length }})
                 </option>
             </select>
         </div>

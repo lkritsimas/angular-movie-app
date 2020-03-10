@@ -1,8 +1,13 @@
 export interface ListItem {
     id: number;
-    type: string;
+    image: string;
 }
 
 export interface ListItems {
-    [key: string]: ListItem[];
+    title: string,
+    movies: ListItem[]
 }
+
+// export interface ListItems {
+//     [key: string]: ListItem[];
+// }
