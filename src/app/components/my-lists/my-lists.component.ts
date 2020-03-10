@@ -1,15 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { tap } from 'rxjs/operators';
 
 import { LocalStorageService } from '../../services/local-storage.service';
 import { slideInOut } from '../../animations';
 import { Movie } from '../../movie';
 import { Person } from '../../person';
-import { ListItems } from 'src/app/list';
-import { MovieService } from 'src/app/services/movie.service';
-import { mergeMap } from 'rxjs/operators';
-import { forkJoin, Observable } from 'rxjs';
+import { ListItems } from '../../list';
 
 @Component({
   selector: 'app-my-lists',
@@ -19,7 +17,7 @@ import { forkJoin, Observable } from 'rxjs';
 })
 export class MyListsComponent implements OnInit {
   faPlus = faPlus;
-  faTrash = faTrash;
+  faTimes = faTimes;
   newListFormVisible: boolean = false;
   private _myLists: ListItems[];
   myLists: any[] = [];
@@ -27,44 +25,19 @@ export class MyListsComponent implements OnInit {
   people: Person[] = [];
 
   constructor(
-    private localStorageService: LocalStorageService,
-    private movieService: MovieService
+    private localStorageService: LocalStorageService
   ) { }
 
   ngOnInit(): void {
-    this._myLists = this.localStorageService.myLists;
-
-    for (let list of Object.keys(this._myLists)) {
-      for (let item of this._myLists[list]) {
-        if (item.type === 'movie') {
-          this.movieService.getMovieDetails(item.id)
-            .subscribe(movie => {
-              let index = this.myLists.findIndex(item => item.title === list);
-
-              if (index === -1) {
-                this.myLists.push({
-                  title: list,
-                  type: item.type,
-                  movies: []
-                })
-
-                index = this.myLists.findIndex(item => item.title === list);
-              }
-
-              this.myLists[index]['movies'].push(movie);
-            });
-        }
-
-      }
-    }
+    this.localStorageService.myLists
+      .pipe(
+        tap((lists: ListItems[]) => this.myLists = lists)
+      )
+      .subscribe();
   }
 
   removeList(list: string): void {
     this.localStorageService.removeList(list);
-  }
-
-  getMovieById(id: number): Movie {
-    return this.movies.find(movie => movie.id === id);
   }
 
   toggleNewListForm(): void {

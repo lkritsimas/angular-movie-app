@@ -2,19 +2,27 @@
     <div class="control">
         <div class="select">
             <select [(ngModel)]="selectedList">
-                <option selected hidden disabled>Add to list</option>
+                <option value="" selected hidden disabled>Add to list</option>
                 <option *ngFor="let list of myLists | keyvalue" [value]="list.key">
                     {{ list.key }}
                 </option>
             </select>
         </div>
     </div>
-    <div class="control">
-        <button (click)="addToList()" class="button is-dark">
+    <div *ngIf="selectedList" class="control">
+        <button *ngIf="!isInList(); else elseBlock" (click)="addToList()" class="button is-primary">
             <span class="icon">
                 <fa-icon [icon]="faPlus"></fa-icon>
             </span>
             <span>Add</span>
         </button>
+        <ng-template #elseBlock>
+            <button (click)="removeFromList()" class="button is-dark">
+                <span class="icon">
+                    <fa-icon [icon]="faTimes"></fa-icon>
+                </span>
+                <span>Remove</span>
+            </button>
+        </ng-template>
     </div>
 </div>

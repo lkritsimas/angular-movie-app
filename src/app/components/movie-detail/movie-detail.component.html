@@ -46,7 +46,7 @@
                     <div [innerHTML]="movie.overview | paragraph" class="is-size-6 has-text-grey"></div>
                 </app-reveal-content>
 
-                <app-add-to-list [id]="movie.id" type="movie"></app-add-to-list>
+                <app-add-to-list [id]="movie.id" [image]="movie.poster_path"></app-add-to-list>
 
             </div>
         </div>

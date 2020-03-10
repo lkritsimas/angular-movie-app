@@ -1,55 +1,52 @@
-<div class="container">
+<div class="section container">
 
-    <div class="section">
+    <div class="my-list-new">
         <form #newListForm="ngForm" (ngSubmit)="onSubmitNewListForm(newListForm)" novalidate>
-            <div class="field is-horizontal">
-                <div class="field-label">
-                    <button type="button" (click)="toggleNewListForm()" class="button is-link">
-                        <span class="icon">
-                            <fa-icon [icon]="faPlus"></fa-icon>
-                        </span>
-                        <span>New list</span>
-                    </button>
-                </div>
-                <div class="field-body">
-                    <div *ngIf="!newListFormVisible" [@slideInOut] class="field is-expanded has-addons slide-in-out">
-                        <div class="control is-expanded">
-                            <input type="text" class="input"
+            <div class="field">
+                <label class="label">New list</label>
+                <div class="control">
+
+                    <div class="field has-addons slide-in-out">
+                        <div class="control">
+                            <input type="text" class="input is-small"
                                 [ngClass]="{ 'is-danger': newListForm.invalid && (newListForm.dirty || newListForm.touched) }"
-                                placeholder="List title" name="title" ngModel required>
+                                placeholder="List title" name="title" autocomplete="off" maxlength="20" ngModel
+                                required>
                         </div>
                         <div class="control">
-                            <button type="submit" class="button is-link">
+                            <button type="submit" class="button is-link is-small">
                                 <span>Create</span>
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
+
         </form>
     </div>
 
-    <div *ngIf="myLists" class="section">
+    <div *ngIf="myLists">
         <div class="title">My lists</div>
 
         <div class="grid-columns">
-            <div class="card" *ngFor="let list of myLists">
+            <div class="card" *ngFor="let list of myLists | keyvalue">
                 <div class="card-content">
-                    <a routerLink="/list/{{ list.title | lowercase }}">
-                        <span class="my-list-title">{{ list.title }}</span>
+                    <a routerLink="/list/{{ list.key | lowercase }}">
+                        <span class="my-list-title">
+                            ({{ list.value.length }}) {{ list.key }}
+                        </span>
                     </a>
-                    <a (click)="removeList(list.title)" class="has-text-danger is-pulled-right">
+                    <a (click)="removeList(list.key)" class="my-list-remove has-text-danger">
                         <span class="icon">
-                            <fa-icon [icon]="faTrash"></fa-icon>
+                            <fa-icon [icon]="faTimes"></fa-icon>
                         </span>
                     </a>
                 </div>
                 <div class="card-image">
-                    <a routerLink="/list/{{ list.title | lowercase }}">
+                    <a routerLink="/list/{{ list.key | lowercase }}">
                         <div class="columns is-multiline is-mobile is-marginless">
-                            <ng-container *ngFor="let movie of list.movies | slice:0:4">
-                                <app-image class="column is-half" [url]="movie.poster_path" type="movie" size="small"
-                                    small [alt]="movie.title">
+                            <ng-container *ngFor="let movie of list.value | slice:0:4">
+                                <app-image class="column is-half" [url]="movie.image" type="movie" size="small" small>
                                 </app-image>
                             </ng-container>
                         </div>

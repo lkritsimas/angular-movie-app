@@ -23,6 +23,7 @@ import { ParagraphPipe } from './pipes/paragraph.pipe';
 import { ParallaxDirective } from './directives/parallax.directive';
 import { MyListsComponent } from './components/my-lists/my-lists.component';
 import { AddToListComponent } from './components/add-to-list/add-to-list.component';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { AddToListComponent } from './components/add-to-list/add-to-list.compone
     AppRoutingModule,
     HttpClientModule,
     FontAwesomeModule,
-    NgScrollbarModule
+    NgScrollbarModule,
+    NgxWebstorageModule.forRoot({ prefix: 'mml', separator: '.', caseSensitive: true })
   ],
   providers: [],
   bootstrap: [AppComponent]

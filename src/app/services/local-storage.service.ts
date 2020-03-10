@@ -1,34 +1,48 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, OnInit } from '@angular/core';
 import { LOCAL_STORAGE, StorageService, StorageTranscoders } from 'ngx-webstorage-service';
 import { inject } from '@angular/core/testing';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
 
 import { ListItem, ListItems } from '../list';
+import { LocalStorageService as localStService } from 'ngx-webstorage';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LocalStorageService {
+export class LocalStorageService implements OnInit {
   private watchListKey: string = 'watchList';
   private myListsKey: string = 'myLists';
   private _watchList: ListItem[];
   private _myLists: ListItems[];
 
-  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
+  private listSource = new BehaviorSubject<ListItems[]>([]);
+  public myLists = this.listSource.asObservable();
+
+  constructor(private storage: localStService) {
+    this.initLists();
+  }
+
+  ngOnInit() {
     this.initLists();
   }
 
   private initLists(): void {
-    this._myLists = this.storage.get(this.myListsKey) || {};
-    this._watchList = this.storage.get(this.watchListKey) || [];
+    this._myLists = this.storage.retrieve(this.myListsKey) || {};
+    this._watchList = this.storage.retrieve(this.watchListKey) || [];
+    this.listSource.next(this._myLists);
+
+    this.storage.observe(this.myListsKey).subscribe((value) => {
+      this._myLists = value || {};
+      this.listSource.next(value || {});
+    });
+
+    this.storage.observe(this.watchListKey).subscribe((value) => {
+      this._watchList = value || [];
+    });
   }
 
   get watchList(): ListItem[] {
     return this._watchList;
-  }
-
-  get myLists(): ListItems[] {
-    return this._myLists;
   }
 
   //  Create a new list
@@ -39,24 +53,24 @@ export class LocalStorageService {
     let currList = this._myLists;
     currList[title] = [];
 
-    this.storage.set(this.myListsKey, currList);
+    this.storage.store(this.myListsKey, currList);
 
     return true;
   }
 
   // Add new item to a list
-  addToList(list: string, id: number, type: string): void {
-    if (!(list in this._myLists))
+  addToList(list: string, id: number, image: string): void {
+    if (!(list in this._myLists) || this.isInMyList(list, id))
       return;
 
     const currList = this._myLists;
 
     currList[list].push({
       id: id,
-      type: type
+      image: image
     });
 
-    this.storage.set(this.myListsKey, currList);
+    this.storage.store(this.myListsKey, currList);
   }
 
   // Remove a specific entry from a list
@@ -64,7 +78,11 @@ export class LocalStorageService {
     if (!(list in this._myLists))
       return false;
 
-    this._myLists = this._myLists[list].filter((list) => list.id != id);
+    const currList = this._myLists;
+    currList[list] = currList[list].filter(item => item.id !== id);
+    this.storage.store(this.myListsKey, currList);
+
+    return true;
   }
 
   // Remove a specific list from array
@@ -73,25 +91,30 @@ export class LocalStorageService {
       return false;
 
     delete this._myLists[list];
-    this.storage.set(this.myListsKey, this._myLists);
+    this.storage.store(this.myListsKey, this._myLists);
 
     return true;
   }
 
   // Add new item to watch list
-  addToWatchList(id: number, type: string): void {
-    const watchList = this.storage.get(this.watchListKey) || [];
+  addToWatchList(id: number): void {
+    const watchList = this.storage.retrieve(this.watchListKey) || [];
 
-    watchList.push({
-      id: id,
-      type: type
-    });
+    watchList.push(id);
 
-    this.storage.set(this.watchListKey, watchList);
+    this.storage.store(this.watchListKey, watchList);
   }
 
   // Empty entire watch list
   clearWatchList(): void {
-    this.storage.remove(this.watchListKey);
+    this.storage.clear(this.watchListKey);
+  }
+
+  // Check if 
+  isInMyList(list: string, id: number) {
+    if (!id || !(list in this._myLists))
+      return false;
+
+    return this._myLists[list].find(item => item.id === id);
   }
 }
