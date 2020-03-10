@@ -8,9 +8,7 @@ import { ListItem, ListItems } from '../list';
   providedIn: 'root'
 })
 export class LocalStorageService implements OnInit {
-  private watchListKey: string = 'watchList';
   private myListsKey: string = 'myLists';
-  private _watchList: ListItem[];
   private _myLists: ListItems[];
 
   private listSource = new BehaviorSubject<ListItems[]>([]);
@@ -23,22 +21,13 @@ export class LocalStorageService implements OnInit {
   ngOnInit() { }
 
   private initLists(): void {
-    this._myLists = this.storage.retrieve(this.myListsKey) || {};
-    this._watchList = this.storage.retrieve(this.watchListKey) || [];
+    this._myLists = this.storage.retrieve(this.myListsKey) || [];
     this.listSource.next(this._myLists);
 
-    this.storage.observe(this.myListsKey).subscribe((value) => {
-      this._myLists = value || {};
-      this.listSource.next(value || {});
+    this.storage.observe(this.myListsKey).subscribe((lists: ListItems[]) => {
+      this._myLists = lists || [];
+      this.listSource.next(lists || []);
     });
-
-    this.storage.observe(this.watchListKey).subscribe((value) => {
-      this._watchList = value || [];
-    });
-  }
-
-  get watchList(): ListItem[] {
-    return this._watchList;
   }
 
   //  Create a new list
@@ -90,20 +79,6 @@ export class LocalStorageService implements OnInit {
     this.storage.store(this.myListsKey, this._myLists);
 
     return true;
-  }
-
-  // Add new item to watch list
-  addToWatchList(id: number): void {
-    const watchList = this.storage.retrieve(this.watchListKey) || [];
-
-    watchList.push(id);
-
-    this.storage.store(this.watchListKey, watchList);
-  }
-
-  // Empty entire watch list
-  clearWatchList(): void {
-    this.storage.clear(this.watchListKey);
   }
 
   // Check if 
