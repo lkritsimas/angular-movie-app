@@ -6,3 +6,12 @@ body {
     height: 100%;
     overflow: hidden;
 }
+
+.ng-scroll-viewport {
+  display: flex;
+  flex-direction: column;
+}
+
+.ng-scroll-content {
+  flex: 1;
+}
