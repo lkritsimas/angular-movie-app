@@ -1,10 +1,8 @@
-import { Inject, Injectable, OnInit } from '@angular/core';
-import { LOCAL_STORAGE, StorageService, StorageTranscoders } from 'ngx-webstorage-service';
-import { inject } from '@angular/core/testing';
-import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
+import { Injectable, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { LocalStorageService as localStService } from 'ngx-webstorage';
 
 import { ListItem, ListItems } from '../list';
-import { LocalStorageService as localStService } from 'ngx-webstorage';
 
 @Injectable({
   providedIn: 'root'
@@ -22,9 +20,7 @@ export class LocalStorageService implements OnInit {
     this.initLists();
   }
 
-  ngOnInit() {
-    this.initLists();
-  }
+  ngOnInit() { }
 
   private initLists(): void {
     this._myLists = this.storage.retrieve(this.myListsKey) || {};
