@@ -21,7 +21,7 @@
             <div class="column is-narrow">
                 <div class="select is-rounded is-fullwidth is-grey" required>
                     <select [(ngModel)]="genresFilter" (ngModelChange)="onGenreFilterChange($event)" required>
-                        <option value="" selected disabled hidden>Filter by genres</option>
+                        <option value="" selected disabled hidden>Filter by genre</option>
                         <option value="">All genres</option>
                         <option *ngFor="let genre of genres" [value]="genre.id">{{ genre.name }}</option>
                     </select>

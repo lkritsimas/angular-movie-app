@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Router, ActivatedRoute, NavigationEnd, Event, NavigationStart, NavigationCancel, NavigationError, RouterEvent } from '@angular/router';
-import { filter, map, debounceTime, tap } from 'rxjs/operators';
-import { forkJoin, Subject } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router, ActivatedRoute, NavigationEnd, RouterEvent } from '@angular/router';
+import { filter, map, tap } from 'rxjs/operators';
 import { NgScrollbar } from 'ngx-scrollbar';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
@@ -14,11 +13,10 @@ import { TitleService } from './services/title.service';
 })
 export class AppComponent implements OnInit {
   faHeart = faHeart;
-  @ViewChild('navBurger') navBurger: ElementRef;
-  @ViewChild('navMenu') navMenu: ElementRef;
   @ViewChild(NgScrollbar, { static: true }) scrollbarRef: NgScrollbar;
   title: string = 'MyMovieList';
   isLoading: boolean = false;
+  navbarToggled: boolean = false;
 
   public constructor(
     private router: Router,
@@ -71,7 +69,6 @@ export class AppComponent implements OnInit {
   }
 
   public toggleNavbar() {
-    this.navBurger.nativeElement.classList.toggle('is-active');
-    this.navMenu.nativeElement.classList.toggle('is-active');
+    this.navbarToggled = !this.navbarToggled;
   }
 }
