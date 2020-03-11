@@ -22,6 +22,22 @@
         border-radius: inherit;      
     }
 
+    &-placeholder:before {
+        content: '';
+        display: block;
+        background: #7a7a7a;
+    }
+    
+    &-ratio-normal:before {
+        // 0.67:1 Aspect ratio
+        padding-top: 150.27%;
+    }
+
+    &-ratio-block:before {
+        // 1.78:1
+        padding-top: 56.30%
+    }
+
     &.small {
         // max-width: 243px;
         // min-width: 150px; 

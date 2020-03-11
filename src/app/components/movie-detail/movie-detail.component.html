@@ -1,13 +1,13 @@
 <app-loading-spinner [show]="loading" overlay></app-loading-spinner>
-<div *ngIf="movie">
+<div *ngIf="movie" lazyLoadImages>
     <div class="details is-relative" [ngClass]="{ 'no-backdrop': !movie.backdrop_path }">
-        <div *ngIf="movie.backdrop_path"
-            [style.backgroundImage]="'url(' + imageService.url(movie.backdrop_path, 'backdrop') + ')'"
+        <div *ngIf="movie.backdrop_path" [attr.data-background-src]="imageService.url(movie.backdrop_path, 'backdrop')"
             class="backdrop is-hidden-touch" appParallax>
         </div>
         <div class="section columns">
             <div class="section column is-narrow is-offset-1 is-relative">
-                <app-image [url]="movie.poster_path" classList="cover container" type="movie" size="medium"></app-image>
+                <app-image [src]="movie.poster_path" classList="cover container" type="movie" size="medium" lazy>
+                </app-image>
 
                 <div *ngIf="movie.vote_count !== 0" class="user-ratings column has-text-centered">
                     <span class="title is-3">{{ movie.vote_average }}</span>
@@ -58,7 +58,7 @@
                 <div class="card">
                     <div class="card-image">
                         <a routerLink="/person/{{ cast.id }}">
-                            <app-image [url]="cast.profile_path" type="person" size="small" small></app-image>
+                            <app-image [src]="cast.profile_path" type="person" size="small" small lazy></app-image>
                         </a>
                     </div>
                     <div class="card-content">
@@ -76,7 +76,7 @@
         <div class="grid-columns columns">
             <ng-container *ngFor="let similarMovie of similarMovies">
                 <a class="movie column" routerLink="/title/{{ similarMovie.id }}">
-                    <app-image [url]="similarMovie.poster_path" type="movie" size="small" small></app-image>
+                    <app-image [src]="similarMovie.poster_path" type="movie" size="small" small lazy></app-image>
                 </a>
             </ng-container>
         </div>

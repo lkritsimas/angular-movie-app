@@ -25,6 +25,7 @@ import { ParagraphPipe } from './pipes/paragraph.pipe';
 import { ParallaxDirective } from './directives/parallax.directive';
 import { MyListsComponent } from './components/my-lists/my-lists.component';
 import { AddToListComponent } from './components/add-to-list/add-to-list.component';
+import { LazyLoadImagesDirective } from './directives/lazy-load-images.directive';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { AddToListComponent } from './components/add-to-list/add-to-list.compone
     ParagraphPipe,
     ParallaxDirective,
     MyListsComponent,
-    AddToListComponent
+    AddToListComponent,
+    LazyLoadImagesDirective
   ],
   imports: [
     BrowserModule,

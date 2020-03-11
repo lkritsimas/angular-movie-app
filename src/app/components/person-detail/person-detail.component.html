@@ -1,9 +1,9 @@
 <app-loading-spinner [show]="loading" overlay></app-loading-spinner>
-<div *ngIf="person">
+<div *ngIf="person" lazyLoadImages>
     <div class="details is-relative">
         <div class="section columns">
             <div class="section column is-narrow is-offset-1 is-relative">
-                <app-image [url]="person.profile_path" classList="cover container" type="person" size="medium">
+                <app-image [src]="person.profile_path" classList="cover container" type="person" size="medium" lazy>
                 </app-image>
             </div>
             <div class="summary section is-medium column is-5">
@@ -27,7 +27,7 @@
         <div class="grid-columns columns">
             <a *ngFor="let movie of moviesAsCast | slice:0:castLimit" class="movie column"
                 routerLink="/title/{{ movie.id }}">
-                <app-image [url]="movie.poster_path" type="movie" size="small" small></app-image>
+                <app-image [src]="movie.poster_path" type="movie" size="small" small lazy></app-image>
             </a>
         </div>
         <a *ngIf="moviesAsCast.length > castLimit" (click)="toggleCastLimit()" class="title is-5 has-text-warning">

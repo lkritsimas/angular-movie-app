@@ -8,11 +8,10 @@ import { Component, OnInit, Input } from '@angular/core';
 export class LoadingSpinnerComponent implements OnInit {
   private _show: boolean;
   @Input() overlay: boolean;
+  @Input() destroy: boolean = false;
   @Input()
-  set show(show: boolean) {
-    this._show = show;
-  }
-  get show() { return this._show; }
+  set show(show: boolean) { this._show = show; }
+  get show(): boolean { return this._show; }
 
   constructor() { }
 
@@ -20,5 +19,4 @@ export class LoadingSpinnerComponent implements OnInit {
     this._show = this._show !== undefined;
     this.overlay = this.overlay !== undefined;
   }
-
 }

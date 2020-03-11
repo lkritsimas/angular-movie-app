@@ -36,7 +36,8 @@
         <div *ngIf="!myLists.length" class="has-text-centered subtitle is-5">
             You do not have any lists yet. C'mon, create one already!
         </div>
-        <div cdkDropList [cdkDropListData]="myLists" (cdkDropListDropped)="drop($event)" class="grid-columns">
+        <div cdkDropList [cdkDropListData]="myLists" (cdkDropListDropped)="drop($event)" class="grid-columns"
+            lazyLoadImages>
             <div cdkDrag *ngFor="let list of myLists" class="card">
                 <div class="card-content">
                     <a routerLink="/list/{{ list.title | lowercase }}">
@@ -56,8 +57,8 @@
                     <a routerLink="/list/{{ list.title | lowercase }}">
                         <div class="grid-columns-card is-marginless">
                             <ng-container *ngFor="let movie of list.movies | slice:0:10; let last = last">
-                                <app-image class="thumbnail is-paddingless" [url]="movie.image" type="movie"
-                                    size="small" small>
+                                <app-image class="thumbnail is-paddingless" [src]="movie.image" type="movie"
+                                    size="small" small lazy>
                                     <div *ngIf="last && list.movies.length > 10" class="my-list-more">
                                         <fa-layers>
                                             <fa-icon [icon]="faHeart" class="has-text-danger">

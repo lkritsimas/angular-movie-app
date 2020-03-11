@@ -2,30 +2,31 @@
   <p *ngIf="title" class="title is-4 is-paddingless">{{ title }}</p>
   <ng-content select=".filter"></ng-content>
 
-  <app-infinite-scroll (scrolled)="runOnScroll()">
+  <app-infinite-scroll (scrolled)="runOnScroll()" lazyLoadImages>
     <ul *ngIf="(movies$ | async) as movies" class="grid-columns grid-large section columns is-centered">
       <ng-container *ngFor="let movie of movies; let first = first;">
-        <!-- Render movie -->
-        <li *ngIf="movie.poster_path; else elseBlock" class="movie column">
-          <a routerLink="/title/{{ movie.id }}">
-            <app-image *ngIf="(movies.length > 1 && first); else notFirst" class="yeet" [url]="movie.backdrop_path"
-              type="block" [alt]="movie.title">
-            </app-image>
-            <ng-template #notFirst>
-              <app-image [url]="movie.poster_path" type="movie" size="medium" small [alt]="movie.title"></app-image>
-            </ng-template>
-            <div class="movie-title-background"></div>
-            <div class="movie-title">
-              {{ movie.title }}
-              <span class="movie-year">{{ movie.release_date | date: 'yyyy' }}</span>
-            </div>
+        <!-- Render person -->
+        <li *ngIf="movie.profile_path; else elseBlock" class="person column">
+          <a routerLink="/person/{{ movie.id }}">
+            <app-image [src]="movie.profile_path" type="person" size="small" small [alt]="movie.name"></app-image>
           </a>
         </li>
-        <!-- Render person -->
+        <!-- Render movie -->
         <ng-template #elseBlock>
-          <li *ngIf="movie.profile_path" class="person column">
-            <a routerLink="/person/{{ movie.id }}">
-              <app-image [url]="movie.profile_path" type="person" size="small" small [alt]="movie.name"></app-image>
+          <li class="movie column">
+            <a routerLink="/title/{{ movie.id }}">
+              <app-image *ngIf="(movies.length > 1 && first); else notFirst" [src]="movie.backdrop_path" type="block"
+                [alt]="movie.title">
+              </app-image>
+              <ng-template #notFirst>
+                <app-image [src]="movie.poster_path" type="movie" size="medium" [alt]="movie.title" lazy small>
+                </app-image>
+              </ng-template>
+              <div class="movie-title-background"></div>
+              <div class="movie-title">
+                {{ movie.title }}
+                <span class="movie-year">{{ movie.release_date | date: 'yyyy' }}</span>
+              </div>
             </a>
           </li>
         </ng-template>

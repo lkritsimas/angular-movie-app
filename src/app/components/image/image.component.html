@@ -1,12 +1,19 @@
 <figure class="app-image image" [ngClass]="classList">
     <ng-content></ng-content>
+    <!-- Display placeholder image while loading, destroy spinner when image is done loading -->
+    <app-loading-spinner *ngIf="src; else noPictureBlock" [show]="loading" [destroy]="removeSpinner">
+        <img *ngIf="!lazy; else lazyBlock" [src]="imageService.url(src, type, size)" [alt]="alt"
+            (load)="setImageLoaded()" [ngClass]="!removeSpinner ? 'image-placeholder image-ratio-' + ratio  : ''" />
+        <ng-template #lazyBlock>
+            <img [attr.data-src]="imageService.url(src, type, size)" [attr.data-original-src]="src" [alt]="alt"
+                (load)="setImageLoaded()" [ngClass]="!removeSpinner ? 'image-placeholder image-ratio-' + ratio  : ''" />
+        </ng-template>
+    </app-loading-spinner>
 
-    <img *ngIf="url; else nopictureBlock" [src]="imageService.url(url, type, size)" [alt]="alt" />
-
-    <ng-template #nopictureBlock>
+    <ng-template #noPictureBlock>
         <div *ngIf="type !== 'backdrop'" class="image-none" [ngClass]="{ small: small }">
-            <div class="image-none-holder" [ngClass]="{ small: small }">
-                <fa-icon *ngIf="type === 'movie'" [icon]="faFilm"></fa-icon>
+            <div class="image-none-holder image-placeholder image-ratio-{{ ratio }}" [ngClass]="{ small: small }">
+                <fa-icon *ngIf="type === 'movie' || type === 'block'" [icon]="faFilm"></fa-icon>
                 <fa-icon *ngIf="type === 'person'" [icon]="faUser"></fa-icon>
             </div>
         </div>
