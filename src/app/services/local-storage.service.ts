@@ -20,11 +20,9 @@ export class LocalStorageService {
 
   private initLists(): void {
     this._myLists = this.storage.retrieve(this.myListsKey) || [];
-    this.sort(this._myLists);
     this.listSource.next(this._myLists);
 
     this.storage.observe(this.myListsKey).subscribe((lists: ListItems[]) => {
-      this.sort(lists);
       this._myLists = lists || [];
       this.listSource.next(this._myLists);
     });
@@ -38,7 +36,6 @@ export class LocalStorageService {
     let currList = this._myLists;
     currList.push({
       title: title,
-      order: this._myLists.length + 1,
       movies: []
     });
 
@@ -74,7 +71,7 @@ export class LocalStorageService {
     // Probably a bad way of doing this, but hey, it works!
     const currList = this._myLists;
     const listIndex = currList.findIndex(currList => currList.title === list);
-    const movieIndex = currList[listIndex].movies.findIndex(item => item.id !== id);
+    const movieIndex = currList[listIndex].movies.findIndex(item => item.id === id);
     currList[listIndex].movies.splice(movieIndex, 1);
 
     this.storage.store(this.myListsKey, currList);
@@ -96,26 +93,16 @@ export class LocalStorageService {
     return true;
   }
 
+  // Saves a reordered array
+  changeOrder(list) {
+    if (!list) return;
+    this.storage.store(this.myListsKey, list);
+  }
+
   // Check if movie exists in list
   isInList(list: string, id: number) {
     const currList = this._myLists.find(currList => currList.title === list);
 
     return currList.movies.some(movie => movie.id === id);
-  }
-
-  // Sort a list
-  private sort(value) {
-    value.sort((a, b) => {
-      // if (a.movies.length < b.movies.length) return 1;
-      // if (a.movies.length > b.movies.length) return -1;
-
-      if (a.order < b.order) return -1;
-      if (b.order > a.order) return 1;
-
-      // if (a.title < b.title) return -1;
-      // if (b.title > a.title) return 1;
-
-      return 0;
-    });
   }
 }

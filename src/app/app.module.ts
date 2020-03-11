@@ -5,6 +5,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -23,7 +25,6 @@ import { ParagraphPipe } from './pipes/paragraph.pipe';
 import { ParallaxDirective } from './directives/parallax.directive';
 import { MyListsComponent } from './components/my-lists/my-lists.component';
 import { AddToListComponent } from './components/add-to-list/add-to-list.component';
-import { NgxWebstorageModule } from 'ngx-webstorage';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
     HttpClientModule,
     FontAwesomeModule,
     NgScrollbarModule,
-    NgxWebstorageModule.forRoot({ prefix: 'mml', separator: '.', caseSensitive: true })
+    NgxWebstorageModule.forRoot({ prefix: 'mml', separator: '.', caseSensitive: true }),
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

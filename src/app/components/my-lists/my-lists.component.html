@@ -3,7 +3,7 @@
     <div class="my-list-new">
         <form #newListForm="ngForm" (ngSubmit)="onSubmitNewListForm(newListForm)" novalidate>
             <div class="field">
-                <label class="label is-small has-text-grey-lighter">
+                <label class="label has-text-grey-lighter">
                     <span class="icon">
                         <fa-icon [icon]="faPlus"></fa-icon>
                     </span>
@@ -13,13 +13,13 @@
 
                     <div class="field has-addons slide-in-out">
                         <div class="control">
-                            <input type="text" class="input is-small"
+                            <input type="text" class="input"
                                 [ngClass]="{ 'is-danger': newListForm.invalid && (newListForm.dirty || newListForm.touched) }"
                                 placeholder="My awesome list" name="title" autocomplete="off" maxlength="20" ngModel
                                 required>
                         </div>
                         <div class="control">
-                            <button type="submit" class="button is-link is-small">
+                            <button type="submit" class="button is-link">
                                 <span>Create</span>
                             </button>
                         </div>
@@ -35,13 +35,18 @@
 
     <div *ngIf="myLists">
         <div class="title">My lists</div>
-
-        <div class="grid-columns">
-            <div class="card" *ngFor="let list of myLists">
+        <div class="subtitle is-6">Drag and drop to reorganize your lists</div>
+        <div *ngIf="!myLists.length" class="has-text-centered subtitle is-5">
+            You do not have any lists yet. C'mon, create one already!
+        </div>
+        <div cdkDropList [cdkDropListData]="myLists" (cdkDropListDropped)="drop($event)" class="grid-columns">
+            <div cdkDrag *ngFor="let list of myLists" class="card">
                 <div class="card-content">
                     <a routerLink="/list/{{ list.title | lowercase }}">
                         <span class="my-list-title">
-                            ({{ list.movies.length }}) {{ list.title }}
+                            <span class="my-list-title-text">{{ list.title }}</span>
+                            <span class="my-list-title-splitter">&ndash;</span>
+                            <span class="my-list-title-amount">{{ list.movies.length }}</span>
                         </span>
                     </a>
                     <a (click)="removeList(list.title)" class="my-list-remove has-text-danger">
@@ -52,9 +57,20 @@
                 </div>
                 <div class="card-image">
                     <a routerLink="/list/{{ list.title | lowercase }}">
-                        <div class="columns is-multiline is-mobile is-marginless">
-                            <ng-container *ngFor="let movie of list.movies | slice:0:4">
-                                <app-image class="column is-half" [url]="movie.image" type="movie" size="small" small>
+                        <div class="grid-columns-card is-marginless">
+                            <ng-container *ngFor="let movie of list.movies | slice:0:10; let last = last">
+                                <app-image class="thumbnail is-paddingless" [url]="movie.image" type="movie"
+                                    size="small" small>
+                                    <div *ngIf="last && list.movies.length > 10" class="my-list-more">
+                                        <fa-layers>
+                                            <fa-icon [icon]="faHeart" class="has-text-danger">
+                                            </fa-icon>
+                                            <fa-layers-text content="{{ list.movies.length - 10 }}+"
+                                                class="has-text-white my-list-more-amount">
+                                            </fa-layers-text>
+
+                                        </fa-layers>
+                                    </div>
                                 </app-image>
                             </ng-container>
                         </div>

@@ -1,4 +1,6 @@
 <figure class="app-image image" [ngClass]="classList">
+    <ng-content></ng-content>
+
     <img *ngIf="url; else nopictureBlock" [src]="imageService.url(url, type, size)" [alt]="alt" />
 
     <ng-template #nopictureBlock>
