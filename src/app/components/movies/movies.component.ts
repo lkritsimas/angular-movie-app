@@ -14,7 +14,7 @@ import { Movie } from '../../movie';
 export class MoviesComponent implements OnInit {
   @Output() public onScroll: EventEmitter<any> = new EventEmitter();
 
-  movies: Observable<Movie[]>;
+  movies$: Observable<Movie[]>;
   path: string;
   title: string = '';
   currPath: string;
@@ -29,7 +29,7 @@ export class MoviesComponent implements OnInit {
     private movieService: MovieService,
     public imageService: ImageService
   ) {
-    this.movies = this.movieService.result;
+    this.movies$ = this.movieService.result;
     this.path = location.path();
   }
 

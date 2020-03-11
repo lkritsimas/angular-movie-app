@@ -52,7 +52,7 @@
     </div>
 
     <div *ngIf="movie.credits" class="credits container section">
-        <h3 class="title is-4 has-text-grey-lighter">Cast</h3>
+        <h3 class="category title is-4 has-text-grey-lighter">Cast</h3>
         <div class="grid-columns columns">
             <div *ngFor="let cast of movie.credits.cast | slice:0:10" class="cast column">
                 <div class="card">
@@ -72,7 +72,7 @@
     </div>
 
     <div *ngIf="similarMovies.length" class="similar container section">
-        <h3 class="title is-4 has-text-grey-lighter">Similar movies</h3>
+        <h3 class="category title is-4 has-text-grey-lighter">Similar movies</h3>
         <div class="grid-columns columns">
             <ng-container *ngFor="let similarMovie of similarMovies">
                 <a class="movie column" routerLink="/title/{{ similarMovie.id }}">

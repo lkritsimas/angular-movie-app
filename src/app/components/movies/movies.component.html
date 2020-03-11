@@ -3,12 +3,13 @@
   <ng-content select=".filter"></ng-content>
 
   <app-infinite-scroll (scrolled)="runOnScroll()">
-    <ul *ngIf="(movies | async)" class="grid-columns grid-large section columns is-centered">
-      <ng-container *ngFor="let movie of (movies | async); let first = first;">
+    <ul *ngIf="(movies$ | async) as movies" class="grid-columns grid-large section columns is-centered">
+      <ng-container *ngFor="let movie of movies; let first = first;">
         <!-- Render movie -->
         <li *ngIf="movie.poster_path; else elseBlock" class="movie column">
           <a routerLink="/title/{{ movie.id }}">
-            <app-image *ngIf="first; else notFirst" [url]="movie.backdrop_path" type="block" [alt]="movie.title">
+            <app-image *ngIf="(movies.length > 1 && first); else notFirst" class="yeet" [url]="movie.backdrop_path"
+              type="block" [alt]="movie.title">
             </app-image>
             <ng-template #notFirst>
               <app-image [url]="movie.poster_path" type="movie" size="medium" small [alt]="movie.title"></app-image>

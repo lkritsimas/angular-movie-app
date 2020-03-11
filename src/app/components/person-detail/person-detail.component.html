@@ -23,7 +23,7 @@
     </div>
 
     <div *ngIf="moviesAsCast" class="known-for container section">
-        <h3 class="title is-4 has-text-grey-lighter">Known for</h3>
+        <h3 class="category title is-4 has-text-grey-lighter">Known for</h3>
         <div class="grid-columns columns">
             <a *ngFor="let movie of moviesAsCast | slice:0:castLimit" class="movie column"
                 routerLink="/title/{{ movie.id }}">
