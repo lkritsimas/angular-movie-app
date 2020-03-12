@@ -17,12 +17,11 @@ export class MovieService {
   private upcomingMoviesEndpoint: string = '/movie/upcoming';
   private topRatedMoviesEndpoint: string = '/movie/top_rated';
   private searchMovieEndpoint: string = '/search/movie';
-  private searchPersonEndpoint: string = '/search/person';
   private movieGenresEndpoint: string = '/genre/movie/list';
 
   public fetchType: string = '';
   public prevFetchType: string = '';
-  private resultSource = new BehaviorSubject<Movie[]>([]);
+  public resultSource = new BehaviorSubject<Movie[]>([]);
   public result = this.resultSource.asObservable();
   public searchTerm = new BehaviorSubject<string>('');
 
@@ -97,38 +96,27 @@ export class MovieService {
     });
   }
 
-  parseSearchTerm(term: string) {
-    term = term.trim();
-    const found = term.match(/^(?:(person|movie):)?\s*(.+?)$/);
+  // search(term: string = '') {
+  //   // Update search term
+  //   this.searchTerm.next(term);
 
-    return {
-      type: found[1] || null,
-      term: found[2] || null
-    };
-  }
+  //   if (!term) return this.router.navigate(['search']);
 
-  search(term: string = '') {
-    // Update search term
-    this.searchTerm.next(term);
+  //   let apiEndPoint = this.searchMovieEndpoint;
+  //   // if (parsed.type === 'person')
+  //   //   apiEndPoint = this.searchPersonEndpoint;
 
-    if (!term) return this.router.navigate(['search']);
+  //   const queryString = this.createQueryString(apiEndPoint, {
+  //     'query': term
+  //   });
 
-    const parsed = this.parseSearchTerm(term);
-    let apiEndPoint = this.searchMovieEndpoint;
-    if (parsed.type === 'person')
-      apiEndPoint = this.searchPersonEndpoint;
+  //   this.httpClient.get<Movie[]>(queryString)
+  //     .subscribe({
+  //       next: (response) => this.resultSource.next(response['results'])
+  //     });
 
-    const queryString = this.createQueryString(apiEndPoint, {
-      'query': parsed.term
-    });
-
-    this.httpClient.get<Movie[]>(queryString)
-      .subscribe({
-        next: (response) => this.resultSource.next(response['results'])
-      });
-
-    this.router.navigate(['search', term]);
-  }
+  //   this.router.navigate(['search', term]);
+  // }
 
   clear() {
     this.resultSource.next([]);
