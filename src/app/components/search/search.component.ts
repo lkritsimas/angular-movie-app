@@ -27,8 +27,6 @@ export class SearchComponent implements OnInit {
       return;
     }
 
-    // this.searchService.search(this.searchTerm);
-
     const parsedTerm = this.searchService.parseSearchTerm(this.searchTerm);
     if (parsedTerm.type) {
       this.searchService.search(parsedTerm.term, parsedTerm.type);
