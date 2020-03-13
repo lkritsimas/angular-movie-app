@@ -1,0 +1,22 @@
+<div class="people section container is-fluid">
+    <p *ngIf="title" class="title is-4 is-paddingless">{{ title }}</p>
+    <ng-content select=".filter"></ng-content>
+
+    <app-infinite-scroll (scrolled)="runOnScroll()" lazyLoadImages>
+        <ul *ngIf="(people$ | async) as people" class="grid-columns grid-large section columns is-centered">
+            <ng-container *ngFor="let person of people;">
+                <!-- Render person -->
+                <li class="person column">
+                    <a routerLink="/person/{{ person.id }}">
+                        <app-image [src]="person.profile_path" type="person" size="small" small [alt]="person.name">
+                        </app-image>
+                        <div class="person-name-background"></div>
+                        <div class="person-name">
+                            {{ person.name }}
+                        </div>
+                    </a>
+                </li>
+            </ng-container>
+        </ul>
+    </app-infinite-scroll>
+</div>

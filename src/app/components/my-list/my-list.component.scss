@@ -1,0 +1,48 @@
+@import '../../../variables';
+
+.my-list {
+    margin-left: auto;
+    margin-right: auto;
+
+    .grid-columns {
+        grid-template-columns: repeat(auto-fill, minmax(min-content, 254px));
+        
+        @include mobile {
+            grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+        }
+
+        @include touch {
+            grid-template-columns: repeat(auto-fill, minmax(219px, 1fr));
+        }        
+    }
+
+    &-item {
+        overflow: hidden;
+        position: relative;
+        font-size: 12px;
+
+        &-title {
+            z-index: 10;
+            cursor: default;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 10px;
+            color: hsla(0, 0%, 98%, 0.7);
+            font-size: inherit;
+            font-weight: 500;
+            text-shadow: 0px -3px 3px $black;
+        }
+
+        &-title-background {
+            content: "";
+            z-index: 1;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+        }        
+    }
+}

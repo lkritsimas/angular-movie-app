@@ -4,6 +4,7 @@ import { tap, map, switchMap } from 'rxjs/operators';
 
 import { PersonService } from '../../services/person.service';
 import { ImageService } from '../../services/image.service';
+import { TitleService } from '../../services/title.service';
 import { Person, Cast, Crew } from '../../person';
 
 @Component({
@@ -21,18 +22,20 @@ export class PersonDetailComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private personService: PersonService,
-    public imageService: ImageService
+    public imageService: ImageService,
+    private titleService: TitleService
   ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.params
+    this.activatedRoute.paramMap
       .pipe(
         tap(() => this.loading = true),
-        map(params => params.id),
-        switchMap(id => this.personService.getPersonDetails(id))
+        map(params => params.get('id')),
+        switchMap(id => this.personService.getPersonDetails(+id))
       )
       .subscribe((person: Person) => {
         this.person = person;
+        this.titleService.setTitle(person.name);
 
         const { cast, crew } = person['movie_credits'];
         this.moviesAsCast = <Cast[]>cast

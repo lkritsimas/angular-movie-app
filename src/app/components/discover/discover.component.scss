@@ -1,6 +1,11 @@
 @import '../../../variables';
 
 .filter {
+    z-index: 20;
+    position: sticky;
+    top: 0;
+    background-color: $app-background;
+
     select {
         border: none;
         

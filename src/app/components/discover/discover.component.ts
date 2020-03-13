@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 import { MovieService } from '../../services/movie.service';
-import { Genre } from '../../movie';
+import { Genre, Movie } from '../../movie';
 
 @Component({
   selector: 'app-discover',
@@ -10,11 +10,11 @@ import { Genre } from '../../movie';
   styleUrls: ['./discover.component.scss']
 })
 export class DiscoverComponent implements OnInit {
+  movies$: BehaviorSubject<Movie[]> = new BehaviorSubject<Movie[]>([]);
   genres: Genre[];
   genresFilter: string = '';
   ratingFilter: string = '';
   sortByFilter: string = 'popularity.desc';
-  // sortByFilterX = new BehaviorSubject<string>('');
 
   constructor(private movieService: MovieService) { }
 
@@ -24,50 +24,46 @@ export class DiscoverComponent implements OnInit {
   }
 
   discoverMovies(): void {
-    this.movieService.discoverMovies(
+    this.movieService.getDiscoverMovies(
       {
         'sort_by': this.sortByFilter,
         'certification_country': 'US',
         'certification': this.ratingFilter,
         'with_genres': this.genresFilter
-      },
-      this.movieService.getPage()
-    );
+      }
+    )
+      .subscribe({
+        next: (movies: Movie[]) => this.movies$.next([...this.movies$.getValue(), ...movies])
+      });
   }
 
   getMovieGenres(): void {
     this.movieService.getMovieGenres()
-      .subscribe((genres: Genre[]) =>
-        this.genres = genres
-      );
+      .subscribe((genres: Genre[]) => this.genres = genres);
   }
 
   onScroll(): void {
     this.discoverMovies();
   }
 
-  onFilterChange(newValue): void {
+  onRatingFilterChange(newValue): void {
     this.ratingFilter = newValue;
-    this.movieService.clear();
+    this.movieService.resetPage();
+    this.movies$.next([]);
     this.discoverMovies();
   }
 
   onGenreFilterChange(newValue): void {
     this.genresFilter = newValue;
-    this.movieService.clear();
+    this.movieService.resetPage();
+    this.movies$.next([]);
     this.discoverMovies();
   }
 
   onSortByFilterChange(newValue): void {
-    // this.sortByFilterX
-    //   .pipe(switchMap(rating => this.movieService.discoverMovies(rating)))
-    //   .subscribe(data => {
-    //     // this.movies$ = data.results
-    //   });
-
-
     this.sortByFilter = newValue;
-    this.movieService.clear();
+    this.movieService.resetPage();
+    this.movies$.next([]);
     this.discoverMovies();
   }
 }

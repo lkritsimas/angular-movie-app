@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Renderer2, NgZone } from '@angular/core';
+import { Directive, ElementRef, Renderer2, NgZone } from '@angular/core';
 import { NgScrollbar } from 'ngx-scrollbar';
 import { tap, map } from 'rxjs/operators';
 
@@ -24,7 +24,5 @@ export class ParallaxDirective {
           this.ngZone.run(() => this.renderer.setStyle(this.element.nativeElement, 'transform', `translate3d(0px, ${top}px, 0px)`))
         )
       ).subscribe();
-
-
   }
 }

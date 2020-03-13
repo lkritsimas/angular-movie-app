@@ -1,8 +1,8 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { LocalStorageService as localStService } from 'ngx-webstorage';
 
-import { ListItem, ListItems } from '../list';
+import { ListItems } from '../list';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,7 @@ export class LocalStorageService {
     this.initLists();
   }
 
+  // Initialize lists
   private initLists(): void {
     this._myLists = this.storage.retrieve(this.myListsKey) || [];
     this.listSource.next(this._myLists);

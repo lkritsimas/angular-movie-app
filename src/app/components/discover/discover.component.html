@@ -1,4 +1,4 @@
-<app-movies (onScroll)="onScroll()">
+<app-movies [data]="movies$ | async" (onScroll)="onScroll()">
     <div class="filter">
         <div class="columns">
             <div class="column">
@@ -29,7 +29,7 @@
             </div>
             <div class="column is-narrow">
                 <div class="select is-rounded is-fullwidth is-grey">
-                    <select [ngModel]="ratingFilter" (ngModelChange)="onFilterChange($event)" required>
+                    <select [ngModel]="ratingFilter" (ngModelChange)="onRatingFilterChange($event)" required>
                         <option value="" selected disabled hidden>Filter by Rating</option>
                         <option value="">All ratings</option>
                         <option value="G">G</option>

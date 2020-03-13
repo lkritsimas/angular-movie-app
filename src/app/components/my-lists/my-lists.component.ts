@@ -1,13 +1,11 @@
-import { Component, OnInit, AfterContentInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { faPlus, faTimes, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { tap } from 'rxjs/operators';
+import { faPlus, faTimes, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { moveItemInArray, CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 
 import { LocalStorageService } from '../../services/local-storage.service';
 import { slideInOut } from '../../animations';
-import { Movie } from '../../movie';
-import { Person } from '../../person';
 import { ListItems } from '../../list';
 
 @Component({
@@ -22,9 +20,7 @@ export class MyListsComponent implements OnInit {
   faHeart = faHeart;
   newListFormError: string = '';
   newListFormVisible: boolean = false;
-  myLists: any[] = [];
-  movies: Movie[] = [];
-  people: Person[] = [];
+  myLists: ListItems[] = [];;
 
   constructor(private localStorageService: LocalStorageService) { }
 

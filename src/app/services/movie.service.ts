@@ -1,59 +1,33 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, BehaviorSubject, Subscription } from 'rxjs';
-import { tap, share, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { tap, map, catchError, retry } from 'rxjs/operators';
 
-import { API_KEY, API_URL } from '../api.config';
 import { Movie, Genre } from '../movie';
+import { HttpService } from './http.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MovieService {
+export class MovieService extends HttpService {
   private movieDetailsEndpoint: string = '/movie';
   private discoverMoviesEndpoint: string = '/discover/movie';
   private popularMoviesEndpoint: string = '/movie/popular';
   private upcomingMoviesEndpoint: string = '/movie/upcoming';
   private topRatedMoviesEndpoint: string = '/movie/top_rated';
-  private searchMovieEndpoint: string = '/search/movie';
   private movieGenresEndpoint: string = '/genre/movie/list';
 
-  public fetchType: string = '';
-  public prevFetchType: string = '';
-  public resultSource = new BehaviorSubject<Movie[]>([]);
-  public result = this.resultSource.asObservable();
-  public searchTerm = new BehaviorSubject<string>('');
-
-  private currentPage: number = 0;
-
-  constructor(private router: Router, private httpClient: HttpClient) { }
-
-  createQueryString(path: string, params?: any, page?: number): string {
-    let queryParamsString: string;
-
-    if (params || page) {
-      const mergedObj = {
-        ...{ 'page': page || 1 },
-        ...params
-      };
-
-      // Build query string
-      queryParamsString = Object.keys(mergedObj)
-        .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(mergedObj[k]))
-        .join('&');
-    }
-
-    return `${API_URL}${path}?${queryParamsString ? queryParamsString + '&' : ''}api_key=${API_KEY}`;
+  constructor(private httpClient: HttpClient) {
+    super();
   }
 
   getMovieGenres(): Observable<Genre[]> {
     const queryString = this.createQueryString(this.movieGenresEndpoint);
     return this.httpClient.get<Genre[]>(queryString)
       .pipe(
-        tap(_ => console.log('fetched movie genres')),
         map(response => response['genres']),
-        share(),
+        retry(3),
+        catchError(this.handleError<Movie>('getMovieGenres'))
       );
   }
 
@@ -63,75 +37,76 @@ export class MovieService {
     });
     return this.httpClient.get<Movie>(queryString)
       .pipe(
-        tap(_ => console.log(`fetched movie ${id}`)),
-        share()
+        retry(3),
+        catchError(this.handleError<Movie>('getMovieDetails'))
       );
   }
 
-  discoverMovies(params?: any, page?: number) {
-    const queryString = this.createQueryString(this.discoverMoviesEndpoint, params, page);
-    return this.httpClient.get<Movie[]>(queryString).subscribe(response =>
-      this.resultSource.next([...this.resultSource.getValue(), ...response['results']])
-    );
+  getDiscoverMovies(params?: any): Observable<Movie[]> {
+    if (!this.hasNextPage()) return of([]);
+    this.nextPage();
+
+    const queryString = this.createQueryString(this.discoverMoviesEndpoint, params, this.currentPage);
+    return this.httpClient.get<Movie[]>(queryString)
+      .pipe(
+        tap((response: any) => {
+          this.currentPage = response.page;
+          this.totalPages = response.total_pages;
+        }),
+        map(response => response['results']),
+        retry(3),
+        catchError(this.handleError<Movie[]>('discoverMovies', []))
+      );
   }
 
-  getPopularMovies(page?: number) {
-    const queryString = this.createQueryString(this.popularMoviesEndpoint, null, page);
-    return this.httpClient.get<Movie[]>(queryString).subscribe(response =>
-      this.resultSource.next([...this.resultSource.getValue(), ...response['results']])
-    );
+  getPopularMovies(): Observable<Movie[]> {
+    if (!this.hasNextPage()) return of([]);
+    this.nextPage();
+
+    const queryString = this.createQueryString(this.popularMoviesEndpoint, null, this.currentPage);
+    return this.httpClient.get<Movie[]>(queryString)
+      .pipe(
+        tap((response: any) => {
+          this.currentPage = response.page;
+          this.totalPages = response.total_pages;
+        }),
+        map(response => response['results']),
+        retry(3),
+        catchError(this.handleError<Movie[]>('getPopularMovies', []))
+      );
   }
 
-  getTopRatedMovies(page?: number) {
-    const queryString = this.createQueryString(this.topRatedMoviesEndpoint, null, page);
-    return this.httpClient.get<Movie[]>(queryString).subscribe(response =>
-      this.resultSource.next([...this.resultSource.getValue(), ...response['results']])
-    );
+  getTopRatedMovies(): Observable<Movie[]> {
+    if (!this.hasNextPage()) return of([]);
+    this.nextPage();
+
+    const queryString = this.createQueryString(this.topRatedMoviesEndpoint, null, this.currentPage);
+    return this.httpClient.get<Movie[]>(queryString)
+      .pipe(
+        tap((response: any) => {
+          this.currentPage = response.page;
+          this.totalPages = response.total_pages;
+        }),
+        map(response => response['results']),
+        retry(3),
+        catchError(this.handleError<Movie[]>('getTopRatedMovies', []))
+      );
   }
 
-  getUpcomingMovies(page?: number) {
-    const queryString = this.createQueryString(this.upcomingMoviesEndpoint, null, page);
-    return this.httpClient.get<Movie[]>(queryString).subscribe(response => {
-      return this.resultSource.next([...this.resultSource.getValue(), ...response['results']])
-    });
-  }
+  getUpcomingMovies(): Observable<Movie[]> {
+    if (!this.hasNextPage()) return of([]);
+    this.nextPage();
 
-  // search(term: string = '') {
-  //   // Update search term
-  //   this.searchTerm.next(term);
-
-  //   if (!term) return this.router.navigate(['search']);
-
-  //   let apiEndPoint = this.searchMovieEndpoint;
-  //   // if (parsed.type === 'person')
-  //   //   apiEndPoint = this.searchPersonEndpoint;
-
-  //   const queryString = this.createQueryString(apiEndPoint, {
-  //     'query': term
-  //   });
-
-  //   this.httpClient.get<Movie[]>(queryString)
-  //     .subscribe({
-  //       next: (response) => this.resultSource.next(response['results'])
-  //     });
-
-  //   this.router.navigate(['search', term]);
-  // }
-
-  clear() {
-    this.resultSource.next([]);
-    this.currentPage = 0;
-  }
-
-  getPage(): number {
-    this.setPage();
-    return this.currentPage;
-  }
-
-  setPage(page?: number) {
-    if (!page)
-      this.currentPage += 1;
-    else
-      this.currentPage = page;
+    const queryString = this.createQueryString(this.upcomingMoviesEndpoint, null, this.currentPage);
+    return this.httpClient.get<Movie[]>(queryString)
+      .pipe(
+        tap((response: any) => {
+          this.currentPage = response.page;
+          this.totalPages = response.total_pages;
+        }),
+        map(response => response['results']),
+        retry(3),
+        catchError(this.handleError<Movie[]>('getUpcomingMovies', []))
+      );
   }
 }

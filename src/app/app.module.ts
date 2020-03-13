@@ -26,6 +26,9 @@ import { ParallaxDirective } from './directives/parallax.directive';
 import { MyListsComponent } from './components/my-lists/my-lists.component';
 import { AddToListComponent } from './components/add-to-list/add-to-list.component';
 import { LazyLoadImagesDirective } from './directives/lazy-load-images.directive';
+import { PeopleComponent } from './components/people/people.component';
+import { MyListComponent } from './components/my-list/my-list.component';
+import { SearchService } from './services/search.service';
 
 @NgModule({
   declarations: [
@@ -45,7 +48,9 @@ import { LazyLoadImagesDirective } from './directives/lazy-load-images.directive
     ParallaxDirective,
     MyListsComponent,
     AddToListComponent,
-    LazyLoadImagesDirective
+    LazyLoadImagesDirective,
+    PeopleComponent,
+    MyListComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +64,7 @@ import { LazyLoadImagesDirective } from './directives/lazy-load-images.directive
     NgxWebstorageModule.forRoot({ prefix: 'mml', separator: '.', caseSensitive: true }),
     DragDropModule
   ],
-  providers: [],
+  providers: [SearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

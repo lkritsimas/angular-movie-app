@@ -83,7 +83,6 @@ export class LazyLoadImagesDirective implements OnInit, OnDestroy {
   }
 
   onImageAppearsInViewport(image: any) {
-    console.log('image', image.dataset);
     if (image.dataset.src) {
       this.renderer.setAttribute(image, 'src', image.dataset.src);
       this.renderer.removeAttribute(image, 'data-src');

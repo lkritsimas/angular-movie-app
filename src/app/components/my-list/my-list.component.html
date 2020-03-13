@@ -1,0 +1,15 @@
+<div class="my-list section container" lazyLoadImages>
+    <p *ngIf="title" class="title is-4 is-paddingless">{{ title }}</p>
+
+    <ul class="grid-columns grid-large section columns is-centered">
+        <li *ngFor="let movie of myList.movies" class="my-list-item column">
+            <a routerLink="/title/{{ movie.id }}">
+                <app-image [src]="movie.image" type="movie" size="medium" lazy small> </app-image>
+                <div class="movie-title-background"></div>
+                <div class="movie-title">
+                    {{ movie.title }}
+                </div>
+            </a>
+        </li>
+    </ul>
+</div>

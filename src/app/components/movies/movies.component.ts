@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Location } from "@angular/common";
-import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 import { ImageService } from '../../services/image.service';
 import { MovieService } from '../../services/movie.service';
@@ -11,17 +11,17 @@ import { Movie } from '../../movie';
   templateUrl: './movies.component.html',
   styleUrls: ['./movies.component.scss']
 })
-export class MoviesComponent implements OnInit {
-  @Output() public onScroll: EventEmitter<any> = new EventEmitter();
+export class MoviesComponent implements OnInit, OnDestroy {
+  movies$: BehaviorSubject<Movie[]> = new BehaviorSubject<Movie[]>([]);
+  @Output()
+  onScroll: EventEmitter<any> = new EventEmitter();
+  @Input()
+  set data(value) { this.movies$.next(value); };
+  get data() { return this.movies$.getValue(); }
 
-  movies$: Observable<Movie[]>;
   path: string;
   title: string = '';
   currPath: string;
-
-  fetchType: string = '';
-  prevFetchType: string = '';
-
   filter: string = '';
 
   constructor(
@@ -29,7 +29,6 @@ export class MoviesComponent implements OnInit {
     private movieService: MovieService,
     public imageService: ImageService
   ) {
-    this.movies$ = this.movieService.result;
     this.path = location.path();
   }
 
@@ -39,15 +38,12 @@ export class MoviesComponent implements OnInit {
     this.fetchMovies();
   }
 
+  // Clear service data on destroy
+  ngOnDestroy() {
+    this.movieService.resetPage();
+  }
+
   fetchMovies() {
-    // Get fetch type
-    this.movieService.prevFetchType = this.movieService.fetchType;
-    this.movieService.fetchType = this.currPath;
-
-    // Clear movies if page has changed
-    if (this.movieService.fetchType !== this.movieService.prevFetchType)
-      this.movieService.clear();
-
     switch (this.currPath) {
       case 'popular':
         this.getPopularMovies();
@@ -64,31 +60,36 @@ export class MoviesComponent implements OnInit {
   }
 
   runOnScroll(): void {
-    // this.fetchMovies();
     this.onScroll.emit(this.fetchMovies());
-
-    console.log('movies: scroll')
-
   }
 
   getUpcomingMovies(): void {
     this.title = 'Upcoming movies';
-    this.movieService.getUpcomingMovies(this.movieService.getPage());
+    this.movieService.getUpcomingMovies()
+      .subscribe({
+        next: (movies: Movie[]) => this.movies$.next([...this.movies$.getValue(), ...movies])
+      });
   }
 
   getPopularMovies(): void {
     this.title = 'Popular movies';
-    this.movieService.getPopularMovies(this.movieService.getPage());
+    this.movieService.getPopularMovies()
+      .subscribe({
+        next: (movies: Movie[]) => this.movies$.next([...this.movies$.getValue(), ...movies])
+      });
   }
 
   getTopRatedMovies(): void {
     this.title = 'Top rated movies';
-    this.movieService.getTopRatedMovies(this.movieService.getPage());
+    this.movieService.getTopRatedMovies()
+      .subscribe({
+        next: (movies: Movie[]) => this.movies$.next([...this.movies$.getValue(), ...movies])
+      });
   }
 
   onFilterChange(newValue) {
     this.filter = newValue;
-    this.movieService.clear();
+    this.movieService.resetPage();
     this.fetchMovies();
   }
 }

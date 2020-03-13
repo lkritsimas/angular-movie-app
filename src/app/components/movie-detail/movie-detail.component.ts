@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { map, switchMap, tap, distinctUntilChanged } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 
 import { MovieService } from '../../services/movie.service';
@@ -28,10 +28,10 @@ export class MovieDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.params
+    this.activatedRoute.paramMap
       .pipe(
         tap(() => this.loading = true),
-        map(params => params.id),
+        map(params => params.get('id')),
         switchMap(id => this.movieService.getMovieDetails(id))
       )
       .subscribe((movie: Movie) => {

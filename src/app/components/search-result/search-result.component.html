@@ -2,7 +2,9 @@
     <div class="container is-fluid">
         <h3 class="search-header column subtitle is-6">Results for: <b>{{ searchTerm }}</b></h3>
     </div>
-    <app-movies></app-movies>
+    <app-movies *ngIf="!routeType || routeType === 'movie'" [data]="movies$ | async" (onScroll)="onScroll()">
+    </app-movies>
+    <app-people *ngIf="routeType === 'person'" [data]="people$ | async" (onScroll)="onScroll()"></app-people>
 </div>
 <ng-template #elseBlock>
     <div class="container is-fluid">

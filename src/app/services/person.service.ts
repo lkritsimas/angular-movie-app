@@ -1,68 +1,45 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
-import { Observable, of, BehaviorSubject } from 'rxjs';
+import { tap, map, retry, catchError } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
-import { API_KEY, API_URL } from '../api.config';
 import { Person } from '../person';
+import { HttpService } from './http.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PersonService {
+export class PersonService extends HttpService {
   private personDetailsEndpoint = '/person';
-  public peopleSource = new BehaviorSubject<Person[]>([]);
-  public people$ = this.peopleSource.asObservable();
+  private personPopularEndpoint = '/person/popular';
 
-  constructor(
-    private httpClient: HttpClient
-  ) { }
-
-  createQueryString(path: string, params?: any, page?: number): string {
-    let queryParamsString: string;
-
-    if (params || page) {
-      const mergedObj = {
-        ...{ 'page': page || 1 },
-        ...params
-      };
-
-      // Build query string
-      queryParamsString = Object.keys(mergedObj)
-        .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(mergedObj[k]))
-        .join('&');
-    }
-
-    return `${API_URL}${path}?${queryParamsString ? queryParamsString + '&' : ''}api_key=${API_KEY}`;
+  constructor(private httpClient: HttpClient) {
+    super();
   }
 
   getPersonDetails(id: number): Observable<Person> {
     const queryString = this.createQueryString(`${this.personDetailsEndpoint}/${id}`, {
-      'append_to_response': 'movie_credits'
+      append_to_response: 'movie_credits'
     });
     return this.httpClient.get<Person>(queryString).pipe(
-      tap(_ => console.log(`fetched person ${id}`))
+      catchError(this.handleError<Person>('getPersonDetails'))
     );
   }
 
-  // search(term: string = ''): Observable<Person[]> {
-  //   // Update search term
-  //   // this.searchTerm.next(term);
+  getPopularPeople(): Observable<Person[]> {
+    if (!this.hasNextPage()) return of([]);
+    this.nextPage();
 
-  //   if (!term) {
-  //     this.router.navigate(['search']);
-  //     return of([]);
-  //   }
-
-  //   const queryString = this.createQueryString(this.searchPersonEndpoint, {
-  //     'query': term
-  //   });
-
-  //   this.router.navigate(['search', term]);
-
-  //   return this.httpClient.get<Person[]>(queryString)
-  //     .pipe(
-  //       tap((response) => this.peopleSource.next(response['results']))
-  //     );
-  // }
+    const queryString = this.createQueryString(this.personPopularEndpoint, null, this.currentPage);
+    return this.httpClient.get<Person[]>(queryString)
+      .pipe(
+        tap((response: any) => {
+          this.currentPage = response.page;
+          this.totalPages = response.total_pages;
+        }),
+        map(response => response['results']),
+        retry(3),
+        catchError(this.handleError<Person[]>('getPopularPeople', []))
+      );
+  }
 }

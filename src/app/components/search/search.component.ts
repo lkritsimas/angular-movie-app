@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-// import { MovieService } from '../../services/movie.service';
 import { SearchService } from '../../services/search.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -16,7 +14,7 @@ export class SearchComponent implements OnInit {
   searchTerm: string = '';
 
   constructor(private router: Router, private searchService: SearchService) {
-    searchService.searchTerm.subscribe({
+    searchService.searchTerm$.subscribe({
       next: (term) => this.searchTerm = term
     });
   }
@@ -29,7 +27,18 @@ export class SearchComponent implements OnInit {
       return;
     }
 
-    this.searchService.search(this.searchTerm);
-    this.router.navigate(['search', this.searchTerm]);
+    // this.searchService.search(this.searchTerm);
+
+    const parsedTerm = this.searchService.parseSearchTerm(this.searchTerm);
+    if (parsedTerm.type) {
+      this.searchService.search(parsedTerm.term, parsedTerm.type);
+    } else {
+      this.searchService.search(parsedTerm.term);
+    }
+
+    if (!parsedTerm.type)
+      this.router.navigate(['search', this.searchTerm]);
+    else
+      this.router.navigate(['search', parsedTerm.type, parsedTerm.term]);
   }
 }
