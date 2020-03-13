@@ -64,7 +64,7 @@ import { SearchService } from './services/search.service';
     NgxWebstorageModule.forRoot({ prefix: 'mml', separator: '.', caseSensitive: true }),
     DragDropModule
   ],
-  providers: [SearchService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
