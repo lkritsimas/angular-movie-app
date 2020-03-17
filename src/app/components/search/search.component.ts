@@ -27,16 +27,6 @@ export class SearchComponent implements OnInit {
       return;
     }
 
-    const parsedTerm = this.searchService.parseSearchTerm(this.searchTerm);
-    if (parsedTerm.type) {
-      this.searchService.search(parsedTerm.term, parsedTerm.type);
-    } else {
-      this.searchService.search(parsedTerm.term);
-    }
-
-    if (!parsedTerm.type)
-      this.router.navigate(['search', this.searchTerm]);
-    else
-      this.router.navigate(['search', parsedTerm.type, parsedTerm.term]);
+    this.router.navigate(['search'], { queryParams: { q: this.searchTerm.trim() } });
   }
 }

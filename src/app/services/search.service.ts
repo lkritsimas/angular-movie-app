@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
 import { tap, map, retry, catchError } from 'rxjs/operators';
@@ -16,7 +16,6 @@ import { HttpService } from './http.service';
 export class SearchService extends HttpService {
   private searchPersonEndpoint: string = '/search/person';
   private searchMovieEndpoint: string = '/search/movie';
-  private _searchTerm: string;
   searchTerm$: Subject<string> = new Subject<string>();
 
   constructor(
@@ -27,30 +26,12 @@ export class SearchService extends HttpService {
     super();
   }
 
-  createQueryString(path: string, params?: any, page?: number): string {
-    let queryParamsString: string;
-
-    if (params || page) {
-      const mergedObj = {
-        ...{ 'page': page || 1 },
-        ...params
-      };
-
-      // Build query string
-      queryParamsString = Object.keys(mergedObj)
-        .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(mergedObj[k]))
-        .join('&');
-    }
-
-    return `${API_URL}${path}?${queryParamsString ? queryParamsString + '&' : ''}api_key=${API_KEY}`;
-  }
-
   parseSearchTerm(term: string): any {
     term = term.trim();
-    const found = term.match(/^(?:(person|movie):)?\s*(.+?)$/);
+    const found = term.match(/^(?:(person|movie):)?\s*(.+?)$/i);
 
     return {
-      type: found[1] || null,
+      type: found[1] ? found[1].toLowerCase() : null,
       term: found[2] || null
     };
   }
@@ -84,7 +65,6 @@ export class SearchService extends HttpService {
     if (!this.personService.hasNextPage()) return of([]);
     this.personService.nextPage();
 
-
     const queryString = this.createQueryString(this.searchPersonEndpoint, {
       query: term,
       page: this.personService.currentPage
@@ -102,25 +82,7 @@ export class SearchService extends HttpService {
       );
   }
 
-  search(term: string, type?: string): void {
-    if (term !== this._searchTerm) {
-      this.movieService.resetPage();
-      this.personService.resetPage();
-    }
-
-    const parsed = this.parseSearchTerm(term);
-    term = parsed.term;
-    type = parsed.type;
-
-
-    this.searchTerm$.next(type ? `${type}: ${term}` : term);
-
-    if (!type || type === 'movie') {
-      this.searchMovies(term);
-    } else if (type === 'person') {
-      this.searchPeople(term);
-    }
-
-    this._searchTerm = term;
+  setTerm(term): void {
+    this.searchTerm$.next(term.trim());
   }
 }

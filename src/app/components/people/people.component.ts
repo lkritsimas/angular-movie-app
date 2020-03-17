@@ -20,29 +20,9 @@ export class PeopleComponent implements OnInit {
   set data(value) { this.people$.next(value); };
   get data() { return this.people$.getValue(); }
 
-  constructor(
-    private personService: PersonService
-  ) { }
+  constructor(private personService: PersonService) { }
 
-  ngOnInit(): void {
-    // this.route.url
-    //   .pipe(
-    //     tap((url: UrlSegment[]) => {
-    //       this.isSearchRoute = url[0].path === 'search'
-
-    //       if (url[2].path && url[1].path === 'movie' || url[1].path === 'person') {
-    //         this.searchType = url[1].path
-    //         this.searchTerm = url[2].path;
-    //       } else {
-    //         this.searchTerm = url[1].path
-    //       }
-    //     })
-    //   )
-    //   .subscribe();
-
-
-    // this.people$ = this.personService.people$;
-  }
+  ngOnInit(): void { }
 
   ngOnDestroy(): void {
     this.personService.resetPage();
@@ -56,6 +36,6 @@ export class PeopleComponent implements OnInit {
   }
 
   runOnScroll(): void {
-    this.onScroll.emit(this.getPopularPeople());
+    this.onScroll.observers.length ? this.onScroll.emit() : this.getPopularPeople();
   }
 }

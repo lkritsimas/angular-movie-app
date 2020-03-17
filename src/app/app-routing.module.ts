@@ -21,8 +21,6 @@ const routes: Routes = [
   { path: 'title/:id', component: MovieDetailComponent },
   { path: 'person/:id', component: PersonDetailComponent },
   { path: 'people', component: PeopleComponent },
-  { path: 'search/:type/:term', component: SearchResultComponent, data: { title: 'Search' } },
-  { path: 'search/:term', component: SearchResultComponent, data: { title: 'Search' } },
   { path: 'search', component: SearchResultComponent, data: { title: 'Search' } },
   { path: '', redirectTo: '/movies/popular', pathMatch: 'full' }
 ];

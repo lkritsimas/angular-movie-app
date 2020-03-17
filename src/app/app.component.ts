@@ -27,23 +27,6 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     const appTitle = this.titleService.getTitle();
 
-    // this.router.events
-    //   // .pipe(
-    //   //   debounceTime(150)
-    //   // )
-    //   .subscribe((event: RouterEvent) => {
-    //     if (event instanceof NavigationStart) {
-    //       this.isLoading = true;
-    //     }
-    //     if (
-    //       event instanceof NavigationEnd ||
-    //       event instanceof NavigationCancel ||
-    //       event instanceof NavigationError
-    //     ) {
-    //       this.isLoading = false;
-    //     }
-    //   });
-
     // Set title based on route
     this.router.events
       .pipe(
